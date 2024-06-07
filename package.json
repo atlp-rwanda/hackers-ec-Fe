@@ -12,8 +12,8 @@
     "beauty": "prettier --write .",
     "preview": "vite preview",
     "check": "prettier . --check",
-    "pre-commit": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
