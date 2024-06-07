@@ -81,3 +81,4 @@ Our application is built using the latest technologies to ensure high performanc
 ## Deployment
 
 [![My Skills](https://skillicons.dev/icons?i=netlify)](https://skillicons.dev)
+[![Hound CI](https://img.shields.io/badge/Hound%20CI-enabled-brightgreen)](https://houndci.com)
