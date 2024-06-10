@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 export default function Nav() {
 	return (
 		<div>
@@ -7,16 +7,16 @@ export default function Nav() {
 					<Link to="/">Home</Link>
 				</li>
 				<li>
-					{" "}
+					{' '}
 					<Link to="/about">About</Link>
 				</li>
 				<li>
-					{" "}
-					<Link to="/users">Users</Link>
+					{' '}
+					<Link to="/login">Login</Link>
 				</li>
 				<li>
-					{" "}
-					<Link to="/other-users">OtherUsers</Link>
+					{' '}
+					<Link to="/register">Register</Link>
 				</li>
 			</ul>
 		</div>
