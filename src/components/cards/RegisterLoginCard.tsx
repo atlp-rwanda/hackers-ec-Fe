@@ -1,0 +1,55 @@
+import bgImage from '../../assets/register-login-card-image.svg';
+import Button from '../buttons/Button';
+
+interface Props {
+	cardTitle: string;
+	buttonUrl: string;
+	navDescription: string;
+	buttonTitle: string;
+}
+
+const RegisterLoginCard = ({
+	cardTitle,
+	buttonUrl,
+	navDescription,
+	buttonTitle,
+}: Props) => {
+	return (
+		<div className="w-full ipad:w-[45%] h-2/5 ipad:h-full flex-center">
+			<div
+				className=" relative flex-center w-full ipad:w-[95%] h-full ipad:h-[95%] rounded-3xl"
+				style={{
+					backgroundImage: `url(${bgImage})`,
+					backgroundPosition: 'center',
+					backgroundSize: 'cover',
+				}}
+			>
+				<div className="absolute inset-0 bg-neutral-black/65 rounded-3xl" />
+				<div className="w-[80%] h-full z-50 flex flex-col items-center place-content-between pt-4 ipad:pt-10 pb-4 ipad:pb-6">
+					<div className="text-neutral-white text-lg mobile:text-3xl ipad:text-3xl text-center font-bold">
+						{cardTitle}
+					</div>
+					<p className="text-[11px] mobile:text-[13px] ipad:text-xs ipad:leading-5 text-neutral-white text-center">
+						Excellent E-commerce destination! Browse thousands of products from
+						top brands, enjoy exclusive deals, and personalized recommendations.
+						With secure payments and fast delivery, ShopTrove makes shopping a
+						breeze.
+					</p>
+					<div className="w-full flex items-center bg-neutral-white/30 py-2 ipad:py-3 px-4 rounded-xl">
+						<div className="flex-1 text-[10px] ipad:text-xs text-neutral-white text-center">
+							{navDescription}
+						</div>
+						<Button
+							buttonType="button"
+							title={buttonTitle}
+							url={buttonUrl}
+							otherStyles="py-2 rounded-lg"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default RegisterLoginCard;
