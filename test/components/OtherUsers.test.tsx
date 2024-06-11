@@ -1,9 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { createStore, Store } from 'redux';
-import OtherUsers from '../pages/OtherUsers';
-import { RootState } from '../redux/store';
-
+import { render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { createStore, Store } from "redux";
+import OtherUsers from "../../src/pages/OtherUsers";
+import { RootState } from "../../src/redux/store";
 interface Action {
 	type: string;
 }
@@ -13,7 +12,7 @@ const initialState: RootState = {
 		data: [],
 		loading: false,
 		error: null,
-	} as RootState['users'],
+	} as RootState["users"],
 };
 
 const mockReducer = (state = initialState, action: Action): RootState => {
@@ -23,12 +22,12 @@ const mockReducer = (state = initialState, action: Action): RootState => {
 	}
 };
 
-describe('OtherUsers component', () => {
-	test('renders user names correctly', () => {
+describe("OtherUsers component", () => {
+	test("renders user names correctly", () => {
 		const users = [
-			{ id: 1, name: 'User 1' },
-			{ id: 2, name: 'User 2' },
-			{ id: 3, name: 'User 3' },
+			{ id: 1, name: "User 1" },
+			{ id: 2, name: "User 2" },
+			{ id: 3, name: "User 3" },
 		];
 
 		const store: Store = createStore(mockReducer, {
