@@ -1,4 +1,4 @@
-import Nav from "../components/Nav";
+import Nav from "../../src/components/Nav";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, it, expect } from "vitest";
