@@ -5,6 +5,8 @@ describe('Footer component', () => {
 	it('renders the correct content', () => {
 		render(<Footer />);
 
-		expect(screen.getByText('This is footer.')).toBeInTheDocument();
+		expect(
+			screen.getByText('© Copyright. All rights reserved.'),
+		).toBeInTheDocument();
 	});
 });

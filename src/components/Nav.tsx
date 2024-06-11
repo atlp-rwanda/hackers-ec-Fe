@@ -1,24 +1,95 @@
-import { Link } from 'react-router-dom';
-export default function Nav() {
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import { toggleModel } from '../redux/features/navSlice';
+import { Link, NavLink } from 'react-router-dom';
+import LandingPageModel from '../components/LandingPageModel';
+import nav_logo from '../assets/Home_logo.png';
+import nav_logo_mobile from '../assets/home_logo_mobile.png';
+import { IoCart, IoMenu } from 'react-icons/io5';
+import { ButtonIcon } from './buttons/ButtonIcon';
+
+const Nav = () => {
+	const dispatch = useAppDispatch();
+	const openModel = useAppSelector((state) => state.nav.openModel);
+
+	const links = [
+		{ to: '/', label: 'Home' },
+		{ to: '/products', label: 'Product' },
+		{ to: '/about', label: 'About Us' },
+		{ to: '/contacts', label: 'Contact Us' },
+	];
+
 	return (
-		<div>
-			<ul className="flex gap-4">
-				<li>
-					<Link to="/">Home</Link>
-				</li>
-				<li>
-					{' '}
-					<Link to="/about">About</Link>
-				</li>
-				<li>
-					{' '}
-					<Link to="/login">Login</Link>
-				</li>
-				<li>
-					{' '}
-					<Link to="/register">Register</Link>
-				</li>
-			</ul>
-		</div>
+		<>
+			<LandingPageModel
+				openModel={openModel}
+				toggleModel={() => dispatch(toggleModel())}
+			/>
+
+			<nav className="parent_div fixed top-0 left-0 w-full bg-neutral-white z-50 shadow">
+				<div className="wrapper flex gap-4 ipad:gap-0 laptop:gap-10">
+					<div className="logo w-[50%] bimobile:w-[30%] ipad:w-[30%]">
+						<img
+							src={nav_logo}
+							alt="nav_logo"
+							className="nav_logo hidden ipad:flex w-full h-full"
+						/>
+						<img
+							src={nav_logo_mobile}
+							alt="nav_logo_mobile"
+							className="nav_logo_mobile ipad:hidden w-full h-full"
+						/>
+					</div>
+					<div className="navigations flex items-center w-full bg-neutral-darkRe justify-between gap-10 mr-[5%]">
+						<div className="left_navigations ipad:flex flex-col gap-4 flex-1 hidden py-2">
+							<div className="search w-full flex py-2">
+								<form className="flex w-full justify-between mobile:mx-[10%] gap-5 tops">
+									<input
+										type="text"
+										placeholder="Search..."
+										className="rounded-l-full rounded-r-full border-2 border-primary-lightblue flex-1 py-1 px-4"
+									/>
+									<ButtonIcon className="mobile:py-1 px-10"> Search</ButtonIcon>
+								</form>
+							</div>
+							<div className="nav flex justify-between  pb-4">
+								{links.map((link) => (
+									<NavLink
+										key={link.to}
+										to={link.to}
+										className={({ isActive }) =>
+											`text-lg font-bold py-1 px-10 rounded-r-full rounded-l-full ${
+												isActive ? 'bg-custom-gradient text-neutral-white' : ''
+											}`
+										}
+									>
+										{link.label}
+									</NavLink>
+								))}
+							</div>
+						</div>
+						<div className="right_navigations w-full ipad:w-[10%] flex justify-end gap-5 py-4">
+							<div className="cart relative">
+								<IoCart className="text-3xl mobile:text-xl text-primary-lightblue" />
+								<span className="bg-neutral-darkRed text-sm mobile:text-base p-1 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6">
+									10
+								</span>
+							</div>
+							<Link to={'/login'}>
+								<ButtonIcon className="py-1 mobile:text-sm mobile:px-7 mobile:py-2">
+									{' '}
+									Login
+								</ButtonIcon>
+							</Link>
+							<IoMenu
+								className="ipad:hidden text-4xl bg-custom-gradient mobile:w-12 w-8 h-8 mobile:h-12 p-2 rounded-full text-neutral-white"
+								onClick={() => dispatch(toggleModel())}
+							/>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</>
 	);
-}
+};
+
+export default Nav;
