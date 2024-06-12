@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import App from "../App";
+import App from "../../src/App";
 import { Provider } from "react-redux";
-import { store } from "../redux/store";
-import "../index.css";
+import { store } from "../../src/redux/store";
+import "../../src/index.css";
 import React from "react";
 describe("Main Component", () => {
   it("renders App without error", () => {
