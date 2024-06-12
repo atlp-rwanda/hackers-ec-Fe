@@ -1,6 +1,6 @@
 # ShopTrove E-Commerce App
 
-[![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/hackers-ec-Fe/badge.svg?branch=ch-setup-test-and-CI-187419042)](https://coveralls.io/github/atlp-rwanda/hackers-ec-Fe?branch=ch-setup-test-and-CI-187419042)
+[![Coverage Status](https://coveralls.io/repos/github/atlp-rwanda/hackers-ec-Fe/badge.svg?branch=develop)](https://coveralls.io/github/atlp-rwanda/hackers-ec-Fe?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bb1bca696fe35cd9abb6/maintainability)](https://codeclimate.com/github/atlp-rwanda/hackers-ec-Fe/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bb1bca696fe35cd9abb6/test_coverage)](https://codeclimate.com/github/atlp-rwanda/hackers-ec-Fe/test_coverage)
 
