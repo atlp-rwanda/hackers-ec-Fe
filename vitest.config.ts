@@ -14,6 +14,7 @@ export default defineConfig({
 				'postcss.config.js',
 				'tailwind.config.js ',
 				'src/redux',
+				'src/main.tsx',
 			],
 		},
 	},
