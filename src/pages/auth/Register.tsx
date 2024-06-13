@@ -1,5 +1,23 @@
+import RegisterLoginContainer from '../../components/Layouts/RegisterLoginContainer';
+import RegisterForm from '../../components/auth/RegisterForm';
+import RegisterLoginCard from '../../components/cards/RegisterLoginCard';
+import useHandleResize from '../../hooks/useHandleResize';
+
 const Register = () => {
-	return <div className="flex-center h-screen text-7xl">Register Page</div>;
+	const { show } = useHandleResize();
+	return (
+		<RegisterLoginContainer>
+			{show && (
+				<RegisterLoginCard
+					cardTitle="Create an account t ShoTrove"
+					buttonUrl="/login"
+					navDescription="Already have an account?"
+					buttonTitle="LOGIN"
+				/>
+			)}
+			<RegisterForm />
+		</RegisterLoginContainer>
+	);
 };
 
 export default Register;

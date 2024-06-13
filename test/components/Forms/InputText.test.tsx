@@ -18,7 +18,9 @@ describe('FormInput Component', () => {
 				otherStyles="px-2"
 			/>,
 		);
+
 		const divElement = screen.getByPlaceholderText('name').parentElement;
+
 		expect(divElement).toHaveClass('w-1/2');
 	});
 
