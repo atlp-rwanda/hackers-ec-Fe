@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+>>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 import {
 	render,
 	screen,
@@ -134,10 +139,17 @@ describe('Add product form component', () => {
 		) as unknown as HTMLOptionElement;
 		await user.selectOptions(selectOption, firstOption);
 
+<<<<<<< HEAD
 		const button = screen.getByRole('button', { name: /Save/i });
 		await user.click(button);
 
 		expect(screen.queryByText(/processing/i));
+=======
+		const button = screen.getByRole('button', { name: /save/i });
+		await user.click(button);
+
+		expect(screen.getByText(/processing/i));
+>>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 	});
 
 	it('should should render a product page component', async () => {
@@ -168,5 +180,51 @@ describe('Add product form component', () => {
 		expect(screen.getByPlaceholderText(/discount/i)).toBeInTheDocument();
 		expect(screen.getByPlaceholderText(/quantity/i)).toBeInTheDocument();
 		expect(screen.getByPlaceholderText('2525-12-03')).toBeInTheDocument();
+<<<<<<< HEAD
+=======
+	});	
+
+	it('should handle adding images correctly', async () => {
+		const { user } = await renderComponent();
+
+		const files = [
+			new File(['image1'], 'image1.png', { type: 'image/png' }),
+			new File(['image2'], 'image2.png', { type: 'image/png' }),
+		];
+
+		const input = screen.getByLabelText('image-input'); 
+
+		await user.upload(input, files);
+
+		expect(screen.getByAltText('Preview 0')).toBeInTheDocument();
+		expect(screen.getByAltText('Preview 1')).toBeInTheDocument();
+	});
+
+	it('should render the form correctly', async () => {
+		const { productName, productPrice, productDiscount, productQuantity, productExpiryDate } = await renderComponent();
+	
+		expect(productName).toBeInTheDocument();
+		expect(productPrice).toBeInTheDocument();
+		expect(productDiscount).toBeInTheDocument();
+		expect(productQuantity).toBeInTheDocument();
+		expect(productExpiryDate).toBeInTheDocument();
+	});
+
+	it('should show processing loader when submitting the form', async () => {
+		const { user, productName, productPrice, productDiscount, productQuantity, productExpiryDate, selectOption } = await renderComponent();
+
+		await user.type(productName, 'BMW');
+		await user.type(productPrice, '100000');
+		await user.type(productDiscount, '100');
+		await user.type(productQuantity, '250');
+		await user.type(productExpiryDate, '2523-06-29');
+		const firstOption = selectOption.querySelector('option') as HTMLOptionElement;
+		await user.selectOptions(selectOption, firstOption);
+
+		const button = screen.getByRole('button', { name: /save/i });
+		await user.click(button);
+
+		expect(screen.getByText(/processing/i)).toBeInTheDocument();
+>>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 	});
 });

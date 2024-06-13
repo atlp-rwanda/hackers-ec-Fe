@@ -1,7 +1,10 @@
 import { z } from 'zod';
 
 export const productValidation = z.object({
+<<<<<<< HEAD
 	id: z.string().optional(),
+=======
+>>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 	name: z.string().min(1, "Name field can't be empty!"),
 	images: z.array(z.any(), {
 		required_error: 'Product images required!',

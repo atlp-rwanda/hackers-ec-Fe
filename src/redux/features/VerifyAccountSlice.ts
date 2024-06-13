@@ -38,6 +38,10 @@ const VerifyAccountSlice = createSlice({
 		builder.addCase(verify.rejected, (state, action: PayloadAction<any>) => {
 			state.isLoading = false;
 			state.isVerified = false;
+<<<<<<< HEAD
+=======
+			console.log(action);
+>>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 			state.message = action.payload?.data?.message;
 		});
 	},

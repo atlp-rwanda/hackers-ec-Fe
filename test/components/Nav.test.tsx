@@ -5,7 +5,10 @@ import { localStorageMock } from '../mock/localStorage';
 import AllProvider from '../Utils/AllProvider';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicData } from '../../src/@types/DynamicData';
+<<<<<<< HEAD
 import userEvent from '@testing-library/user-event';
+=======
+>>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 
 vi.mock('jwt-decode', () => ({
 	jwtDecode: vi.fn(),
@@ -37,6 +40,7 @@ describe('Nav Component', () => {
 		renderComponent();
 
 		expect(screen.getByLabelText('bell-image')).toBeInTheDocument();
+<<<<<<< HEAD
 	});
 
 	it('It should render the search input', async () => {
@@ -46,5 +50,7 @@ describe('Nav Component', () => {
 		await user.type(searchField, 'product');
 		expect(searchField).toHaveValue('product');
 		expect(searchField).toBeInTheDocument();
+=======
+>>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 	});
 });
