@@ -83,7 +83,10 @@ const LoginForm = () => {
 					{...register('password')}
 					error={errors.password}
 				/>
-				<Link to={'/'} className="text-action-error text-xs pl-3">
+				<Link
+					to={'/forgot-password'}
+					className="text-action-error text-xs pl-3"
+				>
 					Forgot password?
 				</Link>
 				<Button
