@@ -3,11 +3,11 @@ import { MemoryRouter } from "react-router-dom";
 import App from "../../src/App";
 
 describe("App Component", () => {
-  it("renders Home and About pages within Layout", () => {
-    render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
-    );
-  });
+	it("renders Home and About pages within Layout", () => {
+		render(
+			<MemoryRouter>
+				<App />
+			</MemoryRouter>,
+		);
+	});
 });

@@ -2,12 +2,7 @@ import { Link } from "react-router-dom";
 export default function Nav() {
 	return (
 		<div>
-			<ul
-				style={{
-					display: "flex",
-					gap: "8px",
-				}}
-			>
+			<ul className="flex gap-4">
 				<li>
 					<Link to="/">Home</Link>
 				</li>
