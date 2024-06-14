@@ -59,7 +59,7 @@ const DashboardLayout = () => {
 						))}
 				</DashboardSideNav>
 			}
-			<div className="flex-1 h-full bg-primary-lightblue/10">
+			<div className="flex-1 h-screen bg-primary-lightblue/10 w-full">
 				<toggleMenuContext.Provider value={{ setShowMenu, showMenu }}>
 					<DashboardTopNav />
 				</toggleMenuContext.Provider>

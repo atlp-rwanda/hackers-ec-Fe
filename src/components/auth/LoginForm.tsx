@@ -17,6 +17,7 @@ import {
 	LoginSchemaType,
 } from '../../validations/auth/login.validation';
 import FormInput from '../Forms/InputText';
+import fetchInfo from '../../utils/userDetails';
 
 const LoginForm = () => {
 	const { isLoading } = useAppSelector((state) => state.login);
@@ -42,8 +43,13 @@ const LoginForm = () => {
 			if (!res.data) {
 				navigate('/success');
 			} else {
+				const userRole: DynamicData = new Array(fetchInfo());
 				showSuccessMessage(res.message);
-				navigate('/');
+				if (userRole[0].role === 'ADMIN') {
+					navigate('/dashboard/admin');
+				} else {
+					navigate('/');
+				}
 			}
 		} catch (e) {
 			const err = e as DynamicData;
