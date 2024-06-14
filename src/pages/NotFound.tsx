@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { notfoundgif } from '../utils/images';
+import { useEffect } from 'react';
 
 const NotFound = () => {
 	const navigate = useNavigate();
@@ -12,7 +12,6 @@ const NotFound = () => {
 
 		return () => clearInterval(interval);
 	}, [navigate]);
-
 	return (
 		<div className="w-full h-screen flex justify-center items-center flex-col gap-5">
 			<img src={notfoundgif} className="w-[250px]" />

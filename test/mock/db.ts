@@ -6,4 +6,16 @@ export const db = factory({
 		id: primaryKey(() => faker.string.uuid()),
 		name: () => faker.commerce.product.name,
 	},
+	users: {
+		id: primaryKey(() => faker.string.uuid()),
+		firstName: () => faker.internet.userName(),
+		lastName: () => faker.internet.userName(),
+		email: () => faker.internet.email(),
+		Active: () => faker.helpers.arrayElement(['Active', 'isActive']),
+		role: () => faker.helpers.arrayElement(['ADMIN', 'BUYER', 'SELLER']),
+	},
+	roles: {
+		id: primaryKey(() => faker.string.uuid()),
+		roleName: () => faker.internet.userName(),
+	},
 });

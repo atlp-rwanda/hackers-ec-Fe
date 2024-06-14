@@ -17,6 +17,9 @@ import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 import ForgotPassword from '../pages/forgottenPassword/ForgotPassword';
 import ResetPassword from '../pages/resetPassword/resetPassword';
 import UserRedirectionPage from '../pages/userRedirection';
+import AdminDashboard from '../pages/Admin/Dashboard';
+import AdminDashboardAllUser from '../pages/Admin/DashboardGetUser';
+import EditUser from '../pages/Admin/EditUserRoles';
 
 function Routers() {
 	return (
@@ -50,7 +53,11 @@ function Routers() {
 							</Route>
 						</Route>
 						<Route element={<ProtectedRoutes roles={['ADMIN']} />}>
-							<Route path="/dashboard/admin" />
+							<Route path="/dashboard/admin">
+								<Route index element={<AdminDashboard />} />
+								<Route path="users" element={<AdminDashboardAllUser />} />
+								<Route path="roles/:id" element={<EditUser />} />
+							</Route>
 						</Route>
 					</Route>
 				</Route>

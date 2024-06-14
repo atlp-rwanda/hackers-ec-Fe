@@ -1,9 +1,8 @@
 import { Triangle } from 'lucide-react';
 import { ReactNode, useState } from 'react';
-import { appLogo } from '../utils/images';
 import Button from './buttons/Button';
+import { appLogo } from '../utils/images';
 import { dashProfileIcon } from '../utils/images';
-
 const DashboardSideNav = ({
 	children,
 	otherStyles,

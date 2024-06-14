@@ -8,5 +8,4 @@ const fetchInfo = () => {
 		return null;
 	}
 };
-
 export default fetchInfo;
