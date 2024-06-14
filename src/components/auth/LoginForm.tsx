@@ -38,14 +38,19 @@ const LoginForm = () => {
 		try {
 			const res = await dispatch(login(data)).unwrap();
 			saveAccessToken(res.data);
-			showSuccessMessage(res.message);
-			navigate('/');
+
+			if (!res.data) {
+				navigate('/success');
+			} else {
+				showSuccessMessage(res.message);
+				navigate('/');
+			}
 		} catch (e) {
 			const err = e as DynamicData;
 			showErrorMessage(
 				err?.data?.message ||
 					err?.message ||
-					'Unknown error occured! Please try again!',
+					'Unknown error occurred! Please try again!',
 			);
 		}
 	};

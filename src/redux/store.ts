@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
-import loginSlice from './features/loginSlice';
+import { loginReducer } from './features/loginSlice';
+import { otpReducer } from './features/OTPSlice';
 import RegisterSlice from './features/RegisterSlice';
 import navReducer from './features/navSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
 export const store = configureStore({
 	reducer: {
-		login: loginSlice,
+		login: loginReducer,
 		register: RegisterSlice,
 		nav: navReducer,
 		verifyAccount: VerifyAccountSlice,
+		otp: otpReducer,
 	},
 });
 

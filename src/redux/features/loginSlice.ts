@@ -21,6 +21,8 @@ const initialState: LoginState = {
 	isLoading: false,
 	isAuthenticated: false,
 	error: null,
+	message: null,
+	requires2FA: false,
 };
 
 const loginSlice = createSlice({
@@ -31,10 +33,19 @@ const loginSlice = createSlice({
 		builder.addCase(login.pending, (state) => {
 			state.isLoading = true;
 			state.error = null;
+			state.requires2FA = false;
 		});
-		builder.addCase(login.fulfilled, (state) => {
+		builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
 			state.isLoading = false;
-			state.isAuthenticated = true;
+			state.message = action.payload.message;
+
+			if (action.payload.token) {
+				state.isAuthenticated = true;
+				state.requires2FA = false;
+			} else {
+				state.isAuthenticated = false;
+				state.requires2FA = true;
+			}
 			state.error = null;
 		});
 		builder.addCase(login.rejected, (state, action: PayloadAction<any>) => {
@@ -45,4 +56,4 @@ const loginSlice = createSlice({
 	},
 });
 
-export default loginSlice.reducer;
+export const loginReducer = loginSlice.reducer;
