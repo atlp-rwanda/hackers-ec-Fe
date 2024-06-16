@@ -48,58 +48,58 @@ const RegisterForm = () => {
 	};
 	const hasErrors = Object.keys(errors).length > 0;
 	return (
-		<div className="relative w-full ipad:w-[55%] h-full ipad:h-full py-5 flex-center flex-col gap-10">
-			<div className="absolute -top-2 tablet:top-2 -right-1">
+		<div className="relative ipad:px-4 h-fit w-full ipad:w-[55%] ipad:h-full flex-center  flex-col ipad:gap-2 gap-5 tablet:gap-10 laptop:gap-7 overflow-auto">
+			<div className="absolute top-1 tablet:top-2 laptop:top-0.5 right-1">
 				<BackButton isBordered title="Back" />
 			</div>
 			{!hasErrors && (
 				<div className="w-max h-max">
-					<img src={logo} alt="ShopTrove logo" width={80} />
+					<img src={logo} alt="ShopTrove logo" width={70} />
 				</div>
 			)}
 			<form
 				onSubmit={handleSubmit(onSubmit)}
-				className="tablet:w-[70%] w-full flex flex-col gap-5"
+				className="mobile:w-full mobile:gap-4 ipad:gap-2 tablet:w-full ipad:w-full w-full flex flex-col gap-3  tablet:gap-3 laptop:gap-4"
 			>
 				<FormInput
 					type="text"
 					placeholder="User name"
-					otherStyles="px-3 py-3 tablet:py-2.5 text-xs rounded-lg"
+					otherStyles="px-3  mobile:py-3 py-2 tablet:py-4 laptop:py-2.5 ipad:py-2 text-xs rounded-lg"
 					{...register('userName')}
 					error={errors.userName}
 				/>
 				<FormInput
 					type="text"
 					placeholder="First name"
-					otherStyles="px-3 py-3 tablet:py-2.5 text-xs rounded-lg"
+					otherStyles="px-3  mobile:py-3 py-2 tablet:py-4 laptop:py-2.5 ipad:py-2 text-xs rounded-lg"
 					{...register('firstName')}
 					error={errors.firstName}
 				/>
 				<FormInput
 					type="text"
 					placeholder="Last name"
-					otherStyles="px-3 py-3 tablet:py-2.5 text-xs rounded-lg"
+					otherStyles="px-3  mobile:py-3 py-2 tablet:py-4 laptop:py-2.5 ipad:py-2 text-xs rounded-lg"
 					{...register('lastName')}
 					error={errors.lastName}
 				/>
 				<FormInput
 					type="text"
 					placeholder="Email"
-					otherStyles="px-3 py-3 tablet:py-2.5 text-xs rounded-lg"
+					otherStyles="px-3  mobile:py-3 py-2 tablet:py-4 laptop:py-2.5 ipad:py-2 text-xs rounded-lg"
 					{...register('email')}
 					error={errors.email}
 				/>
 				<FormInput
 					type="password"
 					placeholder="Password"
-					otherStyles="px-3 py-3 tablet:py-2.5 text-xs rounded-lg"
+					otherStyles="px-3  mobile:py-3 py-2 tablet:py-4 laptop:py-2.5 ipad:py-2 text-xs rounded-lg"
 					{...register('password')}
 					error={errors.password}
 				/>
 				<FormInput
 					type="password"
 					placeholder="Confirm password"
-					otherStyles="px-3 py-3 tablet:py-2.5 text-xs rounded-lg"
+					otherStyles="px-3  mobile:py-3 py-2 tablet:py-4 laptop:py-2.5 ipad:py-2 text-xs rounded-lg"
 					{...register('confirmPassword')}
 					error={errors.confirmPassword}
 				/>
@@ -117,23 +117,23 @@ const RegisterForm = () => {
 							'Register'
 						)
 					}
-					otherStyles=" h-12 rounded-xl"
+					otherStyles=" ipad:h-10 tablet:h-12 rounded-xl"
 				/>
-				<GoogleButton />
-				{!show && (
-					<div className="w-full flex items-center bg-neutral-grey/40 py-2 ipad:py-3 px-4 rounded-xl">
-						<div className="flex-1 text-[10px] ipad:text-xs text-center">
-							Already have an account
-						</div>
-						<Button
-							buttonType="button"
-							title="LOGIN"
-							url="/login"
-							otherStyles="bg-black/30 py-2 rounded-lg"
-						/>
-					</div>
-				)}
 			</form>
+			<GoogleButton />
+			{!show && (
+				<div className="w-full flex items-center bg-neutral-grey/40 py-1 tablet:py-2 px-4 rounded-xl">
+					<div className="flex-1 text-xs ipad:text-xs text-center">
+						Already have an account
+					</div>
+					<Button
+						buttonType="button"
+						title="LOGIN"
+						url="/login"
+						otherStyles="bg-black/30 py-0 tablet:py-2 rounded-lg"
+					/>
+				</div>
+			)}
 		</div>
 	);
 };
