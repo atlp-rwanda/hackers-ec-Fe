@@ -4,13 +4,18 @@ import { describe, expect, it } from 'vitest';
 import Register from '../../src/pages/auth/Register';
 import { store } from '../../src/redux/store';
 import { Provider } from 'react-redux';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const clientId = `${import.meta.env.VITE_GOOGLE_CLIENT_ID}`;
 
 describe('Register component', () => {
 	it('render the register form', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<Register />
+					<GoogleOAuthProvider clientId={clientId}>
+						<Register />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);
@@ -35,7 +40,9 @@ describe('Register component', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<Register />
+					<GoogleOAuthProvider clientId={clientId}>
+						<Register />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);
