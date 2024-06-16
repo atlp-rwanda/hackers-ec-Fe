@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface BackBtnType {
 	url?: string;
-	isBordered: boolean;
+	isBordered?: boolean;
 	otherStyles?: string;
 	title: string;
 }
