@@ -1,49 +1,51 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-// import { useLocation, useNavigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { DynamicData } from '../../@types/DynamicData';
+import useToast from '../../hooks/useToast';
+import { resetPassword } from '../../redux/features/resetSlice';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import {
 	ResetPasswordPayload,
 	ResetPasswordSchema,
 	ResetPasswordSchemaType,
 } from '../../validations/resetPassword/reset.password.validation';
-import { zodResolver } from '@hookform/resolvers/zod';
+import FormInput from '../Forms/InputText';
 import IconLoader from '../Loaders/IconLoader';
-import { ChevronLeft } from 'lucide-react';
-import { useAppDispatch } from '../../redux/hooks/hooks';
-import useToast from '../../hooks/useToast';
-import { resetPassword } from '../../redux/features/resetSlice';
-import { DynamicData } from '../../@types/DynamicData';
+import BackButton from '../buttons/BackButton';
+import Button from '../buttons/Button';
 
 const ResetPasswordForm = () => {
-	// const token = useLocation();
-	// console.log('token', token.search.substring(7));
+	const [searchParams] = useSearchParams();
+	const token = searchParams.get('token');
+
+	const { isLoading } = useAppSelector((state) => state.resetPassword);
 	const dispatch = useAppDispatch();
 	const { showSuccessMessage, showErrorMessage } = useToast();
 
-	// FORM
+	const navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { errors },
 	} = useForm<ResetPasswordSchemaType>({
 		resolver: zodResolver(ResetPasswordSchema),
 	});
 
 	const onSubmit: SubmitHandler<ResetPasswordPayload> = async (data) => {
-		console.log('form data', data);
+		if (!token) {
+			showErrorMessage('Invalid token. please try again');
+			return navigate('/login');
+		}
 		try {
 			const { password } = data;
-			const res = await dispatch(resetPassword({ password })).unwrap();
+			const res = await dispatch(resetPassword({ password, token })).unwrap();
 			showSuccessMessage(res.message);
-			console.log('***************************', res);
+
+			navigate('/login');
 		} catch (e) {
 			const err = e as DynamicData;
-			console.log(
-				'error',
-				err?.data?.message ||
-					err?.message ||
-					'Unknown error occured! Please try again!',
-			);
 			showErrorMessage(
 				err?.data?.message ||
 					err?.message ||
@@ -52,59 +54,47 @@ const ResetPasswordForm = () => {
 		}
 	};
 
-	const navigate = useNavigate();
-	const handleNavigation = () => {
-		navigate('/');
-	};
-
 	return (
 		<>
 			<form className=" flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-				<input
-					{...register('password')}
-					className="text-center border border-overlay w-full rounded-sm py-1 mobile:py-2"
+				<FormInput
 					type="password"
 					placeholder="Password"
+					otherStyles="text-center bg-neutral-white border border-overlay w-full rounded-sm py-1 mobile:py-2 mb-2"
+					{...register('password')}
+					error={errors.password}
 				/>
-
-				{errors.password && (
-					<p className="text-sm text-action-error px-2">
-						{errors.password.message}
-					</p>
-				)}
-				<input
-					{...register('confirmPassword')}
-					className="text-center border border-overlay w-full rounded-sm py-1 mobile:py-2"
+				<FormInput
 					type="password"
 					placeholder="Confirm Password"
+					otherStyles="text-center bg-neutral-white border border-overlay w-full rounded-sm py-1 mobile:py-2 mb-2"
+					{...register('confirmPassword')}
+					error={errors.confirmPassword}
 				/>
 
-				{errors.confirmPassword && (
-					<p className="text-sm text-action-error text-center px-2">
-						{errors.confirmPassword.message}
-					</p>
-				)}
-
-				<button
-					disabled={isSubmitting}
-					className="bg-action-success text-neutral-white py-1 w-full rounded-3xl flex justify-center gap-4 mobile:py-2 hover:bg-action-success/95"
-				>
-					{isSubmitting ? (
-						<>
-							<IconLoader className="animate-spin mr-1" /> {'Loading'}
-						</>
-					) : (
-						'Confirm'
-					)}
-				</button>
+				<Button
+					url={null}
+					buttonType="submit"
+					color="bg-action-success"
+					otherStyles="w-full h-10 text-base rounded-3xl hover:bg-action-success/95"
+					title={
+						isLoading ? (
+							<>
+								<IconLoader className="animate-spin mr-1" /> {'Loading....'}
+							</>
+						) : (
+							'Confirm'
+						)
+					}
+				/>
 			</form>
-			<button
-				className="py-2 hover:bg-neutral-grey/20 rounded-3xl flex justify-center items-center gap-4 mobile:text-lg"
-				onClick={handleNavigation}
-			>
-				<ChevronLeft size={18} />
-				Return to site
-			</button>
+			<BackButton
+				url="/"
+				otherStyles="
+			py-2 hover:bg-neutral-grey/20 rounded-3xl  gap-4 mobile:text-sm
+			"
+				title="Return to site"
+			/>
 		</>
 	);
 };

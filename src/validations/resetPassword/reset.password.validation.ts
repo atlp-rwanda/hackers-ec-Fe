@@ -4,17 +4,16 @@ export const ResetPasswordSchema = z
 	.object({
 		password: z
 			.string()
-			.min(1, { message: 'Password can not be empty' })
+			.min(1, { message: 'The password field cannot be empty' })
 			.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/, {
-				message:
-					'Password must be at least 8 characters long and include a lowercase letter & uppercase letters, and a digit.',
+				message: '8 character password with lowercase, uppercase, and a digit.',
 			}),
 		confirmPassword: z
 			.string()
-			.min(1, { message: 'Confirm password can not be empty.' }),
+			.min(1, { message: 'The Confirm password field cannot be empty' }),
 	})
 	.refine((data) => data.password === data.confirmPassword, {
-		message: 'Password do not match',
+		message: 'Passwords do not match',
 		path: ['confirmPassword'],
 	});
 

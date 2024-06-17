@@ -1,13 +1,12 @@
-import backgroundImage from '../../assets/register-login-background.svg';
-import logo from '../../assets/otherLogo.svg';
 import { ReactNode } from 'react';
+import { registerLoginBackground, roundedLogo } from '../../utils/images';
 
 const ResetPasswordContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<div
 			className="w-full h-screen relative flex items-center  justify-center"
 			style={{
-				backgroundImage: `url(${backgroundImage})`,
+				backgroundImage: `url(${registerLoginBackground})`,
 				backgroundPosition: 'center',
 				backgroundSize: 'cover',
 			}}
@@ -15,7 +14,7 @@ const ResetPasswordContainer = ({ children }: { children: ReactNode }) => {
 			<div className="absolute top-0 left-0 bg-neutral-black/70 w-full h-full" />
 			<div className="absolute z-10 p-4 w-[90%] h-[95%] bg-neutral-white mx-8 px-6 py-10 rounded-3xl flex flex-col gap-2 items-center justify-center mobile:z-auto  mobile:w-[77%] mobile:h-[70%]  ipad:w-[50%] ipad:h-[90%] laptop:w-[48%]  ipad:gap-0 ">
 				<div className="flex justify-center w-max h-max mb-8">
-					<img src={logo} alt="ShopTrove logo" className="w-[60%]" />
+					<img src={roundedLogo} alt="ShopTrove logo" className="w-[60%]" />
 				</div>
 				<h1 className="text-3xl mb-2 mobile:mb-4 mobile:text-4xl font-poppins font-semibold text-center tracking-tighter ipad:mb-3">
 					Reset password
