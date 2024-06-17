@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import FormInput from '../../../src/components/Forms/InputText';
+import { FieldError } from 'react-hook-form';
 
 describe('FormInput Component', () => {
 	it('renders the input with given placeholder', () => {
@@ -46,5 +47,24 @@ describe('FormInput Component', () => {
 		);
 		const inputElement = screen.getByPlaceholderText('Enter password');
 		expect(inputElement).toHaveAttribute('type', 'password');
+	});
+
+	it('renders error message when error prop is passed', () => {
+		const error: FieldError = { message: 'Test error message', type: 'test' };
+		render(<FormInput type="text" placeholder="Test" error={error} />);
+
+		expect(screen.getByText('Test error message')).toBeInTheDocument();
+	});
+
+	it('applies default error styles when no custom styles are provided', () => {
+		const error: FieldError = {
+			message: 'Default styled error message',
+			type: 'test',
+		};
+		render(<FormInput type="text" placeholder="Test" error={error} />);
+
+		const errorMessage = screen.getByText('Default styled error message');
+		expect(errorMessage).toHaveClass('text-[0.5rem]');
+		expect(errorMessage).toHaveClass('px-2');
 	});
 });

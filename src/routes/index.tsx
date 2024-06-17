@@ -3,7 +3,6 @@ import Layout from '../components/Layout';
 import DashboardLayout from '../components/Layouts/DashboardLayout';
 import Home from '../pages/Home';
 import About from '../pages/About';
-import ResetPassword from '../pages/resetPassword/resetPassword';
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import AddProduct from '../pages/dashboard/seller/AddProduct';
@@ -16,18 +15,24 @@ import UserRedirection from '../pages/SellerRedirection';
 import NotFound from '../pages/NotFound';
 import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 import ForgotPassword from '../pages/forgottenPassword/ForgotPassword';
+import ResetPassword from '../pages/resetPassword/resetPassword';
+import UserRedirectionPage from '../pages/userRedirection';
 
 function Routers() {
 	return (
 		<>
 			<Routes>
-				<Route path="forgot-password" element={<ForgotPassword />} />
-				<Route path="reset-password" element={<ResetPassword />} />
+				<Route path="/users/forgot-password" element={<ForgotPassword />} />
+				<Route path="/users/reset-password" element={<ResetPassword />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="users/account/verify/:token" element={<VerifyAccount />} />
 				<Route path="/users/2fa" element={<TwoFactorAuth />} />
 				<Route path="/success" element={<UserRedirection />} />
+				<Route
+					path="/forgot-password-success"
+					element={<UserRedirectionPage />}
+				/>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="/about" element={<About />} />

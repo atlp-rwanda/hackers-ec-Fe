@@ -84,7 +84,7 @@ const LoginForm = () => {
 					error={errors.password}
 				/>
 				<Link
-					to={'/forgot-password'}
+					to={'/users/forgot-password'}
 					className="text-action-error text-xs pl-3"
 				>
 					Forgot password?
