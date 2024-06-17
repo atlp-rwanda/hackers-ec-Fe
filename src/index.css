@@ -6,7 +6,6 @@
 body {
 	@apply font-poppins w-full h-full;
 	font-family: 'Poppins', sans-serif;
-	padding-top: 4rem;
 }
 
 @layer utilities {

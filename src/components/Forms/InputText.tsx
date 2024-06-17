@@ -4,6 +4,7 @@ import { FieldError } from 'react-hook-form';
 interface InputProps {
 	type: string;
 	width?: string;
+	disabled?: boolean;
 	placeholder: string;
 	otherStyles?: string;
 	error?: FieldError | undefined;

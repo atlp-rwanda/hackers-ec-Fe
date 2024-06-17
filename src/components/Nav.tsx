@@ -6,10 +6,23 @@ import nav_logo from '../assets/Home_logo.png';
 import nav_logo_mobile from '../assets/home_logo_mobile.png';
 import { IoCart, IoMenu } from 'react-icons/io5';
 import { ButtonIcon } from './buttons/ButtonIcon';
+import ProfileDropdown from './ProfileDropdown';
+import { fetchUserProfile } from '../redux/features/userUpdateSlice';
+import { useEffect } from 'react';
 
 const Nav = () => {
+	const accessToken = localStorage.getItem('access_token');
 	const dispatch = useAppDispatch();
 	const openModel = useAppSelector((state) => state.nav.openModel);
+
+	const { data } = useAppSelector((state) => state.profile);
+
+	// Fetch user data when the component mounts
+	useEffect(() => {
+		if (!data) {
+			dispatch(fetchUserProfile());
+		}
+	}, [data, dispatch]);
 
 	const links = [
 		{ to: '/', label: 'Home' },
@@ -68,18 +81,21 @@ const Nav = () => {
 							</div>
 						</div>
 						<div className="right_navigations w-full ipad:w-[10%] flex justify-end gap-5 py-4">
-							<div className="cart relative">
-								<IoCart className="text-3xl mobile:text-xl text-primary-lightblue" />
-								<span className="bg-neutral-darkRed text-sm mobile:text-base p-1 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6">
+							<div className="cart relative pt-2">
+								<IoCart className="text-3xl mobile:text-3xl text-primary-lightblue" />
+								<span className="bg-neutral-darkRed text-sm mobile:text-base p-1 mt-2 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6">
 									10
 								</span>
 							</div>
-							<Link to={'/login'}>
-								<ButtonIcon className="py-1 mobile:text-sm mobile:px-7 mobile:py-2">
-									{' '}
-									Login
-								</ButtonIcon>
-							</Link>
+							{accessToken ? (
+								<ProfileDropdown image={data?.profileImage} />
+							) : (
+								<Link to={'/login'}>
+									<ButtonIcon className="py-1 mobile:text-sm mobile:px-7 mobile:py-2">
+										Login
+									</ButtonIcon>
+								</Link>
+							)}
 							<IoMenu
 								className="ipad:hidden text-4xl bg-custom-gradient mobile:w-12 w-8 h-8 mobile:h-12 p-2 rounded-full text-neutral-white"
 								onClick={() => dispatch(toggleModel())}
