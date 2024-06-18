@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { Toaster } from 'sonner';
 import NProgressBar from './utils/NProgressBar';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
@@ -14,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 			<Toaster position="top-right" richColors />
 			<BrowserRouter>
 				<NProgressBar>
-					<App />
+					<DndProvider backend={HTML5Backend}>
+						<App />
+					</DndProvider>
 				</NProgressBar>
 			</BrowserRouter>
 		</Provider>

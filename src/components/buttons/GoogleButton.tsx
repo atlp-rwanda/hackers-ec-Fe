@@ -1,4 +1,4 @@
-import googleIcon from '../../assets/googleIcon.svg';
+import { googleIcon } from '../../utils/images';
 
 const GoogleButton = () => {
 	return (

@@ -20,7 +20,7 @@ describe('Button commponent', () => {
 		expect(screen.getByText('Click me')).toBeInTheDocument();
 	});
 
-	it('should render a link button when url is provide and button not disabled', () => {
+	it('should render a link button when url is provide and button', () => {
 		render(
 			<Button
 				url={'/home'}

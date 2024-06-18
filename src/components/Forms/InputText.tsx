@@ -23,6 +23,7 @@ const FormInput = forwardRef(
 						className={`w-full bg-[#D9D9D9] ${otherStyles} outline-none text-black/75`}
 						{...props}
 						ref={ref}
+						min={0}
 					/>
 					{error && (
 						<p className="text-[0.5rem] text-action-error text-end px-2">
