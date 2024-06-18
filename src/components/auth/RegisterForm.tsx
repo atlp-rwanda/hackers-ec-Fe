@@ -48,7 +48,7 @@ const RegisterForm = () => {
 	};
 	const hasErrors = Object.keys(errors).length > 0;
 	return (
-		<div className="relative ipad:px-4 h-fit w-full ipad:w-[55%] ipad:h-full flex-center  flex-col ipad:gap-2 gap-5 tablet:gap-10 laptop:gap-7 overflow-auto">
+		<div className="relative ipad:px-4 w-full ipad:w-[55%] ipad:h-full flex-center  flex-col ipad:gap-2 gap-5 tablet:gap-10 laptop:gap-7 overflow-auto">
 			<div className="absolute top-1 tablet:top-2 laptop:top-0.5 right-1">
 				<BackButton isBordered title="Back" />
 			</div>
