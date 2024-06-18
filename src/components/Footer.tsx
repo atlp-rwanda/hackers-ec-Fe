@@ -1,4 +1,4 @@
-import footer from '../assets/footer.svg';
+import { roundedLogo } from '../utils/images';
 import { FaInstagram, FaTwitter } from 'react-icons/fa';
 
 const Footer = () => {
@@ -8,7 +8,11 @@ const Footer = () => {
 				<div className="bg-custom-gradient rounded-md text-neutral-white mx-auto p-10 flex w-full gap-5 rounded-br-[3rem] rounded-bl-[3rem] flex-wrap ipad:flex-nowrap">
 					<div className="ipad:w-[40%] w-full">
 						<div className="bg-neutral-white rounded-lg p-5 col-span-1 flex flex-col justify-center items-center">
-							<img src={footer} alt="footer" className="w-20 ipad:w-32 mb-4" />
+							<img
+								src={roundedLogo}
+								alt="footer"
+								className="w-20 ipad:w-32 mb-4"
+							/>
 							<div className="text-center">
 								<h1 className="text-2xl ipad:text-3xl text-primary-lightblue font-bold">
 									ShopTrove

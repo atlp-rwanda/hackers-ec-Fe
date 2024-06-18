@@ -1,5 +1,5 @@
-import bgImage from '../../assets/register-login-card-image.svg';
 import Button from '../buttons/Button';
+import { registerLoginCardImage } from '../../utils/images';
 
 interface Props {
 	cardTitle: string;
@@ -19,7 +19,7 @@ const RegisterLoginCard = ({
 			<div
 				className=" relative flex-center w-full ipad:w-[95%] h-full ipad:h-[95%] rounded-3xl"
 				style={{
-					backgroundImage: `url(${bgImage})`,
+					backgroundImage: `url(${registerLoginCardImage})`,
 					backgroundPosition: 'center',
 					backgroundSize: 'cover',
 				}}

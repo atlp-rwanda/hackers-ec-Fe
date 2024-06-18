@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
-import backgroundImage from '../../assets/register-login-background.svg';
-
+import { registerLoginBackground } from '../../utils/images';
 const RegisterLoginContainer = ({ children }: { children: ReactNode }) => {
 	return (
 		<div
 			className="w-full h-screen relative flex-center"
 			style={{
-				backgroundImage: `url(${backgroundImage})`,
+				backgroundImage: `url(${registerLoginBackground})`,
 				backgroundPosition: 'center',
 				backgroundSize: 'cover',
 			}}
