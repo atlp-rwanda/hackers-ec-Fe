@@ -36,14 +36,14 @@ const RegisterLoginCard = ({
 						breeze.
 					</p>
 					<div className="w-full flex items-center bg-neutral-white/30 py-2 ipad:py-3 px-4 rounded-xl">
-						<div className="flex-1 text-[10px] ipad:text-xs text-neutral-white text-center">
+						<div className="flex-1 text-xs ipad:text-[0.6rem] text-neutral-white text-center">
 							{navDescription}
 						</div>
 						<Button
 							buttonType="button"
 							title={buttonTitle}
 							url={buttonUrl}
-							otherStyles="py-2 rounded-lg"
+							otherStyles=" ipad:w-[10%] ipad:py-1 py-2 rounded-lg"
 						/>
 					</div>
 				</div>

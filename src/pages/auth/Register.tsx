@@ -9,7 +9,7 @@ const Register = () => {
 		<RegisterLoginContainer>
 			{show && (
 				<RegisterLoginCard
-					cardTitle="Create an account t ShoTrove"
+					cardTitle="Create an account at ShoTrove"
 					buttonUrl="/login"
 					navDescription="Already have an account?"
 					buttonTitle="LOGIN"
