@@ -25,7 +25,7 @@ const FormInput = forwardRef(
 						ref={ref}
 					/>
 					{error && (
-						<p className="text-[9px] text-action-error text-end px-2">
+						<p className="text-[0.5rem] text-action-error text-end px-2">
 							{error.message}
 						</p>
 					)}
