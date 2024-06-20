@@ -6,6 +6,9 @@ export default {
 			poppins: ['Poppins', 'sans-serif'],
 		},
 		screens: {
+			bimobile: '496px',
+			// => @media (min-width: 496px) { ... }
+
 			mobile: '640px',
 			// => @media (min-width: 640px) { ... }
 
@@ -27,6 +30,8 @@ export default {
 				success: '#1D8E36',
 				warning: '#FBC02D',
 			},
+			inputCaption: '#858585',
+			inputBg: '#d9d9d9',
 			overlay: '#a5b4be',
 			neutral: {
 				grey: '#a5b4be',
@@ -37,10 +42,11 @@ export default {
 			primary: {
 				lightblue: '#266491',
 			},
+			transparent: 'transparent', // Add this line for transparent background
 		},
 		backgroundImage: {
 			'custom-gradient':
-				'linear-gradient(90deg, rgba(14,36,52,1) 0%, rgba(38,100,144,1) 42%, rgba(38,100,145,1) 42%, rgba(41,106,154,1) 100%)',
+				'linear-gradient(90deg,rgba(14,36,52,1) 0%,rgba(38,100,145,1) 42%,rgba(38,100,144,1) 42%, rgba(41,106,154,1) 100% )',
 		},
 	},
 	plugins: [],
