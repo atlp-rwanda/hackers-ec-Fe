@@ -20,6 +20,11 @@ body {
 	.form-input {
 		@apply px-3 py-2 text-xs rounded-lg;
 	}
+	.bgImage {
+		background-image: url('./assets/register-login-background.svg');
+		background-position: 'center';
+		background-size: 'cover';
+	}
 }
 
 nav a.active {

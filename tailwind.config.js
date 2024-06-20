@@ -46,7 +46,9 @@ export default {
 		},
 		backgroundImage: {
 			'custom-gradient':
-				'linear-gradient(90deg,rgba(14,36,52,1) 0%,rgba(38,100,145,1) 42%,rgba(38,100,144,1) 42%, rgba(41,106,154,1) 100% )',
+				'linear-gradient(90deg, rgba(14,36,52,1) 0%, rgba(38,100,144,1) 42%, rgba(38,100,145,1) 42%, rgba(41,106,154,1) 100%)',
+			authenticationBackgroundImage:
+				'url("./src/assets/register-login-background.svg")',
 		},
 	},
 	plugins: [],

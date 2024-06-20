@@ -9,7 +9,7 @@ import { FaLinkedinIn } from 'react-icons/fa6';
 const Contacts = () => {
 	return (
 		<>
-			<div className="w-full h-screen flex items-center justify-center ipad:my-0 mobile:my-32 my-40">
+			<div className="w-full h-screen flex items-center justify-center ipad:my-0 mobile:my-32 my-40 mt-[10rem]">
 				<div className="flex w-[100%] flex-col laptop:flex-row py-6 px-[5%] gap-10 ipad:flex-row">
 					<div className="laptop:w-[50%] w-full laptop:h-full bg-contactImage text-neutral-white tablet:px-10 tablet:gap-10 text-wrap flex flex-col px-6 h-full py-16  gap-6 rounded-3xl">
 						<h1 className="text-2xl font-bold ">Get In Touch</h1>

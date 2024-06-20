@@ -13,7 +13,7 @@ import '../index.css';
 const Home = () => {
 	return (
 		<>
-			<div className="parent_container min-h-screen">
+			<div className="parent_container min-h-screen pt-[4rem]">
 				<div className="wrapper flex flex-col ipad:flex-row">
 					<div className="right_hero flex flex-col gap-4 mobile:gap-6 tablet:gap-10 ipad:justify-center w-full absolute z-30 ipad:z-0 ipad:relative top-[15%] px-[5%]">
 						<motion.div
