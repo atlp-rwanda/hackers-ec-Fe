@@ -4,7 +4,8 @@ import About from '../pages/About';
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Home from '../pages/Home';
-
+import Product from '../pages/Product';
+import Contacts from '../pages/Contacts';
 function Routers() {
 	return (
 		<>
@@ -14,6 +15,8 @@ function Routers() {
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="/about" element={<About />} />
+					<Route path="products" element={<Product />} />
+					<Route path="contacts" element={<Contacts />} />
 				</Route>
 			</Routes>
 		</>

@@ -1,14 +1,18 @@
 import Nav from '../../src/components/Nav';
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect } from 'vitest';
+import { store } from '../../src/redux/store';
 
 describe('Nav Component', () => {
 	it('renders the Home link', () => {
 		render(
-			<MemoryRouter>
-				<Nav />
-			</MemoryRouter>,
+			<Provider store={store}>
+				<MemoryRouter>
+					<Nav />
+				</MemoryRouter>
+			</Provider>,
 		);
 
 		expect(screen.getByText('Home')).toBeInTheDocument();
@@ -16,10 +20,12 @@ describe('Nav Component', () => {
 
 	it('renders the About link', () => {
 		render(
-			<MemoryRouter>
-				<Nav />
-			</MemoryRouter>,
+			<Provider store={store}>
+				<MemoryRouter>
+					<Nav />
+				</MemoryRouter>
+			</Provider>,
 		);
-		expect(screen.getByText('About')).toBeInTheDocument();
+		expect(screen.getByText('About Us')).toBeInTheDocument();
 	});
 });
