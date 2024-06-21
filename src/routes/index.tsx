@@ -7,6 +7,9 @@ import Home from '../pages/Home';
 import Product from '../pages/Product';
 import Contacts from '../pages/Contacts';
 import VerifyAccount from '../components/auth/VerifyAccount';
+import TwoFactorAuth from '../pages/auth/TwoFactor';
+import SellerDashboard from '../pages/SellerDashboard';
+import UserRedirection from '../pages/SellerRedirection';
 
 function Routers() {
 	return (
@@ -15,11 +18,14 @@ function Routers() {
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="users/account/verify/:token" element={<VerifyAccount />} />
+				<Route path="/users/2fa" element={<TwoFactorAuth />} />
+				<Route path="/success" element={<UserRedirection />} />
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="/about" element={<About />} />
 					<Route path="products" element={<Product />} />
 					<Route path="contacts" element={<Contacts />} />
+					<Route path="/seller-dashboard" element={<SellerDashboard />} />
 				</Route>
 			</Routes>
 		</>
