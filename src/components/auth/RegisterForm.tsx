@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import logo from '../../assets/otherLogo.svg';
+import { roundedLogo } from '../../utils/images';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { useNavigate } from 'react-router-dom';
@@ -54,7 +54,7 @@ const RegisterForm = () => {
 			</div>
 			{!hasErrors && (
 				<div className="w-max h-max">
-					<img src={logo} alt="ShopTrove logo" width={70} />
+					<img src={roundedLogo} alt="ShopTrove logo" width={70} />
 				</div>
 			)}
 			<form

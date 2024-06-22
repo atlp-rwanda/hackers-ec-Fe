@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 import TwoFactorAuth from '../../../src/pages/auth/TwoFactor';
 import { store } from '../../../src/redux/store';
 import AllProvider from '../../Utils/AllProvider';
+import { DynamicData } from '../../../src/@types/DynamicData';
 
 vi.mock('react-router-dom', async () => {
 	const actual = await vi.importActual('react-router-dom');
@@ -56,7 +57,7 @@ describe('TwoFactorAuth component', () => {
 	it('navigates to the homepage when the return button is clicked', () => {
 		const mockedNavigate = vi.fn();
 
-		(useNavigate as jest.Mock).mockReturnValue(mockedNavigate);
+		(useNavigate as unknown as DynamicData).mockReturnValue(mockedNavigate);
 
 		renderComponents();
 
@@ -77,7 +78,7 @@ describe('TwoFactorAuth component', () => {
 
 	it('should not go to seller dashboard if OTP is invalid', async () => {
 		const mockedNavigate = vi.fn();
-		(useNavigate as jest.Mock).mockReturnValue(mockedNavigate);
+		(useNavigate as unknown as DynamicData).mockReturnValue(mockedNavigate);
 
 		renderComponents();
 

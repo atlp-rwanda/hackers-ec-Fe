@@ -2,8 +2,8 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { toggleModel } from '../redux/features/navSlice';
 import { Link, NavLink } from 'react-router-dom';
 import LandingPageModel from '../components/LandingPageModel';
-import nav_logo from '../assets/Home_logo.png';
-import nav_logo_mobile from '../assets/home_logo_mobile.png';
+import { nav_logo } from '../utils/images';
+import { nav_logo_mobile } from '../utils/images';
 import { IoCart, IoMenu } from 'react-icons/io5';
 import { ButtonIcon } from './buttons/ButtonIcon';
 
