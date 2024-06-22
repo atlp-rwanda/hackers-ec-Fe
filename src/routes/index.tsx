@@ -1,28 +1,35 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from '../components/Layout';
 import DashboardLayout from '../components/Layouts/DashboardLayout';
-import Home from '../pages/Home';
 import About from '../pages/About';
+import Home from '../pages/Home';
+import NotFound from '../pages/NotFound';
+import UserRedirection from '../pages/SellerRedirection';
 import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
-import AddProduct from '../pages/dashboard/seller/AddProduct';
-import Products from '../pages/dashboard/seller/Products';
 import UserProfile from '../pages/auth/Profile';
-import Product from '../pages/Product';
 import Contacts from '../pages/Contacts';
 import VerifyAccount from '../components/auth/VerifyAccount';
 import TwoFactorAuth from '../pages/auth/TwoFactor';
-import UserRedirection from '../pages/SellerRedirection';
-import NotFound from '../pages/NotFound';
-import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 import ForgotPassword from '../pages/forgottenPassword/ForgotPassword';
 import ResetPassword from '../pages/resetPassword/resetPassword';
 import UserRedirectionPage from '../pages/userRedirection';
-import AdminDashboard from '../pages/Admin/Dashboard';
-import AdminDashboardAllUser from '../pages/Admin/DashboardGetUser';
 import EditUser from '../pages/Admin/EditUserRoles';
 import ErrorPage from '../pages/ErrorPage';
 import HandleGoogleLogin from '../components/HandleGoogleLogin';
+import SingleProduct from '../pages/SingleProduct';
+import PreventSeller from '../components/Layouts/PreventSeller';
+import ProtectedDashboard from '../components/Layouts/ProtectedDashboard';
+import {
+	AddProducts,
+	DashboardContent,
+	DashboardProducts,
+	DashboardSingleProducts,
+	UserRoles,
+	Users,
+} from '../utils/DashboardUtils';
+import ProductsPage from '../pages/ProductsPage';
+import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 
 function Routers() {
 	return (
@@ -30,43 +37,46 @@ function Routers() {
 			<Routes>
 				<Route path="/users/forgot-password" element={<ForgotPassword />} />
 				<Route path="/users/reset-password" element={<ResetPassword />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/google" element={<HandleGoogleLogin />} />
-				<Route path="/register" element={<Register />} />
-				<Route
-					element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}
-				>
-					<Route path="/profile" element={<UserProfile />} />{' '}
-				</Route>
-				<Route path="users/account/verify/:token" element={<VerifyAccount />} />
-				<Route path="/users/2fa" element={<TwoFactorAuth />} />
-				<Route path="/success" element={<UserRedirection />} />
 				<Route
 					path="/forgot-password-success"
 					element={<UserRedirectionPage />}
 				/>
+				<Route path="/login" element={<Login />} />
+				<Route path="/google" element={<HandleGoogleLogin />} />
+				<Route path="/register" element={<Register />} />
+				<Route path="users/account/verify/:token" element={<VerifyAccount />} />
+				<Route path="/users/2fa" element={<TwoFactorAuth />} />
+				<Route path="/success" element={<UserRedirection />} />
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="about" element={<About />} />
-					<Route path="products" element={<Product />} />
 					<Route path="contacts" element={<Contacts />} />
-				</Route>
-				<Route element={<ProtectedRoutes roles={['ADMIN', 'SELLER']} />}>
-					<Route element={<DashboardLayout />}>
-						<Route element={<ProtectedRoutes roles={['SELLER']} />}>
-							<Route path="/dashboard/seller">
-								<Route path="products">
-									<Route index element={<Products />} />
-									<Route path="new" element={<AddProduct />} />
-								</Route>
+					<Route element={<PreventSeller roles={['']} />}>
+						<Route
+							element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}
+						>
+							<Route path="/profile" element={<UserProfile />} />{' '}
+							<Route path="products">
+								<Route index element={<ProductsPage />} />
+								<Route path=":id" element={<SingleProduct />} />
 							</Route>
 						</Route>
-						<Route element={<ProtectedRoutes roles={['ADMIN']} />}>
-							<Route path="/dashboard/admin">
-								<Route index element={<AdminDashboard />} />
-								<Route path="users" element={<AdminDashboardAllUser />} />
-								<Route path="roles/:id" element={<EditUser />} />
-							</Route>
+					</Route>
+				</Route>
+				<Route element={<DashboardLayout />}>
+					<Route path="/dashboard" element={<ProtectedDashboard />}>
+						<Route index element={<DashboardContent />} />
+						<Route path="products">
+							<Route index element={<DashboardProducts />} />
+							<Route path=":id" element={<DashboardSingleProducts />} />
+							<Route path="new" element={<AddProducts />} />
+						</Route>
+						<Route path="users">
+							<Route index element={<Users />} />
+						</Route>
+						<Route path="roles">
+							<Route index element={<UserRoles />} />
+							<Route path=":id" element={<EditUser />} />
 						</Route>
 					</Route>
 				</Route>

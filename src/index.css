@@ -33,6 +33,24 @@ body {
 	.sidebar-item {
 		@apply flex py-3 items-center px-[9%] gap-7 text-[19px]  font-semibold;
 	}
+	.hero_background_image {
+		background-image: url('../src/assets/heroe_image_background.png');
+		background-size: contain;
+		background-position: bottom;
+		background-repeat: no-repeat;
+	}
+	.hero_image {
+		background-image: url('../src/assets/heroe_image.png');
+		background-size: contain;
+		background-position: bottom;
+		background-repeat: no-repeat;
+	}
+
+	.bg-contactImage {
+		background-image: url('../src/assets/contact.png');
+		background-size: cover;
+		background-position: center;
+	}
 }
 
 nav a.active {
@@ -48,43 +66,79 @@ nav a.active {
 	color: #fff;
 }
 
-.hide {
-	opacity: 0;
-	visibility: hidden;
-	transition:
-		opacity 1s ease,
-		visibility 1s ease;
+.product_card {
+	box-shadow:
+		0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.show {
-	opacity: 1;
-	visibility: visible;
-	transition:
-		opacity 1s ease,
-		visibility 1s ease;
+.btn:active {
+	scale: 0.5;
+	transition: 0.4s ease-out;
 }
 
-.hero_background_image {
-	background-image: url('../src/assets/heroe_image_background.png');
-	background-size: contain;
-	background-position: bottom;
-	background-repeat: no-repeat;
+.btn:hover {
+	scale: 1.1;
+	transition: 0.5s ease-in-out;
+	cursor: pointer;
+}
+.cart_btn:hover {
+	scale: 1.3;
+	transition: 0.3s ease-in-out;
+	cursor: pointer;
 }
 
-.hero_image {
-	background-image: url('../src/assets/heroe_image.png');
-	background-size: contain;
-	background-position: bottom;
-	background-repeat: no-repeat;
+.cart_btn:active {
+	scale: 0.3;
+	transition: 0.4s ease-out;
 }
 
-.bg-contactImage {
-	background-image: url('../src/assets/contact.png');
-	background-size: cover;
-	background-position: center;
+.wish_btn:hover {
+	color: coral;
+	transition: 0.5s ease-in-out;
+	cursor: pointer;
+	scale: 1.4;
+	rotate: 10deg;
+}
+.wish_btn:active {
+	color: coral;
+	transition: 0.5s ease-in-out;
+	cursor: pointer;
+	scale: 0.3;
+	rotate: 10deg;
 }
 
-/* h-[89.6px] */
+.cart_btn:active {
+	scale: 0.5;
+	transition: 0.5s ease-in-out;
+	cursor: pointer;
+}
+
+.tableWrapper .tables {
+	display: block;
+	overflow: hidden;
+	table-layout: auto;
+	border-collapse: collapse;
+	white-space: nowrap;
+	width: 100%;
+	margin: auto;
+	overflow-x: auto;
+}
+
+.tableWrapper th,
+.tableWrapper td {
+	padding: 0.8rem;
+}
+
+.tableWrapper td {
+	border-top: 0.5px solid #ddd;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.expand {
+	width: 1%;
+}
 
 .pagination {
 	display: flex;
@@ -111,4 +165,35 @@ nav a.active {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+table thead tr th:first-child {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+table thead tr th:last-child {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+._shadow {
+	box-shadow:
+		0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.a_link:hover {
+	scale: 1.1;
+	background-color: #eff4f8;
+	transition: 0.5s ease-in-out;
+	color: #256490;
+}
+
+.a_category:hover {
+	scale: 1.1;
+	background-color: #ffffff;
+	transition: 0.5s ease-in-out;
+	color: #256490;
+	border-radius: 5px;
 }

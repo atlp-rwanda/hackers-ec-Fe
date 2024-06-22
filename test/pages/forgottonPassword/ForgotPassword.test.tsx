@@ -6,7 +6,6 @@ import AllProvider from '../../Utils/AllProvider';
 describe('Forgot password component', () => {
 	it('should render forgot password component without error', () => {
 		render(<ForgotPassword />, { wrapper: AllProvider });
-		screen.debug();
 	});
 
 	it('should updates email inputs correctly', () => {

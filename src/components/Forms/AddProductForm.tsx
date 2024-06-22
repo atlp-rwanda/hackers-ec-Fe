@@ -71,7 +71,7 @@ const AddProductForm = () => {
 		try {
 			const res = await dispatch(addProduct(data)).unwrap();
 			showSuccessMessage(res.message);
-			navigate('/dashboard/seller/products');
+			navigate('/dashboard/products');
 		} catch (e) {
 			const err = e as DynamicData;
 			showErrorMessage(
@@ -238,7 +238,7 @@ const AddProductForm = () => {
 					<Button
 						title="Cancel"
 						buttonType="button"
-						url={'/dashboard/seller/products'}
+						url={'/dashboard/products'}
 						color="bg-action-error"
 						otherStyles="rounded-md h-10"
 					/>

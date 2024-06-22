@@ -4,4 +4,5 @@ export interface ProductState {
 	isLoading: boolean;
 	products: DynamicData[];
 	error: string | null;
+	singleProduct: DynamicData;
 }

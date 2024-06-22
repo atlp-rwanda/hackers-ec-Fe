@@ -45,7 +45,7 @@ const LoginForm = () => {
 				const userRole: DynamicData = new Array(fetchInfo());
 				showSuccessMessage(res.message);
 				if (userRole[0].role === 'ADMIN') {
-					navigate('/dashboard/admin');
+					navigate('/dashboard');
 				} else {
 					navigate('/');
 				}

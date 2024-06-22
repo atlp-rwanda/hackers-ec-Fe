@@ -11,57 +11,57 @@ import { MdDashboard } from 'react-icons/md';
 
 export const sideBarItems = [
 	{
-		path: '/dashboard/admin',
+		path: '/dashboard',
 		name: 'Dashboard',
 		icon: <MdDashboard />,
 		scope: ['ADMIN'],
 	},
 	{
-		path: '/dashboard/admin/users',
+		path: '/dashboard/users',
 		name: 'Users',
 		icon: <FaUsers />,
 		scope: ['ADMIN'],
 	},
 	{
-		path: '/dashboard/seller',
+		path: '/dashboard',
 		name: 'Dashboard',
 		icon: <LayoutDashboard />,
 		scope: ['SELLER'],
 	},
 	{
-		path: '/dashboard/seller/products',
+		path: '/dashboard/products',
 		name: 'Products',
 		icon: <ShoppingBasket />,
 		scope: ['SELLER'],
 	},
 	{
-		path: '/dashboard/seller/categories',
+		path: '/dashboard/categories',
 		name: 'Categories',
 		icon: <Kanban />,
 		scope: ['SELLER'],
 	},
 	{
-		path: '/dashboard/seller/sales',
+		path: '/dashboard/sales',
 		name: 'Sales',
 		icon: <BadgeDollarSign />,
 		scope: ['SELLER'],
 	},
 	{
-		path: '/dashboard/seller/wishlists',
+		path: '/dashboard/wishlists',
 		name: 'Wishlists',
 		icon: <GanttChart />,
 		scope: ['SELLER'],
 	},
 
 	{
-		path: '/dashboard/admin/roles',
+		path: '/dashboard/roles',
 		name: 'Roles',
 		icon: <FaNetworkWired />,
 		scope: ['ADMIN'],
 	},
 
 	{
-		path: '/dashboard/admin/settings',
+		path: '/dashboard/settings',
 		name: 'Setting',
 		icon: <IoSettingsSharp />,
 		scope: ['BUYER', 'SELLER', 'ADMIN'],
