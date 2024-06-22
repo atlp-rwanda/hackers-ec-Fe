@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { DynamicData } from '../../@types/DynamicData';
-import logo from '../../assets/otherLogo.svg';
+import { roundedLogo } from '../../utils/images';
 import BackButton from '../../components/buttons/BackButton';
 import Button from '../../components/buttons/Button';
 import GoogleButton from '../../components/buttons/GoogleButton';
@@ -62,7 +62,7 @@ const LoginForm = () => {
 			</div>
 			{show && (
 				<div className="w-max h-max">
-					<img src={logo} alt="ShopTrove logo" width={80} />
+					<img src={roundedLogo} alt="ShopTrove logo" width={80} />
 				</div>
 			)}
 			<form

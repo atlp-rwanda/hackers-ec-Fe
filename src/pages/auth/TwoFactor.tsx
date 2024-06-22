@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { DynamicData } from '../../@types/DynamicData';
-import otherLogo from '../../assets/otherLogo.svg';
+import { roundedLogo } from '../../utils/images';
 import backgroundImage from '../../assets/register-login-background.svg';
 import FormInput from '../../components/Forms/InputText';
 import IconLoader from '../../components/Loaders/IconLoader';
@@ -41,7 +41,7 @@ const TwoFactorAuth = () => {
 			const res = await dispatch(verifyOTP({ otp: data.otp, token })).unwrap();
 			saveAccessToken(res.data);
 			showSuccessMessage(res.message);
-			navigate('/seller-dashboard');
+			navigate('/dashboard/seller');
 		} catch (e) {
 			const err = e as DynamicData;
 			showErrorMessage(
@@ -64,7 +64,7 @@ const TwoFactorAuth = () => {
 			<div className="absolute top-0 left-0 bg-neutral-black/70 w-full h-full" />
 			<div className="absolute z-10 p-4 w-[90%] h-fit bg-neutral-white mx-8 px-6 py-6 rounded-3xl flex flex-col gap-2 items-center justify-center mobile:z-auto mobile:w-[77%] mobile:h-fit ipad:w-[50%] ipad:h-fit">
 				<div className="flex justify-center w-max h-max mb-8">
-					<img src={otherLogo} alt="ShopTrove logo" className="w-[60%]" />
+					<img src={roundedLogo} alt="ShopTrove logo" className="w-[60%]" />
 				</div>
 				<h1 className="text-4xl mb-4 font-poppins font-semibold text-center tracking-tighter">
 					Two-Factor <br />

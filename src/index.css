@@ -4,9 +4,7 @@
 @tailwind utilities;
 
 body {
-	@apply font-poppins w-full h-full;
-	font-family: 'Poppins', sans-serif;
-	padding-top: 4rem;
+	@apply font-poppins w-full h-full overflow-x-hidden;
 }
 
 @layer utilities {
@@ -24,6 +22,16 @@ body {
 		background-image: url('./assets/register-login-background.svg');
 		background-position: 'center';
 		background-size: 'cover';
+	}
+
+	.labels {
+		@apply text-xs text-neutral-black/75 ml-1;
+	}
+	.product-container {
+		@apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4;
+	}
+	.sidebar-item {
+		@apply flex py-3 items-center px-[9%] gap-7 text-[19px]  font-semibold;
 	}
 }
 
@@ -75,3 +83,5 @@ nav a.active {
 	background-size: cover;
 	background-position: center;
 }
+
+/* h-[89.6px] */
