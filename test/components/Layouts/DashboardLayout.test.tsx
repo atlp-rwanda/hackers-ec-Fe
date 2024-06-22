@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { Routes, Route } from 'react-router-dom';
 import { it, expect, describe } from 'vitest';
 import DashboardLayout from '../../../src/components/Layouts/DashboardLayout';
-import AllProvider from '../../../src/utils/AllProvider';
+import AllProvider from '../../../src/AllProvider';
 import { localStorageMock } from '../../mock/localStorage';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicData } from '../../../src/@types/DynamicData';

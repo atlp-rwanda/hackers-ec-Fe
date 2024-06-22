@@ -22,7 +22,6 @@ module.exports = {
 			{ allowConstantExport: true },
 		],
 		indent: ['warn', 'tab'],
-		// quotes: ['error', 'single'],
 		semi: ['error', 'always'],
 	},
 };

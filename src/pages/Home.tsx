@@ -9,6 +9,8 @@ import { ButtonIcon } from '../components/buttons/ButtonIcon';
 import About from './About';
 import Contacts from './Contacts';
 import '../index.css';
+import { Link } from 'react-router-dom';
+import LandingProduct from './LandingProduct';
 
 const Home = () => {
 	return (
@@ -48,8 +50,12 @@ const Home = () => {
 						</p>
 						<div className="button">
 							<ButtonIcon className="tablet:px-20 py-2 mobile:py-3 font-semi-bold tablet:text-xl">
-								{' '}
-								<FaShoppingCart /> Explore now
+								<Link
+									to={'/dashboard/products'}
+									className="flex gap-2 items-center"
+								>
+									<FaShoppingCart /> Explore now{' '}
+								</Link>
 							</ButtonIcon>
 						</div>
 					</div>
@@ -72,6 +78,7 @@ const Home = () => {
 					</div>
 				</div>
 			</div>
+			<LandingProduct />
 			<About />
 			<Contacts />
 		</>

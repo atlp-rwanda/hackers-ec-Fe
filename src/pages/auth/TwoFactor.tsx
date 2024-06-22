@@ -41,7 +41,7 @@ const TwoFactorAuth = () => {
 			const res = await dispatch(verifyOTP({ otp: data.otp, token })).unwrap();
 			saveAccessToken(res.data);
 			showSuccessMessage(res.message);
-			navigate('/dashboard/seller');
+			navigate('/dashboard');
 		} catch (e) {
 			const err = e as DynamicData;
 			showErrorMessage(
