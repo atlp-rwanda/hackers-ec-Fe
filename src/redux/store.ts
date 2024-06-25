@@ -4,6 +4,7 @@ import { otpReducer } from './features/OTPSlice';
 import RegisterSlice from './features/RegisterSlice';
 import navReducer from './features/navSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
+import profileSlice from './features/userUpdateSlice';
 import categorySlice from './features/categorySlice';
 import productSlice from './features/productSlice';
 import forgottonSlice from './features/forgottonSlice';
@@ -14,6 +15,7 @@ export const store = configureStore({
 		login: loginReducer,
 		register: RegisterSlice,
 		nav: navReducer,
+		profile: profileSlice,
 		verifyAccount: VerifyAccountSlice,
 		otp: otpReducer,
 		categories: categorySlice,
