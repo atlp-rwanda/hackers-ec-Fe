@@ -7,6 +7,7 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import AddProduct from '../pages/dashboard/seller/AddProduct';
 import Products from '../pages/dashboard/seller/Products';
+import UserProfile from '../pages/auth/Profile';
 import Product from '../pages/Product';
 import Contacts from '../pages/Contacts';
 import VerifyAccount from '../components/auth/VerifyAccount';
@@ -26,6 +27,11 @@ function Routers() {
 				<Route path="/users/reset-password" element={<ResetPassword />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
+				<Route
+					element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}
+				>
+					<Route path="/profile" element={<UserProfile />} />{' '}
+				</Route>
 				<Route path="users/account/verify/:token" element={<VerifyAccount />} />
 				<Route path="/users/2fa" element={<TwoFactorAuth />} />
 				<Route path="/success" element={<UserRedirection />} />
@@ -35,7 +41,7 @@ function Routers() {
 				/>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
-					<Route path="/about" element={<About />} />
+					<Route path="about" element={<About />} />
 					<Route path="products" element={<Product />} />
 					<Route path="contacts" element={<Contacts />} />
 				</Route>
