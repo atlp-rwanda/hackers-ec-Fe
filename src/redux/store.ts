@@ -6,6 +6,9 @@ import navReducer from './features/navSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
 import categorySlice from './features/categorySlice';
 import productSlice from './features/productSlice';
+import forgottonSlice from './features/forgottonSlice';
+import resetPasswordSlice from './features/resetSlice';
+
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
@@ -15,6 +18,8 @@ export const store = configureStore({
 		otp: otpReducer,
 		categories: categorySlice,
 		product: productSlice,
+		forgotPassword: forgottonSlice,
+		resetPassword: resetPasswordSlice,
 	},
 });
 
