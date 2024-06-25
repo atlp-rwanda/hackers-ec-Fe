@@ -26,8 +26,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+
       - name: Install dependencies
         run: npm install
+
       - name: Run tests
         run: npm run test
 
@@ -37,6 +39,7 @@ jobs:
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
+
       - name: Store coverage report
         if: always()
         run: mkdir -p coverage
