@@ -11,11 +11,14 @@ import resetPasswordSlice from './features/resetSlice';
 import getUserSlice from './features/getUserSlice';
 import AssignrolesSlice from './features/AssignrolesSlice';
 import getRolesSlice from './features/getRolesSlice';
+import profileSlice from './features/userUpdateSlice';
+
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
 		register: RegisterSlice,
 		nav: navReducer,
+		profile: profileSlice,
 		verifyAccount: VerifyAccountSlice,
 		otp: otpReducer,
 		categories: categorySlice,

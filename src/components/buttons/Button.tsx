@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 interface ButtonProps {
+	disabled?: boolean;
 	color?: string;
 	url: string | null;
 	otherStyles: string;
@@ -15,6 +16,7 @@ const Button: React.FC<ButtonProps> = ({
 	color,
 	buttonType,
 	otherStyles,
+	disabled = false,
 }) => {
 	return (
 		<button
@@ -22,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
 			className={`transition duration-100 ease-in-out ${
 				color ? `${color}` : 'bg-custom-gradient hover:scale-105'
 			} text-neutral-white button-size ${otherStyles}`}
+			disabled={disabled}
 		>
 			{!url ? (
 				<span className="flex-center">{title}</span>
