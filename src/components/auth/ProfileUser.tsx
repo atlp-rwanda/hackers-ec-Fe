@@ -20,6 +20,7 @@ import IconLoader from '../Loaders/IconLoader';
 import { DynamicData } from '../../@types/DynamicData';
 import UserProfileHeader from '../UserProfileHeader';
 import UserProfileSideBox from '../UserProfileSideBox';
+import BackButton from '../buttons/BackButton';
 
 const ProfileUser = () => {
 	const dispatch = useAppDispatch();
@@ -65,7 +66,8 @@ const ProfileUser = () => {
 	const watchedFormData = useWatch({ control });
 
 	const isFormDirty =
-		JSON.stringify(initialData) !== JSON.stringify(watchedFormData);
+		JSON.stringify(initialData) !== JSON.stringify(watchedFormData) ||
+		selectedImage !== null;
 
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files[0]) {
@@ -90,7 +92,6 @@ const ProfileUser = () => {
 			}
 		} catch (e) {
 			const err = e as DynamicData;
-			console.log(err);
 			showErrorMessage(
 				err?.data || err?.message || 'Something went wrong! Please try again!',
 			);
@@ -98,14 +99,21 @@ const ProfileUser = () => {
 	};
 
 	return (
-		<div className="flex flex-col gap-10 bg-overlay z-[-1]">
+		<div className="flex flex-col gap-10 bg-overlay z-[-1] h-screen">
+			<div className="absolute top-52 right-5 z-[2] mobile:top-10">
+				<BackButton
+					url="/"
+					title="Back"
+					otherStyles="px-4 py-2 bg-neutral-white text-lg rounded-sm font-bold"
+				/>
+			</div>
 			<UserProfileHeader
 				image={data?.profileImage}
 				handleImageChange={handleImageChange}
 				firstName={data?.firstName}
 				upload={Upload}
 			/>
-			<div className="flex flex-col py-10 px-6 tablet:flex-row my-14">
+			<div className="flex flex-col py-10 px-6 tablet:flex-row my-14 overflow-y-auto">
 				<div className="flex justify-center items-center w-[100%] font-poppins tablet:w-[10rem]">
 					<UserProfileSideBox top={'top-1'} />
 				</div>
@@ -272,7 +280,7 @@ const ProfileUser = () => {
 										{'Please wait....'}
 									</>
 								) : (
-									'Update'
+									'Save profile'
 								)
 							}
 							otherStyles="rounded-xl"
