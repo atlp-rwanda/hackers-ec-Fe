@@ -28,6 +28,7 @@ const GetUser = (props: getUserType) => {
 	const { isLoading, data } = useAppSelector((state) => state.allUsers);
 	const pathname = window.location.pathname;
 	const dispatch = useAppDispatch();
+	const itemsPerPage = 8;
 
 	useEffect(() => {
 		dispatch(getRoles()).unwrap();
@@ -49,7 +50,6 @@ const GetUser = (props: getUserType) => {
 	const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchQuery(event.target.value);
 	};
-	const itemsPerPage = 8;
 	const offset = currentPage * itemsPerPage;
 	const currentItems = data[data.length - 1]?.data
 		.filter((user: DynamicData) =>
