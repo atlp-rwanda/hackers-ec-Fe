@@ -14,8 +14,8 @@ function UserProfileHeader({
 	firstName,
 }: UserProfileHeaderProps) {
 	return (
-		<div className="flex justify-around px-8 gap-10 items-center py-4 tablet:w-[50%] tablet:gap-2">
-			<div className="bg-custom-gradient absolute w-[100%] h-[20rem] top-[-8rem] rounded-3xl z-0 tablet:rounded-full tablet:h-[35rem] tablet:w-[50%] tablet:top-[-20rem] tablet:rotate-[-10deg]"></div>
+		<div className="flex justify-around px-8 gap-10 items-center py-4 ipad:w-[50%] tablet:gap-2">
+			<div className="bg-custom-gradient absolute w-[100%] h-[20rem] top-[-8rem] rounded-3xl z-0 ipad:rounded-full ipad:h-[35rem] ipad:w-[50%] ipad:top-[-20rem] ipad:rotate-[-10deg]"></div>
 			<div className="h-auto tablet:px-6 flex z-10">
 				<div className="w-[6rem] tablet:w-[10rem] flex justify-center items-center">
 					<img
