@@ -6,7 +6,6 @@ describe('About Component', () => {
 		render(<About />);
 		expect(screen.getByText('Worldwide Delivery')).toBeInTheDocument();
 	});
-
 	it('should render the About component', () => {
 		render(<About />);
 	});

@@ -1,6 +1,3 @@
-import roleIcon from '../assets/roles.svg';
-import { FaUsers } from 'react-icons/fa';
-import { IoSettingsSharp } from 'react-icons/io5';
 import {
 	BadgeDollarSign,
 	GanttChart,
@@ -8,18 +5,21 @@ import {
 	LayoutDashboard,
 	ShoppingBasket,
 } from 'lucide-react';
+import { FaNetworkWired, FaUsers } from 'react-icons/fa';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { MdDashboard } from 'react-icons/md';
 
 export const sideBarItems = [
 	{
-		path: '/dashboard/users',
-		name: 'Users',
-		icon: <FaUsers />,
+		path: '/dashboard/admin',
+		name: 'Dashboard',
+		icon: <MdDashboard />,
 		scope: ['ADMIN'],
 	},
 	{
-		path: '/dashboard/roles',
-		name: 'Roles',
-		icon: roleIcon,
+		path: '/dashboard/admin/users',
+		name: 'Users',
+		icon: <FaUsers />,
 		scope: ['ADMIN'],
 	},
 	{
@@ -52,8 +52,16 @@ export const sideBarItems = [
 		icon: <GanttChart />,
 		scope: ['SELLER'],
 	},
+
 	{
-		path: '/dashboard/settings',
+		path: '/dashboard/admin/roles',
+		name: 'Roles',
+		icon: <FaNetworkWired />,
+		scope: ['ADMIN'],
+	},
+
+	{
+		path: '/dashboard/admin/settings',
 		name: 'Setting',
 		icon: <IoSettingsSharp />,
 		scope: ['BUYER', 'SELLER', 'ADMIN'],

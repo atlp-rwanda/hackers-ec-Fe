@@ -8,7 +8,9 @@ import categorySlice from './features/categorySlice';
 import productSlice from './features/productSlice';
 import forgottonSlice from './features/forgottonSlice';
 import resetPasswordSlice from './features/resetSlice';
-
+import getUserSlice from './features/getUserSlice';
+import AssignrolesSlice from './features/AssignrolesSlice';
+import getRolesSlice from './features/getRolesSlice';
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
@@ -20,6 +22,9 @@ export const store = configureStore({
 		product: productSlice,
 		forgotPassword: forgottonSlice,
 		resetPassword: resetPasswordSlice,
+		allUsers: getUserSlice,
+		updateRoles: AssignrolesSlice,
+		allRoles: getRolesSlice,
 	},
 });
 
