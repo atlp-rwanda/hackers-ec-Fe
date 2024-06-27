@@ -9,6 +9,7 @@ import { ButtonIcon } from './buttons/ButtonIcon';
 import ProfileDropdown from './ProfileDropdown';
 import { fetchUserProfile } from '../redux/features/userUpdateSlice';
 import { useEffect } from 'react';
+import Notification from './notification/Notification';
 
 const Nav = () => {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -80,7 +81,7 @@ const Nav = () => {
 								))}
 							</div>
 						</div>
-						<div className="right_navigations w-full ipad:w-[10%] flex justify-end gap-5 py-4">
+						<div className="right_navigations w-full ipad:w-max flex items-center justify-end gap-6">
 							<div className="cart relative pt-2">
 								<IoCart className="text-3xl mobile:text-3xl text-primary-lightblue" />
 								<span className="bg-neutral-darkRed text-sm mobile:text-base p-1 mt-2 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6">
@@ -88,7 +89,10 @@ const Nav = () => {
 								</span>
 							</div>
 							{accessToken ? (
-								<ProfileDropdown image={data?.profileImage} />
+								<>
+									<Notification />
+									<ProfileDropdown image={data?.profileImage} />
+								</>
 							) : (
 								<Link to={'/login'}>
 									<ButtonIcon className="py-1 mobile:text-sm mobile:px-7 mobile:py-2">

@@ -15,9 +15,10 @@ import payment from '../assets/payment.png';
 import dashProfileIcon from '../assets/profileIcon.svg';
 import quality from '../assets/quality.png';
 import registerLoginBackground from '../assets/register-login-background.svg';
-import registerLoginCardImage from '../assets/register-login-card-image.svg';
+import registerLoginCardImage from '../assets/register-login-card-img.png';
 import uploadImage from '../assets/uploadImage.svg';
 import world from '../assets/world.png';
+import notificationSound from '../assets/notificationSound.mp3';
 
 export {
 	aboutImg,
@@ -40,4 +41,5 @@ export {
 	roundedLogo,
 	uploadImage,
 	world,
+	notificationSound,
 };

@@ -1,18 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { loginReducer } from './features/loginSlice';
-import { otpReducer } from './features/OTPSlice';
-import RegisterSlice from './features/RegisterSlice';
-import navReducer from './features/navSlice';
-import VerifyAccountSlice from './features/VerifyAccountSlice';
-import categorySlice from './features/categorySlice';
-import productSlice from './features/productSlice';
-import forgottonSlice from './features/forgottonSlice';
-import resetPasswordSlice from './features/resetSlice';
-import getUserSlice from './features/getUserSlice';
 import AssignrolesSlice from './features/AssignrolesSlice';
+import categorySlice from './features/categorySlice';
+import forgottonSlice from './features/forgottonSlice';
 import getRolesSlice from './features/getRolesSlice';
+import getUserSlice from './features/getUserSlice';
+import { loginReducer } from './features/loginSlice';
+import navReducer from './features/navSlice';
+import { otpReducer } from './features/OTPSlice';
+import productSlice from './features/productSlice';
+import RegisterSlice from './features/RegisterSlice';
+import resetPasswordSlice from './features/resetSlice';
 import profileSlice from './features/userUpdateSlice';
 import googleSlice from './features/googleSlice';
+import VerifyAccountSlice from './features/VerifyAccountSlice';
+import notificationSlice from './features/notificationSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
 		updateRoles: AssignrolesSlice,
 		allRoles: getRolesSlice,
 		google: googleSlice,
+		notifications: notificationSlice,
 	},
 });
 

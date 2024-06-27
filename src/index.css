@@ -63,7 +63,7 @@ nav a.active {
 	);
 
 	font-size: 1.2rem;
-	color: #fff;
+	color: #f8f8f8;
 }
 
 .product_card {
@@ -196,4 +196,13 @@ table thead tr th:last-child {
 	transition: 0.5s ease-in-out;
 	color: #256490;
 	border-radius: 5px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
+.no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }

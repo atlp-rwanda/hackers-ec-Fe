@@ -50,6 +50,19 @@ export default {
 			authenticationBackgroundImage:
 				'url("./src/assets/register-login-background.svg")',
 		},
+		boxShadow: {
+			'inner-bottom':
+				'inset 0 -4px 6px -1px rgba(0, 0, 0, 0.1), inset 0 -2px 4px -1px rgba(0, 0, 0, 0.06)',
+			'bottom-left-right':
+				'2px 2px 4px rgba(0, 0, 0, 0.5), -2px 2px 4px rgba(0, 0, 0, 0.5)',
+			'dark-lg':
+				'0 10px 10px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2)',
+		},
+	},
+	variants: {
+		extend: {
+			boxShadow: ['responsive', 'hover', 'focus'],
+		},
 	},
 	plugins: [],
 };

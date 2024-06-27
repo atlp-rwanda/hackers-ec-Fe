@@ -12,4 +12,10 @@ describe('Error Page', () => {
 
 		expect(screen.getByText(/Go to Home/i)).toBeInTheDocument();
 	});
+
+	it('should render error page with correct message', () => {
+		render(<ErrorPage />, { wrapper: AllProvider });
+
+		expect(screen.getByText(/wrong/i)).toBeInTheDocument();
+	});
 });
