@@ -17,7 +17,7 @@ import SingleProduct from '../pages/SingleProduct';
 import PreventSeller from '../components/Layouts/PreventSeller';
 import ProtectedDashboard from '../components/Layouts/ProtectedDashboard';
 import {
-	AddProduct,
+	AddProducts,
 	DashboardContent,
 	DashboardProducts,
 	DashboardSingleProducts,
@@ -56,7 +56,8 @@ function Routers() {
 						<Route path="products">
 							<Route index element={<DashboardProducts />} />
 							<Route path=":id" element={<DashboardSingleProducts />} />
-							<Route path="new" element={<AddProduct />} />
+							<Route path="new" element={<AddProducts />} />
+							<Route path="edit/:id" element={<AddProducts />} />
 						</Route>
 					</Route>
 				</Route>

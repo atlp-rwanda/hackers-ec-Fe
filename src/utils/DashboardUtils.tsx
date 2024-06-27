@@ -1,5 +1,6 @@
 import { UserInfoTypes } from '../@types/userType';
 import NotFound from '../pages/NotFound';
+import AddProduct from '../pages/dashboard/seller/AddProduct';
 import SellerProductsPage from '../pages/dashboard/seller/SellerProductsPage';
 import SellerSingleProduct from '../pages/dashboard/seller/SellerSingleProduct';
 import fetchInfo from './userDetails';
@@ -38,7 +39,7 @@ export const DashboardContent = () => {
 		<div>Unauthorized access</div>
 	);
 };
-export const AddProduct = () => {
+export const AddProducts = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
 	return decoded.role === 'ADMIN' ? (

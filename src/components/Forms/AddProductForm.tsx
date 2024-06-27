@@ -2,12 +2,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
 import { DynamicData } from '../../@types/DynamicData';
 import useToast from '../../hooks/useToast';
 import { fetchCategories } from '../../redux/features/categorySlice';
-import { addProduct } from '../../redux/features/productSlice';
+import { addProduct, updateProduct } from '../../redux/features/productSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import {
 	productTypes,
@@ -18,10 +18,19 @@ import ImageDropZone from '../cards/ImageDropZone';
 import IconLoader from '../Loaders/IconLoader';
 import FormInput from './InputText';
 
-const AddProductForm = () => {
+const AddProductForm = ({ productData }: { productData: productTypes }) => {
+	const location = useLocation();
+
+	productData = {
+		...location.state,
+		price: String(location.state.price),
+		quantity: String(location.state.quantity),
+		discount: String(location.state.discount),
+	};
+
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const [images, setImages] = useState<string[]>([]);
+	const [images, setImages] = useState<string[]>(productData?.images || []);
 	const [imageFiles, setImageFiles] = useState<File[]>([]);
 	const { showErrorMessage, showSuccessMessage } = useToast();
 	const { isLoading, categories } = useAppSelector((state) => state.categories);
@@ -36,18 +45,20 @@ const AddProductForm = () => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
-	} = useForm<productTypes>({ resolver: zodResolver(productValidation) });
+	} = useForm<productTypes>({
+		resolver: zodResolver(productValidation),
+		defaultValues: productData || {},
+	});
 
-	// handling drag and drop
 	const handleDrop = (files: FileList) => {
 		const uploadedImages = Array.from(files).map((file) =>
 			URL.createObjectURL(file),
 		);
+
 		setImageFiles((prev) => [...prev, ...Array.from(files)]);
 		setImages((prevImages) => [...prevImages, ...uploadedImages]);
 	};
 
-	// handling adding one or more images
 	const handleImages = (e: DynamicData) => {
 		const files = Array.from(e.target.files) as File[];
 		const uploadedImages = files.map((file) =>
@@ -57,7 +68,6 @@ const AddProductForm = () => {
 		setImages((prevImages) => [...prevImages, ...uploadedImages]);
 	};
 
-	// handling removing one image
 	const removeImage = (index: number) => {
 		setImageFiles((prev) => prev.filter((_, i) => i !== index));
 		setImages((prevImages) => prevImages.filter((_, i) => i !== index));
@@ -69,8 +79,19 @@ const AddProductForm = () => {
 
 	const onSubmit: SubmitHandler<productTypes> = async (data: productTypes) => {
 		try {
-			const res = await dispatch(addProduct(data)).unwrap();
-			showSuccessMessage(res.message);
+			if (productData) {
+				if (productData.id) {
+					const res = await dispatch(
+						updateProduct({ productData: data, id: productData.id }),
+					).unwrap();
+					showSuccessMessage(res.message);
+				} else {
+					showErrorMessage('Product ID is missing for update operation.');
+				}
+			} else {
+				const res = await dispatch(addProduct(data)).unwrap();
+				showSuccessMessage(res.message);
+			}
 			navigate('/dashboard/products');
 		} catch (e) {
 			const err = e as DynamicData;
@@ -218,29 +239,20 @@ const AddProductForm = () => {
 						</div>
 					))}
 				</div>
-				<div className="h-[10%] grid grid-cols-1 ipad:grid-cols-2 gap-3 items-center">
+				<div className="h-[10%] grid grid-cols-1 place-items-end mt-4 mb-10">
 					<Button
+						// ariaLabel="submit"
 						buttonType="submit"
-						url={null}
+						disabled={processing}
+						otherStyles="p-2 rounded-full text-[10px]"
 						title={
 							processing ? (
-								<>
-									<IconLoader className="animate-spin mr-1" />{' '}
-									{'processing....'}
-								</>
+								<IconLoader />
 							) : (
-								'Save'
+								<span>{productData ? 'Update Product' : 'Add Product'}</span>
 							)
 						}
-						color="bg-action-success"
-						otherStyles="rounded-md h-10"
-					/>
-					<Button
-						title="Cancel"
-						buttonType="button"
-						url={'/dashboard/products'}
-						color="bg-action-error"
-						otherStyles="rounded-md h-10"
+						url={null}
 					/>
 				</div>
 			</div>

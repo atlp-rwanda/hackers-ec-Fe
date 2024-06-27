@@ -5,25 +5,45 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 import { DynamicData } from '../../../@types/DynamicData';
 import ReactPaginate from 'react-paginate';
-import { GrNext } from 'react-icons/gr';
-import { GrPrevious } from 'react-icons/gr';
+import { GrNext, GrPrevious } from 'react-icons/gr';
 import { ScaleLoader } from 'react-spinners';
 import { ShoppingBasket } from 'lucide-react';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { IoClose } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { getProducts } from '../../../redux/features/productSlice';
+import {
+	deleteProduct,
+	getProducts,
+} from '../../../redux/features/productSlice';
+import useToast from '../../../hooks/useToast';
 
 const SellerProductsPage = () => {
 	const { isLoading } = useAppSelector((state) => state.product);
 	const data = useAppSelector((state) => state.product.products) || [];
-
 	const dispatch = useAppDispatch();
+	const { showErrorMessage, showSuccessMessage } = useToast();
 
 	useEffect(() => {
 		dispatch(getProducts()).unwrap();
 	}, [dispatch]);
+
+	const handleDelete = async (id: string) => {
+		try {
+			if (window.confirm('Are you sure you want to delete this product?')) {
+				const res = await dispatch(deleteProduct(id)).unwrap();
+				showSuccessMessage(res?.message || 'Product deleted successfully');
+				dispatch(getProducts());
+			}
+		} catch (error) {
+			const err = error as DynamicData;
+			showErrorMessage(
+				err?.data?.message ||
+					err?.message ||
+					'Unknown error occurred! Please try again!',
+			);
+		}
+	};
 
 	const [openModels, setOpenModels] = useState<{ [key: number]: boolean }>({});
 	const [currentPage, setCurrentPage] = useState(0);
@@ -53,7 +73,7 @@ const SellerProductsPage = () => {
 						<ScaleLoader
 							color="#256490"
 							role="progressbar"
-							aria-label="single_product_loder"
+							aria-label="single_product_loader"
 						/>
 					</div>
 				) : (
@@ -81,6 +101,7 @@ const SellerProductsPage = () => {
 											<th className="expand">Action</th>
 										</tr>
 									</thead>
+
 									<tbody className="text-slate-700">
 										{currentItems.map((item: DynamicData, idx: number) => (
 											<tr
@@ -97,7 +118,7 @@ const SellerProductsPage = () => {
 												<td className=" text-sm">
 													{item?.name?.length > 20
 														? item.name.slice(0, 20) + '...'
-														: item.name}
+														: item?.name}
 												</td>
 												<td>{item?.category?.name}</td>
 												<td>{item?.quantity}</td>
@@ -120,13 +141,23 @@ const SellerProductsPage = () => {
 																		Preview
 																	</Link>
 																</div>
-																<div className="edit_product flex gap-2 text-sm rounded-md p-1 a_link">
-																	<FaEdit className="text-xl" /> Edit product
-																</div>
-																<div className="delete_product flex gap-2 text-sm rounded-md p-1 a_link ">
+																<Link
+																	to={`/dashboard/products/edit/${item.id}`}
+																	state={item}
+																>
+																	<button className="edit_product flex gap-2 text-sm rounded-md p-1 a_link">
+																		<FaEdit className="text-xl" /> Edit product
+																	</button>
+																</Link>
+																<button
+																	className="delete_product flex gap-2 text-sm rounded-md p-1 a_link "
+																	onClick={() => {
+																		handleDelete(item.id), toggleItemModel(idx);
+																	}}
+																>
 																	<MdDelete className="text-xl text-action-error" />{' '}
 																	Delete product
-																</div>
+																</button>
 																<IoClose
 																	className="absolute -right-2 -top-4 rounded-full bg-action-error  text-2xl"
 																	onClick={() => toggleItemModel(idx)}
