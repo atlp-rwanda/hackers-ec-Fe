@@ -14,6 +14,7 @@ import profileSlice from './features/userUpdateSlice';
 import googleSlice from './features/googleSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
 import notificationSlice from './features/notificationSlice';
+import EnableAccountSlice from './features/EnableAccountSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
 		allRoles: getRolesSlice,
 		google: googleSlice,
 		notifications: notificationSlice,
+		enableAccount: EnableAccountSlice,
 	},
 });
 

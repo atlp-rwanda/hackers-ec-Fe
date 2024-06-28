@@ -74,14 +74,13 @@ describe('Dashboard getuser page', () => {
 				<AdminDashboardAllUser />
 			</AllProvider>,
 		);
-
+	};
+	test('it should render table', async () => {
+		await renderComponent();
 		const loader = screen.getByRole('progressbar');
 		expect(loader).toBeInTheDocument();
 		await waitForElementToBeRemoved(loader);
 		expect(loader).not.toBeInTheDocument();
-	};
-	test('it should render table', async () => {
-		await renderComponent();
 		const firstName = screen.getByText(/kabera/i);
 		const lastName = screen.getByText(/joe/i);
 		const email = screen.getByText(/johndoe1@example.com/i);

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, useEffect, useState } from 'react';
 import { IoMdMore } from 'react-icons/io';
@@ -30,7 +31,9 @@ const GetUser = (props: getUserType) => {
 	const itemsPerPage = 8;
 
 	useEffect(() => {
-		dispatch(getRoles()).unwrap();
+		if (!roles) {
+			dispatch(getRoles()).unwrap();
+		}
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -38,7 +41,9 @@ const GetUser = (props: getUserType) => {
 	}, [searchQuery]);
 
 	useEffect(() => {
-		dispatch(getUser()).unwrap();
+		if (data.length === 0) {
+			dispatch(getUser()).unwrap();
+		}
 	}, [dispatch]);
 	const getRoleName = (roleId: string) => {
 		return roles?.data.find((role: roleType) => role.id === roleId).roleName;

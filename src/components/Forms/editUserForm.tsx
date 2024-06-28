@@ -1,4 +1,4 @@
-// eslint-disable-next-line react-hooks/exhaustive-deps
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { FaLessThan } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,17 @@ import useToken from '../../hooks/useToken';
 import useToast from '../../hooks/useToast';
 import { HashLoader } from 'react-spinners';
 import { userType } from '../../@types/userType';
+import {
+	enableAccount,
+	setEnable,
+	setReason,
+	resetField,
+} from '../../redux/features/EnableAccountSlice';
+import {
+	EnableDisableSchema,
+	EnableDisableSchemaType,
+} from '../../validations/EnableDisable.validation';
+import { getUser } from '../../redux/features/getUserSlice';
 
 type userFormType = {
 	id?: string;
@@ -30,20 +41,24 @@ const EditUserForm = (props: userFormType) => {
 	const dispatch = useAppDispatch();
 	const { showErrorMessage, showSuccessMessage } = useToast();
 	const id = props.id;
+	const isAccountActive = props.useR[0]?.isActive;
 	const { accessToken } = useToken();
 	const navigate = useNavigate();
-	const url = window.location.pathname;
+
+	const { enable, reason } = useAppSelector((state) => state.enableAccount) as {
+		enable: string;
+		reason: string;
+	};
 
 	useEffect(() => {
 		if (!roles) {
 			dispatch(getRoles()).unwrap();
 		}
-	}, [dispatch, roles]);
+		dispatch(setEnable(isAccountActive ? 'true' : 'false'));
+	}, [dispatch, isAccountActive]);
 
 	const handleNavigation = () => {
-		if (url) {
-			navigate(-1);
-		}
+		navigate(-1);
 	};
 	const {
 		register,
@@ -61,6 +76,7 @@ const EditUserForm = (props: userFormType) => {
 			const token = accessToken;
 			if (id && token) {
 				const res = await dispatch(assignRoles({ id, role, token })).unwrap();
+				dispatch(getUser()).unwrap();
 				showSuccessMessage(res.message);
 				navigate('/dashboard/users');
 			}
@@ -72,6 +88,43 @@ const EditUserForm = (props: userFormType) => {
 					'Unknown error occured! Please try again!',
 			);
 		}
+	};
+
+	const {
+		register: registerReason,
+		handleSubmit: handleReasonSubmit,
+		formState: { errors: reasonErrors },
+	} = useForm<EnableDisableSchemaType>({
+		resolver: zodResolver(EnableDisableSchema),
+	});
+
+	const handleEnableDisableSubmit = async (newEnable: string) => {
+		try {
+			if (id) {
+				const res = await dispatch(
+					enableAccount({ id, isAccountActive: newEnable, reason }),
+				).unwrap();
+				dispatch(getUser()).unwrap();
+				showSuccessMessage(res.message);
+				navigate('/dashboard/users');
+			}
+		} catch (e) {
+			const err = e as DynamicData;
+			showErrorMessage(
+				err.response.data.message ||
+					err?.message ||
+					'Unknown error occurred! Please try again!',
+			);
+		}
+	};
+
+	const handleEnableDisableClick = () => {
+		handleReasonSubmit(() => {
+			const newEnable = enable === 'true' ? 'false' : 'true';
+			handleEnableDisableSubmit(newEnable);
+			dispatch(setEnable(newEnable));
+			dispatch(resetField());
+		})();
 	};
 
 	return (
@@ -180,16 +233,30 @@ const EditUserForm = (props: userFormType) => {
 							</div>
 						</div>
 						<div className="disableAccForm w-full flex flex-col text-[15px] gap-2 mobile:w-[85%] mobile:m-auto mobile:items-center">
-							<h2 className=" font-semibold mobile:w-[90%]">
-								Enable/disable account
+							<h2 className="font-semibold mobile:w-[90%]">
+								Enable/Disable Account
 							</h2>
-							<span className="whiteSpace bg-overlay  bg-opacity-20 py-12 mobile:w-[90%] rounded"></span>
-							<span className="mobile:w-[90%] mobile:m-auto">
+							<textarea
+								{...registerReason('reason')}
+								value={reason}
+								onChange={(e) => dispatch(setReason(e.target.value))}
+								className="whiteSpace bg-overlay bg-opacity-20 px-3 py-2 mobile:w-[90%] rounded"
+								placeholder="Enter reason for enabling/disabling the account"
+							></textarea>
+							{reasonErrors.reason && (
+								<p className="text-action-error text-[12px] text-right  w-[85%]">
+									{reasonErrors.reason.message}
+								</p>
+							)}
+							<span className="mobile:w-[90%] mobile:m-auto items-start justify-start ">
 								<button
 									type="button"
-									className="w-full bg-action-success py-2  rounded-lg text-neutral-white mobile:w-[20%] mobile:h-[2rem]  mobile:py-0"
+									onClick={handleEnableDisableClick}
+									className={`w-full ${
+										enable === 'true' ? 'bg-action-error' : 'bg-action-success'
+									} py-2 rounded-lg text-neutral-white mobile:w-[20%] mobile:h-[2rem] mobile:py-0`}
 								>
-									Enable
+									{enable === 'true' ? 'Disable' : 'Enable'}
 								</button>
 							</span>
 						</div>

@@ -1,21 +1,14 @@
 import { useParams } from 'react-router-dom';
-
 import EditUserForm from '../../components/Forms/editUserForm';
 import GetUser from '../../components/adminDashboard/getUser';
 import { userType } from '../../@types/userType';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
-import { useEffect } from 'react';
-import { getUser } from '../../redux/features/getUserSlice';
+import { useAppSelector } from '../../redux/hooks/hooks';
 
 const EditUser = () => {
 	const { id } = useParams<string>();
-	const dispatch = useAppDispatch();
 	const users = useAppSelector(
 		(state) => state.allUsers.data[state.allUsers.data.length - 1],
 	);
-	useEffect(() => {
-		dispatch(getUser()).unwrap();
-	}, [dispatch]);
 
 	const getUserInfo = () => {
 		return users?.data.filter((item: userType) => item?.id === id) || '';
