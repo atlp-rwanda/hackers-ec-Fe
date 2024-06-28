@@ -9,7 +9,12 @@ describe('Landing page products components', () => {
 				<SellerSingleProduct />
 			</AllProvider>,
 		);
-
 		expect(screen.getByText('Product Details')).toBeInTheDocument();
+		expect(screen.getByText(/Expiry Date/i)).toBeInTheDocument();
+		expect(screen.getByText(/Category/i)).toBeInTheDocument();
+		expect(screen.getByText(/Price/i)).toBeInTheDocument();
+		expect(screen.getByText(/Discount/i)).toBeInTheDocument();
+		expect(screen.getByText(/Next/i)).toBeInTheDocument();
+		expect(screen.getByText(/Previous/i)).toBeInTheDocument();
 	});
 });

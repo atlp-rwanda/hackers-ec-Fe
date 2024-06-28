@@ -30,6 +30,7 @@ import {
 import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 import ProductsPage from '../pages/ProductsPage';
 import SingleProduct from '../pages/SingleProduct';
+import ReviewsPage from '../pages/product/ReviewsPage';
 
 function Routers() {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -66,6 +67,7 @@ function Routers() {
 								<Route index element={<ProductsPage />} />
 								<Route path=":id" element={<SingleProduct />} />
 							</Route>
+							<Route path="reviews/:id" element={<ReviewsPage />} />
 						</Route>
 					</Route>
 				</Route>

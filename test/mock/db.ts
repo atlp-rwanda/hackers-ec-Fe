@@ -1,4 +1,4 @@
-import { factory, primaryKey } from '@mswjs/data';
+import { factory, primaryKey, oneOf } from '@mswjs/data';
 import { faker } from '@faker-js/faker';
 
 export const db = factory({
@@ -27,5 +27,14 @@ export const db = factory({
 		expiryDate: () => faker.commerce.product.name,
 		status: () => faker.commerce.product.name,
 		images: () => faker.helpers.arrayElement(['image1', 'image2', 'image3']),
+	},
+	reviews: {
+		id: primaryKey(() => faker.string.uuid()),
+		userId: () => faker.commerce.productName(),
+		productId: () => faker.commerce.productName(),
+		feedBack: () => faker.lorem.text(),
+		ratings: () => faker.helpers.arrayElement([1, 2, 3, 4, 5]),
+		user: oneOf('users'),
+		product: oneOf('products'),
 	},
 });

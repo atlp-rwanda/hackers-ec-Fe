@@ -37,6 +37,8 @@ describe('handleEnableDisableSubmit', () => {
 	let navigate: NavigateFunction;
 	let showSuccessMessage: (message: string) => void;
 	let showErrorMessage: (message: string) => void;
+	const successMessage = vi.fn();
+	const errorMessage = vi.fn();
 
 	beforeEach(() => {
 		dispatch = vi.fn() as unknown as ThunkDispatch<any, any, any>;
@@ -181,7 +183,14 @@ describe('handleEnableDisableSubmit', () => {
 	});
 
 	it('should render EditUserForm without crashing', () => {
-		render(<EditUserForm id="123" useR={[{ id: '1', isActive: true }]} />);
+		render(
+			<EditUserForm
+				id="123"
+				useR={[{ id: '1', isActive: true }]}
+				successMessage={successMessage}
+				errorMessage={errorMessage}
+			/>,
+		);
 	});
 
 	it('should call handleEnableDisableSubmit, setEnable, and resetField on handleEnableDisableClick', async () => {

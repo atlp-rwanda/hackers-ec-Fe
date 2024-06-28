@@ -8,6 +8,7 @@ import { Toaster } from 'sonner';
 import userEvent from '@testing-library/user-event';
 
 vi.mock('socket.io-client');
+
 vi.mock('../../hooks/useToken', () => ({
 	__esModule: true,
 	default: () => ({ accessToken: 'fake-token' }),

@@ -18,6 +18,9 @@ import EnableAccountSlice from './features/EnableAccountSlice';
 import SearchSlice from './features/SearchSlice';
 import deleteProductSlice from './features/deleteProductSlice';
 
+import CreateReviewSlice from './features/CreateReviewSlice';
+import fetchReviewSlice from './features/getReviewSice';
+import editReviewSlice from './features/editReviewSlice';
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
@@ -38,6 +41,9 @@ export const store = configureStore({
 		enableAccount: EnableAccountSlice,
 		search: SearchSlice,
 		deleteProduct: deleteProductSlice,
+		createReview: CreateReviewSlice,
+		fetchReview: fetchReviewSlice,
+		editReview: editReviewSlice,
 	},
 });
 

@@ -13,7 +13,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DynamicData } from '../../@types/DynamicData';
 import { assignRoles } from '../../redux/features/AssignrolesSlice';
-import useToken from '../../hooks/useToken';
 import useToast from '../../hooks/useToast';
 import { HashLoader } from 'react-spinners';
 import { userType } from '../../@types/userType';
@@ -32,6 +31,8 @@ import { getUser } from '../../redux/features/getUserSlice';
 type userFormType = {
 	id?: string;
 	useR: userType[];
+	successMessage: (message: string) => void;
+	errorMessage: (message: string) => void;
 };
 const EditUserForm = (props: userFormType) => {
 	const roles = useAppSelector(
@@ -42,7 +43,6 @@ const EditUserForm = (props: userFormType) => {
 	const { showErrorMessage, showSuccessMessage } = useToast();
 	const id = props.id;
 	const isAccountActive = props.useR[0]?.isActive;
-	const { accessToken } = useToken();
 	const navigate = useNavigate();
 
 	const { enable, reason } = useAppSelector((state) => state.enableAccount) as {
@@ -73,19 +73,18 @@ const EditUserForm = (props: userFormType) => {
 	) => {
 		try {
 			const { role } = data;
-			const token = accessToken;
-			if (id && token) {
-				const res = await dispatch(assignRoles({ id, role, token })).unwrap();
+			if (id) {
+				const res = await dispatch(assignRoles({ id, role })).unwrap();
 				dispatch(getUser()).unwrap();
-				showSuccessMessage(res.message);
+				props.successMessage(res.message);
 				navigate('/dashboard/users');
 			}
 		} catch (e) {
 			const err = e as DynamicData;
-			showErrorMessage(
+			props.errorMessage(
 				err.response.data.message ||
 					err?.message ||
-					'Unknown error occured! Please try again!',
+					'Unknown error occurred! Please try again!',
 			);
 		}
 	};
@@ -150,7 +149,6 @@ const EditUserForm = (props: userFormType) => {
 						className=" fixed w-full h-full  z-[100]  bg-primary-lightblue/30 backdrop-blur-sm  left-0  top-0"
 						onClick={handleNavigation}
 					></div>
-
 					<div className="setEditSubMainDiv w-[98%] z-[700] rounded-md  top-  flex flex-col bg-neutral-white shadow-2xl px-4  pt-8 pb-8 gap-5 mobile:gap-10 mobile:w-[80%] mobile:m-auto tablet:w-[60%] ipad:w-[50%] mobile:py-7">
 						<div className="backButton mobile:w-[78%] mobile:m-auto mobile:items-center">
 							<span className="mobile:w-[90%] mobile:m-auto">
