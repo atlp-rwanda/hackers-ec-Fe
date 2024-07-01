@@ -22,6 +22,7 @@ import AdminDashboard from '../pages/Admin/Dashboard';
 import AdminDashboardAllUser from '../pages/Admin/DashboardGetUser';
 import EditUser from '../pages/Admin/EditUserRoles';
 import ErrorPage from '../pages/ErrorPage';
+import HandleGoogleLogin from '../components/HandleGoogleLogin';
 
 function Routers() {
 	return (
@@ -30,6 +31,7 @@ function Routers() {
 				<Route path="/users/forgot-password" element={<ForgotPassword />} />
 				<Route path="/users/reset-password" element={<ResetPassword />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/google" element={<HandleGoogleLogin />} />
 				<Route path="/register" element={<Register />} />
 				<Route
 					element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}

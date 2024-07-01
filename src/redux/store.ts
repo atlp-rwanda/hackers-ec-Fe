@@ -12,6 +12,7 @@ import getUserSlice from './features/getUserSlice';
 import AssignrolesSlice from './features/AssignrolesSlice';
 import getRolesSlice from './features/getRolesSlice';
 import profileSlice from './features/userUpdateSlice';
+import googleSlice from './features/googleSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
 		allUsers: getUserSlice,
 		updateRoles: AssignrolesSlice,
 		allRoles: getRolesSlice,
+		google: googleSlice,
 	},
 });
 
