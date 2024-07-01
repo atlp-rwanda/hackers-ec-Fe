@@ -4,13 +4,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import LoginForm from '../../../src/components/auth/LoginForm';
 import { store } from '../../../src/redux/store';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const clientId = `${import.meta.env.VITE_GOOGLE_CLIENT_ID}`;
 
 describe('LoginForm component', () => {
 	it('should render a login form', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<LoginForm />
+					<GoogleOAuthProvider clientId={clientId}>
+						<LoginForm />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);

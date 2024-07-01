@@ -4,13 +4,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
 import Login from '../../../src/pages/auth/Login';
 import { store } from '../../../src/redux/store';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const clientId = `${import.meta.env.VITE_GOOGLE_CLIENT_ID}`;
 
 describe('Login component', () => {
 	it('updates email and password inputs correctly', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<Login />
+					<GoogleOAuthProvider clientId={clientId}>
+						<Login />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);

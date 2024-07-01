@@ -6,6 +6,9 @@ import Register from '../../../src/pages/auth/Register';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import RegisterForm from '../../../src/components/auth/RegisterForm';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const clientId = `${import.meta.env.VITE_GOOGLE_CLIENT_ID}`;
 
 const mockUseHandleResize = vi.fn();
 
@@ -18,7 +21,9 @@ describe('Register component', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<Register />
+					<GoogleOAuthProvider clientId={clientId}>
+						<Register />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);
@@ -43,7 +48,9 @@ describe('Register component', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<Register />
+					<GoogleOAuthProvider clientId={clientId}>
+						<Register />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);
@@ -75,7 +82,9 @@ describe('Register component', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<RegisterForm />
+					<GoogleOAuthProvider clientId={clientId}>
+						<RegisterForm />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);
@@ -92,7 +101,9 @@ describe('Register component', () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<RegisterForm />
+					<GoogleOAuthProvider clientId={clientId}>
+						<RegisterForm />
+					</GoogleOAuthProvider>
 				</BrowserRouter>
 			</Provider>,
 		);
