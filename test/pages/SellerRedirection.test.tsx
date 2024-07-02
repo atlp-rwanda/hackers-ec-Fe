@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
@@ -23,14 +24,13 @@ vi.mock('../../src/components/redirections/UserRedirectionInput', () => ({
 	),
 }));
 
-const mockStore = configureStore([]);
+const mocktore = configureStore([]);
 
 describe('SellerRedirection', () => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let store: any;
 
 	beforeEach(() => {
-		store = mockStore({
+		store = mocktore({
 			login: {
 				requires2FA: true,
 			},
@@ -52,7 +52,7 @@ describe('SellerRedirection', () => {
 	});
 
 	it('does not render the component when requires2FA is false', () => {
-		store = mockStore({
+		store = mocktore({
 			login: {
 				requires2FA: false,
 			},

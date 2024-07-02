@@ -15,6 +15,7 @@ export default defineConfig({
 				'tailwind.config.js ',
 				'src/redux',
 				'src/main.tsx',
+				'src/utils/variants.ts',
 			],
 		},
 	},

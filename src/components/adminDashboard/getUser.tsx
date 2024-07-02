@@ -182,7 +182,7 @@ const GetUser = (props: getUserType) => {
 																</div>
 															</Link>
 															<Link
-																to={`/dashboard/admin/roles/${item.id}`}
+																to={`/dashboard/roles/${item.id}`}
 																className=""
 															>
 																<div className="text-[26px] flex text-center items-center gap-4  px-2 py-1 rounded-xl bg-neutral-grey bg-opacity-35 hover:bg-opacity-70">
@@ -225,7 +225,7 @@ const GetUser = (props: getUserType) => {
 					</div>
 				</div>
 			)}
-			{pathname.includes('/dashboard/admin/Roles') ? (
+			{pathname.includes('/dashboard/Roles') ? (
 				<div className="blueOverlay absolute w-full h-full bg-opacity-60 blur-sm top-0 shadow-2xl z-[100] bg-primary-lightblue "></div>
 			) : (
 				false

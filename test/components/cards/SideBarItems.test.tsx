@@ -4,10 +4,10 @@ import { fireEvent, render } from '@testing-library/react';
 import { Menu } from 'lucide-react';
 
 describe('SideBarItem component', () => {
-	const mockSetActive = vi.fn();
+	const mocketActive = vi.fn();
 
 	beforeEach(() => {
-		mockSetActive.mockClear();
+		mocketActive.mockClear();
 	});
 
 	it('renders with correct classes when active', () => {
@@ -18,7 +18,7 @@ describe('SideBarItem component', () => {
 					link="/dashboard"
 					text="Dashboard"
 					active={true}
-					setActive={mockSetActive}
+					setActive={mocketActive}
 				/>
 			</MemoryRouter>,
 		);
@@ -26,6 +26,6 @@ describe('SideBarItem component', () => {
 		const linkElement = getByText('Dashboard');
 		fireEvent.click(linkElement);
 
-		expect(mockSetActive).toHaveBeenCalledWith('Dashboard');
+		expect(mocketActive).toHaveBeenCalledWith('Dashboard');
 	});
 });

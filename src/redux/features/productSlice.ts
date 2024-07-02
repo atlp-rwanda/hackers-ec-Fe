@@ -5,6 +5,13 @@ import { DynamicData } from '../../@types/DynamicData';
 import API from '../../utils/api';
 import { ProductState } from '../../@types/product';
 
+const initialState: ProductState = {
+	isLoading: false,
+	products: [],
+	error: null,
+	singleProduct: [],
+};
+
 export const addProduct = createAsyncThunk(
 	'addProduct',
 	async (productData: productTypes, { rejectWithValue }) => {
@@ -30,14 +37,32 @@ export const addProduct = createAsyncThunk(
 	},
 );
 
-const initialState: ProductState = {
-	isLoading: false,
-	products: [],
-	error: null,
-};
+export const getProducts = createAsyncThunk(
+	'products',
+	async (_, { rejectWithValue }) => {
+		try {
+			const { data } = await API.get('/products');
+			return data;
+		} catch (error) {
+			return rejectWithValue((error as DynamicData).response);
+		}
+	},
+);
 
-const productSlice = createSlice({
-	name: 'product',
+export const getSinleProducts = createAsyncThunk(
+	'singleProduct',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			const { data } = await API.get(`/products/${id}`);
+			return data.data;
+		} catch (error) {
+			return rejectWithValue((error as DynamicData).response);
+		}
+	},
+);
+
+const productsSlice = createSlice({
+	name: 'products',
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
@@ -45,11 +70,12 @@ const productSlice = createSlice({
 			state.isLoading = true;
 			state.error = null;
 		});
+
 		builder.addCase(
 			addProduct.fulfilled,
 			(state, action: PayloadAction<DynamicData>) => {
-				state.isLoading = false;
 				state.products = [...state.products, action.payload.data];
+				state.isLoading = false;
 				state.error = null;
 			},
 		);
@@ -60,7 +86,44 @@ const productSlice = createSlice({
 				state.error = action.payload?.data?.message;
 			},
 		);
+		builder.addCase(getProducts.pending, (state) => {
+			state.isLoading = true;
+			state.error = null;
+		});
+		builder.addCase(
+			getProducts.fulfilled,
+			(state, action: PayloadAction<DynamicData>) => {
+				state.isLoading = false;
+				state.products = action.payload.data;
+			},
+		);
+		builder.addCase(
+			getProducts.rejected,
+			(state, action: PayloadAction<any>) => {
+				state.isLoading = false;
+				state.error = action.payload;
+			},
+		);
+
+		builder.addCase(getSinleProducts.pending, (state) => {
+			state.isLoading = true;
+			state.error = null;
+		});
+		builder.addCase(
+			getSinleProducts.fulfilled,
+			(state, action: PayloadAction<DynamicData>) => {
+				state.isLoading = false;
+				state.singleProduct = [action.payload];
+			},
+		);
+		builder.addCase(
+			getSinleProducts.rejected,
+			(state, action: PayloadAction<any>) => {
+				state.isLoading = false;
+				state.error = action.payload;
+			},
+		);
 	},
 });
 
-export default productSlice.reducer;
+export default productsSlice.reducer;

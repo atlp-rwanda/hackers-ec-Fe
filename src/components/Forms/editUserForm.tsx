@@ -62,7 +62,7 @@ const EditUserForm = (props: userFormType) => {
 			if (id && token) {
 				const res = await dispatch(assignRoles({ id, role, token })).unwrap();
 				showSuccessMessage(res.message);
-				navigate('/dashboard/admin/users');
+				navigate('/dashboard/users');
 			}
 		} catch (e) {
 			const err = e as DynamicData;
