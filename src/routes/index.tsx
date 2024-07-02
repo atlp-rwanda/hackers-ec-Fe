@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from '../components/Layout';
 import DashboardLayout from '../components/Layouts/DashboardLayout';
 import Home from '../pages/Home';
@@ -25,12 +25,16 @@ import ErrorPage from '../pages/ErrorPage';
 import HandleGoogleLogin from '../components/HandleGoogleLogin';
 
 function Routers() {
+	const accessToken = localStorage.getItem('access_token') || '';
 	return (
 		<>
 			<Routes>
 				<Route path="/users/forgot-password" element={<ForgotPassword />} />
 				<Route path="/users/reset-password" element={<ResetPassword />} />
-				<Route path="/login" element={<Login />} />
+				<Route
+					path="/login"
+					element={accessToken ? <Navigate to="/" /> : <Login />}
+				/>
 				<Route path="/google" element={<HandleGoogleLogin />} />
 				<Route path="/register" element={<Register />} />
 				<Route
