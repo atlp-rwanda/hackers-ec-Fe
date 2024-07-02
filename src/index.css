@@ -206,3 +206,37 @@ table thead tr th:last-child {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
 }
+/* width */
+::-webkit-scrollbar {
+	width: 0.45rem;
+	margin-left: 2rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #888;
+	border-radius: 5rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(
+		90deg,
+		rgba(14, 36, 52, 1) 0%,
+		rgba(38, 100, 144, 1) 42%,
+		rgba(38, 100, 145, 1) 42%,
+		rgba(41, 106, 154, 1) 100%
+	);
+	border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(
+		90deg,
+		rgba(14, 36, 52, 1) 0%,
+		rgba(38, 100, 1441) 92%,
+		rgba(38, 100, 145) 92%,
+		rgba(41, 106, 154) 100%
+	);
+}

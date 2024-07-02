@@ -1,22 +1,23 @@
 import { motion } from 'framer-motion';
-import depart_icon from '../assets/departments_icon.svg';
-import Button from '../components/buttons/Button';
-import { FaHeart, FaStar, FaCartPlus, FaCaretDown } from 'react-icons/fa';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { useEffect, useState } from 'react';
-import { getProducts } from '../redux/features/productSlice';
+import { FaCaretDown, FaHeart, FaStar } from 'react-icons/fa';
+import { IoFilter } from 'react-icons/io5';
 import { ScaleLoader } from 'react-spinners';
 import { DynamicData } from '../@types/DynamicData';
+import { searchInputs } from '../@types/SearchType';
+import depart_icon from '../assets/departments_icon.svg';
+import Button from '../components/buttons/Button';
+import ProductPageAddToCart from '../components/carts/ProductPageAddToCart';
 import CategoryModel from '../components/CategoryModel';
-import fetchInfo from '../utils/userDetails';
+import FormInput from '../components/Forms/InputText';
+import { getProducts } from '../redux/features/productSlice';
 import {
 	getSearchedProducts,
 	manipulateSearchInput,
 	search,
 } from '../redux/features/SearchSlice';
-import { searchInputs } from '../@types/SearchType';
-import FormInput from '../components/Forms/InputText';
-import { IoFilter } from 'react-icons/io5';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import fetchInfo from '../utils/userDetails';
 
 const LandingProduct = () => {
 	const { isLoading, products } = useAppSelector((state) => state.product);
@@ -136,9 +137,7 @@ const LandingProduct = () => {
 															className="w-full h-full object-cover rounded-lg"
 														/>
 													</div>
-													<div className="cart_icon cart_btn absolute right-3 bottom-3 text-neutral-white bg-primary-lightblue p-2 text-2xl rounded-full flex items-center justify-center cursor-pointer">
-														<FaCartPlus />
-													</div>
+													<ProductPageAddToCart productId={item.id} />
 													{item.discount > 0 && (
 														<div className="discount absolute p-1 rounded bg-action-warning text-neutral-white -right-2 -top-2 font-bold">
 															{item.discount}%

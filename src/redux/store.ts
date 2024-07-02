@@ -1,25 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit';
 import AssignrolesSlice from './features/AssignrolesSlice';
-import { otpReducer } from './features/OTPSlice';
-import RegisterSlice from './features/RegisterSlice';
+import cartSlice from './features/cartSlice';
 import categorySlice from './features/categorySlice';
+import deleteProductSlice from './features/deleteProductSlice';
+import EnableAccountSlice from './features/EnableAccountSlice';
 import forgottonSlice from './features/forgottonSlice';
 import getRolesSlice from './features/getRolesSlice';
 import getUserSlice from './features/getUserSlice';
+import googleSlice from './features/googleSlice';
 import { loginReducer } from './features/loginSlice';
 import navReducer from './features/navSlice';
-import productSlice from './features/productSlice';
-import resetPasswordSlice from './features/resetSlice';
-import profileSlice from './features/userUpdateSlice';
-import googleSlice from './features/googleSlice';
-import VerifyAccountSlice from './features/VerifyAccountSlice';
 import notificationSlice from './features/notificationSlice';
-import EnableAccountSlice from './features/EnableAccountSlice';
+import { otpReducer } from './features/OTPSlice';
+import productSlice from './features/productSlice';
+import RegisterSlice from './features/RegisterSlice';
+import resetPasswordSlice from './features/resetSlice';
 import SearchSlice from './features/SearchSlice';
-import deleteProductSlice from './features/deleteProductSlice';
+import profileSlice from './features/userUpdateSlice';
+import VerifyAccountSlice from './features/VerifyAccountSlice';
+
 import CreateReviewSlice from './features/CreateReviewSlice';
-import fetchReviewSlice from './features/getReviewSice';
 import editReviewSlice from './features/editReviewSlice';
+import fetchReviewSlice from './features/getReviewSice';
 import passwordSlice from './features/passwordUpdateSlice';
 
 export const store = configureStore({
@@ -46,6 +48,7 @@ export const store = configureStore({
 		fetchReview: fetchReviewSlice,
 		editReview: editReviewSlice,
 		updatePassword: passwordSlice,
+		cart: cartSlice,
 	},
 });
 

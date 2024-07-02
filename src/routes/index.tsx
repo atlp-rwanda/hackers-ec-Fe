@@ -32,6 +32,7 @@ import ProductsPage from '../pages/ProductsPage';
 import SingleProduct from '../pages/SingleProduct';
 import ReviewsPage from '../pages/product/ReviewsPage';
 import UpdatePassword from '../components/Layouts/UpdatePassword';
+import Cart from '../pages/carts/Carts';
 
 function Routers() {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -62,6 +63,9 @@ function Routers() {
 					<Route path="/password" element={<UpdatePassword />} />{' '}
 				</Route>
 				<Route path="/" element={<Layout />}>
+					<Route element={<ProtectedRoutes roles={['BUYER']} />}>
+						<Route path="/carts" element={<Cart />} />
+					</Route>
 					<Route index element={<Home />} />
 					<Route path="about" element={<About />} />
 					<Route path="contacts" element={<Contacts />} />

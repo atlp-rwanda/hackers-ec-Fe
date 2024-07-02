@@ -1,27 +1,30 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FaCaretDown, FaCartPlus, FaHeart, FaStar } from 'react-icons/fa';
+import { FaCaretDown, FaHeart, FaStar } from 'react-icons/fa';
+import { IoFilter } from 'react-icons/io5';
 import { ScaleLoader } from 'react-spinners';
 import { DynamicData } from '../@types/DynamicData';
-import CategoryModel from '../components/CategoryModel';
+import { searchInputs } from '../@types/SearchType';
 import Button from '../components/buttons/Button';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
-import { depart_icon } from '../utils/images';
+import ProductPageAddToCart from '../components/carts/ProductPageAddToCart';
+import CategoryModel from '../components/CategoryModel';
+import FormInput from '../components/Forms/InputText';
+import { getCarts } from '../redux/features/cartSlice';
 import { getProducts } from '../redux/features/productSlice';
 import {
 	getSearchedProducts,
 	manipulateSearchInput,
 	search,
 } from '../redux/features/SearchSlice';
-import FormInput from '../components/Forms/InputText';
-import { IoFilter } from 'react-icons/io5';
-import { searchInputs } from '../@types/SearchType';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import { depart_icon } from '../utils/images';
 import fetchInfo from '../utils/userDetails';
 
 const ProductsPage = () => {
 	const [openFilter, setOpenFilter] = useState(false);
 	const { isLoading, products } = useAppSelector((state) => state.product);
 	const { data, searchInputs } = useAppSelector((state) => state.search);
+	const { carts } = useAppSelector((state) => state.cart);
 	const [openModel, setOpenModel] = useState(false);
 
 	const toggleModel = () => {
@@ -43,7 +46,13 @@ const ProductsPage = () => {
 		if (products && !products.length && tokenInfo) {
 			dispatch(getProducts()).unwrap();
 		}
-	}, [dispatch, products]);
+	}, [dispatch, products, tokenInfo]);
+
+	useEffect(() => {
+		if (carts && !carts.length) {
+			dispatch(getCarts()).unwrap();
+		}
+	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(getSearchedProducts(products));
@@ -144,9 +153,7 @@ const ProductsPage = () => {
 															className="w-full h-full object-cover rounded-lg"
 														/>
 													</div>
-													<div className="cart_icon cart_btn absolute right-3 bottom-3 text-neutral-white bg-primary-lightblue p-2 text-2xl rounded-full flex items-center justify-center cursor-pointer">
-														<FaCartPlus />
-													</div>
+													<ProductPageAddToCart productId={item.id} />
 													{item.discount > 0 && (
 														<div className="discount absolute p-1 rounded bg-action-warning text-neutral-white -right-2 -top-2 font-bold">
 															{item.discount}%
