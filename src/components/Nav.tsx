@@ -12,14 +12,15 @@ import { useEffect } from 'react';
 
 const Nav = () => {
 	const accessToken = localStorage.getItem('access_token') || '';
-	const dispatch = useAppDispatch();
+
 	const openModel = useAppSelector((state) => state.nav.openModel);
 
+	const dispatch = useAppDispatch();
 	const { data } = useAppSelector((state) => state.profile) || {};
 
 	// Fetch user data when the component mounts
 	useEffect(() => {
-		if (!data) {
+		if (!data && accessToken) {
 			dispatch(fetchUserProfile());
 		}
 	}, [data, dispatch]);
