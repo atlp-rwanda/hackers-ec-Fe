@@ -38,7 +38,6 @@ const VerifyAccountSlice = createSlice({
 		builder.addCase(verify.rejected, (state, action: PayloadAction<any>) => {
 			state.isLoading = false;
 			state.isVerified = false;
-			console.log(action);
 			state.message = action.payload?.data?.message;
 		});
 	},

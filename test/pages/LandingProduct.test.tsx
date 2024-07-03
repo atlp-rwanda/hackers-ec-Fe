@@ -1,4 +1,5 @@
 import {
+	fireEvent,
 	render,
 	screen,
 	waitForElementToBeRemoved,
@@ -12,6 +13,7 @@ import { localStorageMock } from '../mock/localStorage';
 import fetchInfo from '../../src/utils/userDetails';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicData } from '../../src/@types/DynamicData';
+import userEvent from '@testing-library/user-event';
 
 type ProductType = {
 	id: string;
@@ -48,8 +50,8 @@ describe('Get all products', () => {
 		[1, 2, 3, 4, 5, 6, 7].map((item) => {
 			const product = db.products.create({
 				name: `Iphone ${item}`,
-				price: `1000000 ${item}`,
-				discount: `10 ${item}`,
+				price: `10 ${item}`,
+				discount: `1 ${item}`,
 			});
 			products.push(product);
 		});
@@ -97,5 +99,33 @@ describe('Get all products', () => {
 		expect(loader).not.toBeInTheDocument();
 
 		expect(name).toBeDefined();
+	});
+
+	it('it should display the minimum and maximum search fields', async () => {
+		await renderComponent();
+		const filterButton = screen.getByText(/Filters/i);
+		fireEvent.click(filterButton);
+		expect(
+			await screen.findByPlaceholderText('Minimum price'),
+		).toBeInTheDocument();
+		expect(screen.getByPlaceholderText('Maximum price')).toBeInTheDocument();
+	});
+
+	it('handles search input changes', async () => {
+		await renderComponent();
+
+		const filterButton = screen.getByText(/Filters/i);
+		const user = userEvent.setup();
+		await user.click(filterButton);
+
+		const minPriceInput = screen.getByPlaceholderText(/Minimum price/i);
+		const maxPriceInput = screen.getByPlaceholderText(/Maximum price/i);
+
+		await user.type(maxPriceInput, '5');
+		await user.type(minPriceInput, '999999999999999');
+
+		expect(maxPriceInput).toHaveValue(5);
+		expect(minPriceInput).toHaveValue(999999999999999);
+
 	});
 });

@@ -15,6 +15,7 @@ import googleSlice from './features/googleSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
 import notificationSlice from './features/notificationSlice';
 import EnableAccountSlice from './features/EnableAccountSlice';
+import SearchSlice from './features/SearchSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -34,6 +35,7 @@ export const store = configureStore({
 		google: googleSlice,
 		notifications: notificationSlice,
 		enableAccount: EnableAccountSlice,
+		search: SearchSlice,
 	},
 });
 

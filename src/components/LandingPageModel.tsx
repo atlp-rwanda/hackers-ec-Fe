@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAppDispatch } from '../redux/hooks/hooks';
+import { manipulateSearchInput } from '../redux/features/SearchSlice';
 
 interface ModalProps {
 	openModel: boolean;
@@ -8,6 +10,7 @@ interface ModalProps {
 }
 
 const LandingPageModel: React.FC<ModalProps> = ({ openModel, toggleModel }) => {
+	const dispatch = useAppDispatch();
 	return (
 		<AnimatePresence>
 			{openModel && (
@@ -28,6 +31,11 @@ const LandingPageModel: React.FC<ModalProps> = ({ openModel, toggleModel }) => {
 								type="text"
 								className="border-primary-lightblue border-2 inline-block rounded-r-full rounded-l-full h-8 w-full mobile:w-[60%] px-4"
 								placeholder="Search ..."
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									e.target.value
+										? dispatch(manipulateSearchInput({ name: e.target.value }))
+										: dispatch(manipulateSearchInput({ name: null }))
+								}
 							/>
 							<button onClick={toggleModel}>Search</button>
 						</form>

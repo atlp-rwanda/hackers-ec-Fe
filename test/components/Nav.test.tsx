@@ -5,6 +5,7 @@ import { localStorageMock } from '../mock/localStorage';
 import AllProvider from '../Utils/AllProvider';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicData } from '../../src/@types/DynamicData';
+import userEvent from '@testing-library/user-event';
 
 vi.mock('jwt-decode', () => ({
 	jwtDecode: vi.fn(),
@@ -36,5 +37,14 @@ describe('Nav Component', () => {
 		renderComponent();
 
 		expect(screen.getByLabelText('bell-image')).toBeInTheDocument();
+	});
+
+	it('It should render the search input', async () => {
+		renderComponent();
+		const searchField = screen.getByPlaceholderText(/search/i);
+		const user = userEvent.setup();
+		await user.type(searchField, 'product');
+		expect(searchField).toHaveValue('product');
+		expect(searchField).toBeInTheDocument();
 	});
 });
