@@ -17,7 +17,6 @@ import UserRedirectionPage from '../pages/userRedirection';
 import EditUser from '../pages/Admin/EditUserRoles';
 import ErrorPage from '../pages/ErrorPage';
 import HandleGoogleLogin from '../components/HandleGoogleLogin';
-import SingleProduct from '../pages/SingleProduct';
 import PreventSeller from '../components/Layouts/PreventSeller';
 import ProtectedDashboard from '../components/Layouts/ProtectedDashboard';
 import {
@@ -28,8 +27,9 @@ import {
 	UserRoles,
 	Users,
 } from '../utils/DashboardUtils';
-import ProductsPage from '../pages/ProductsPage';
 import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
+import ProductsPage from '../pages/ProductsPage';
+import SingleProduct from '../pages/SingleProduct';
 
 function Routers() {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -76,6 +76,7 @@ function Routers() {
 							<Route index element={<DashboardProducts />} />
 							<Route path=":id" element={<DashboardSingleProducts />} />
 							<Route path="new" element={<AddProducts />} />
+							<Route path="edit/:id" element={<AddProducts />} />
 						</Route>
 						<Route path="users">
 							<Route index element={<Users />} />
