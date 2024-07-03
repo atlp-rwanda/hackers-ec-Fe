@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from '../components/Layout';
 import DashboardLayout from '../components/Layouts/DashboardLayout';
 import About from '../pages/About';
@@ -32,6 +32,7 @@ import ProductsPage from '../pages/ProductsPage';
 import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 
 function Routers() {
+	const accessToken = localStorage.getItem('access_token') || '';
 	return (
 		<>
 			<Routes>
@@ -41,7 +42,12 @@ function Routers() {
 					path="/forgot-password-success"
 					element={<UserRedirectionPage />}
 				/>
-				<Route path="/login" element={<Login />} />
+
+				<Route
+					path="/login"
+					element={accessToken ? <Navigate to="/" /> : <Login />}
+				/>
+
 				<Route path="/google" element={<HandleGoogleLogin />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="users/account/verify/:token" element={<VerifyAccount />} />
