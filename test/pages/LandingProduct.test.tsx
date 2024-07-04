@@ -1,8 +1,5 @@
 import {
-<<<<<<< HEAD
 	fireEvent,
-=======
->>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 	render,
 	screen,
 	waitForElementToBeRemoved,
@@ -16,10 +13,7 @@ import { localStorageMock } from '../mock/localStorage';
 import fetchInfo from '../../src/utils/userDetails';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicData } from '../../src/@types/DynamicData';
-<<<<<<< HEAD
 import userEvent from '@testing-library/user-event';
-=======
->>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 
 type ProductType = {
 	id: string;
@@ -56,13 +50,8 @@ describe('Get all products', () => {
 		[1, 2, 3, 4, 5, 6, 7].map((item) => {
 			const product = db.products.create({
 				name: `Iphone ${item}`,
-<<<<<<< HEAD
 				price: `10 ${item}`,
 				discount: `1 ${item}`,
-=======
-				price: `1000000 ${item}`,
-				discount: `10 ${item}`,
->>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 			});
 			products.push(product);
 		});
@@ -111,7 +100,6 @@ describe('Get all products', () => {
 
 		expect(name).toBeDefined();
 	});
-<<<<<<< HEAD
 
 	it('it should display the minimum and maximum search fields', async () => {
 		await renderComponent();
@@ -139,6 +127,4 @@ describe('Get all products', () => {
 		expect(maxPriceInput).toHaveValue(5);
 		expect(minPriceInput).toHaveValue(999999999999999);
 	});
-=======
->>>>>>> fce9eae (feat(Register): Users should be able Signup/Register to the E-commerce App)
 });

@@ -15,6 +15,7 @@ import {
 	PasswordUpdateSchemaType,
 } from '../../validations/auth/password.validation';
 import { UserPassword } from '../../@types/auth/passwordTypes';
+import { DynamicData } from '../../@types/DynamicData';
 
 const UpdatePassword = () => {
 	const dispatch = useAppDispatch();
@@ -44,19 +45,16 @@ const UpdatePassword = () => {
 			confirmPassword: data.confirmPassword,
 		};
 		dispatch(updateUserPassword(passData))
-			.then(
-				(resultAction: { payload: { status: string; message: string } }) => {
-					if (resultAction.payload.status === 'SUCCESS') {
-						showSuccessMessage(resultAction.payload.message);
-						reset();
-					} else {
-						showErrorMessage(resultAction.payload.message);
-					}
-				},
-			)
-			.catch((error: string | undefined) => {
-				showErrorMessage('something went wrong');
-				throw new Error(error);
+			.then((resultAction: DynamicData) => {
+				if (resultAction.payload.status === 'SUCCESS') {
+					showSuccessMessage(resultAction.payload.message);
+					reset();
+				} else {
+					showErrorMessage(resultAction.payload.message);
+				}
+			})
+			.catch((error: DynamicData) => {
+				showErrorMessage(error.message);
 			});
 	};
 
