@@ -50,10 +50,7 @@ const Home = () => {
 						</p>
 						<div className="button">
 							<ButtonIcon className="tablet:px-20 py-2 mobile:py-3 font-semi-bold tablet:text-xl">
-								<Link
-									to={'/dashboard/products'}
-									className="flex gap-2 items-center"
-								>
+								<Link to={''} className="flex gap-2 items-center">
 									<FaShoppingCart /> Explore now{' '}
 								</Link>
 							</ButtonIcon>

@@ -1,12 +1,13 @@
-/* eslint-disable quotes */
-import { BellRing, Menu, Search, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import useHandleResize from '../hooks/useHandleResize';
 import { useContext } from 'react';
 import { toggleMenuContext } from './Layouts/DashboardLayout';
+import Notification from './notification/Notification';
 
 const DashboardTopNav = () => {
 	const { show } = useHandleResize();
 	const { setShowMenu, showMenu } = useContext(toggleMenuContext);
+
 	return (
 		<div className="p-5 flex items-center justify-between border-b border-neutral-grey bg-neutral-white">
 			<h1 className="text-sm ipad:text-lg text-neutral-black/70 font-light">
@@ -16,9 +17,7 @@ const DashboardTopNav = () => {
 				John Doe
 			</h1>
 			<div className="flex items-center gap-5 mr-5">
-				<div className="transition-colors border border-neutral-grey p-2 rounded-lg cursor-pointer hover:bg-neutral-grey/20">
-					<BellRing size={18} />
-				</div>
+				<Notification />
 				{show ? (
 					<div className="flex-center gap-2 px-2 py-2 border border-neutral-grey bg-neutral-grey/20 rounded-lg">
 						<Search size={18} />
