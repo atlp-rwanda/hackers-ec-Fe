@@ -20,7 +20,7 @@ const Nav = () => {
 
 	// Fetch user data when the component mounts
 	useEffect(() => {
-		if (!data) {
+		if (!data && accessToken) {
 			dispatch(fetchUserProfile());
 		}
 	}, [data, dispatch]);
