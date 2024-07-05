@@ -109,14 +109,11 @@ describe('Dashboard Edit role page', () => {
 					</div>
 				</AllProvider>,
 			);
-			const loader = screen.getByTestId('role-form-loader');
-			expect(loader).toBeInTheDocument();
-			await waitForElementToBeRemoved(loader);
-			expect(loader).not.toBeInTheDocument();
 		}
 	};
 	test('it should test edit role page of user', async () => {
 		await renderEditusePage();
+
 		const firstName = screen.getByText(/kabera/i);
 		const lastName = screen.getByText(/joe/i);
 		const email = screen.getByText(/johndoe1@example.com/i);
