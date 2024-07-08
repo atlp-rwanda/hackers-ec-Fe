@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { productTypes } from '../../validations/products/addProductValidation';
 import { DynamicData } from '../../@types/DynamicData';
-import API from '../../utils/api';
 import { ProductState } from '../../@types/product';
+import API from '../../utils/api';
+import { productTypes } from '../../validations/products/addProductValidation';
 
 const initialState: ProductState = {
 	isLoading: false,
@@ -55,18 +55,6 @@ export const getSinleProducts = createAsyncThunk(
 		try {
 			const { data } = await API.get(`/products/${id}`);
 			return data.data;
-		} catch (error) {
-			return rejectWithValue((error as DynamicData).response);
-		}
-	},
-);
-
-export const deleteProduct = createAsyncThunk(
-	'deleteProduct',
-	async (id: string, { rejectWithValue }) => {
-		try {
-			const { data } = await API.delete(`/products/${id}`);
-			return { id, message: data.message };
 		} catch (error) {
 			return rejectWithValue((error as DynamicData).response);
 		}
@@ -165,27 +153,9 @@ const productsSlice = createSlice({
 				state.error = action.payload;
 			},
 		);
-		builder.addCase(
-			deleteProduct.rejected,
-			(state, action: PayloadAction<any>) => {
-				state.isLoading = false;
-				state.error = action.payload;
-			},
-		);
-		builder.addCase(deleteProduct.pending, (state) => {
-			state.isLoading = false;
-			state.error = null;
-		});
-
-		builder.addCase(deleteProduct.fulfilled, (state, action) => {
-			state.isLoading = false;
-			state.products = state.products.filter(
-				(product) => product.id !== action.payload.id,
-			);
-		});
 
 		builder.addCase(updateProduct.pending, (state) => {
-			state.isLoading = false;
+			state.isLoading = true;
 			state.error = null;
 		});
 
