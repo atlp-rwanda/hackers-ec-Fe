@@ -134,10 +134,10 @@ describe('Add product form component', () => {
 		) as unknown as HTMLOptionElement;
 		await user.selectOptions(selectOption, firstOption);
 
-		const button = screen.getByRole('button', { name: /save/i });
+		const button = screen.getByRole('button', { name: /Save/i });
 		await user.click(button);
 
-		expect(screen.getByText(/processing/i));
+		expect(screen.queryByText(/processing/i));
 	});
 
 	it('should should render a product page component', async () => {

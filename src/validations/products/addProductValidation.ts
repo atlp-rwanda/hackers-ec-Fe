@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const productValidation = z.object({
+	id: z.string().optional(),
 	name: z.string().min(1, "Name field can't be empty!"),
 	images: z.array(z.any(), {
 		required_error: 'Product images required!',

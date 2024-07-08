@@ -110,6 +110,8 @@ const SellerProductsPage = () => {
 														<SellerProductsModal
 															id={item.id}
 															idx={idx}
+															item={item}
+															state={item}
 															handleToggle={toggleItemModel}
 														/>
 													)}

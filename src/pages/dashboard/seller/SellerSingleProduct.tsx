@@ -17,7 +17,6 @@ const SellerSingleProduct = () => {
 		const getSingleProduct = async () => {
 			if (id) {
 				await dispatch(getSinleProducts(id)).unwrap();
-				console.log(singleProduct, 'proooooooooodct');
 			}
 		};
 		getSingleProduct();
@@ -77,25 +76,25 @@ const SellerSingleProduct = () => {
 									<h1 className="text-sm mobile:text-xl laptop:text-2xl">
 										{singleProduct[0]?.name}
 									</h1>
-									<p className="text-[10px] mobile:text-xs font-bold flex items-center ">
+									<p className="text-[10px] mobile:text-xs font-bold flex items-center gap-2">
 										Discount:
 										<small className="">
 											{singleProduct[0]?.discount}% off
 										</small>
 									</p>
-									<p className="text-[10px] mobile:text-xs font-bold flex items-center ">
+									<p className="text-[10px] mobile:text-xs font-bold flex items-center gap-2 ">
 										Price:
 										<small className="font-normal">
 											$ {singleProduct[0]?.price}
 										</small>
 									</p>
-									<p className="text-[10px] mobile:text-xs font-bold flex items-center">
+									<p className="text-[10px] mobile:text-xs font-bold flex items-center gap-2">
 										Category:
 										<small className="font-normal">
 											{singleProduct[0]?.category?.name}
 										</small>
 									</p>
-									<p className="text-[10px] mobile:text-xs font-bold flex items-center flex-nowrap ">
+									<p className="text-[10px] mobile:text-xs font-bold flex items-center gap-2 flex-nowrap ">
 										Expiry Date:
 										<small className="font-normal">
 											{singleProduct[0]?.expiryDate
@@ -103,7 +102,7 @@ const SellerSingleProduct = () => {
 												: 'N/A'}
 										</small>
 									</p>
-									<p className="text-[10px] mobile:text-xs font-bold flex items-center ">
+									<p className="text-[10px] mobile:text-xs font-bold flex items-center gap-2 ">
 										Status:
 										<small className="font-normal">
 											{singleProduct[0]?.productStatus}
