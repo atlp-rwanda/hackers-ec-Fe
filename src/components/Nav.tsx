@@ -10,6 +10,7 @@ import ProfileDropdown from './ProfileDropdown';
 import { fetchUserProfile } from '../redux/features/userUpdateSlice';
 import { useEffect } from 'react';
 import Notification from './notification/Notification';
+import { manipulateSearchInput } from '../redux/features/SearchSlice';
 
 const Nav = () => {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -61,6 +62,13 @@ const Nav = () => {
 										type="text"
 										placeholder="Search..."
 										className="rounded-l-full rounded-r-full border-2 border-primary-lightblue flex-1 py-1 px-4"
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											e.target.value
+												? dispatch(
+														manipulateSearchInput({ name: e.target.value }),
+													)
+												: dispatch(manipulateSearchInput({ name: null }))
+										}
 									/>
 									<ButtonIcon className="mobile:py-1 px-10"> Search</ButtonIcon>
 								</form>

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { FaCaretDown, FaCartPlus, FaHeart, FaStar } from 'react-icons/fa';
 import { ScaleLoader } from 'react-spinners';
@@ -7,9 +8,20 @@ import Button from '../components/buttons/Button';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { depart_icon } from '../utils/images';
 import { getProducts } from '../redux/features/productSlice';
+import {
+	getSearchedProducts,
+	manipulateSearchInput,
+	search,
+} from '../redux/features/SearchSlice';
+import FormInput from '../components/Forms/InputText';
+import { IoFilter } from 'react-icons/io5';
+import { searchInputs } from '../@types/SearchType';
+import fetchInfo from '../utils/userDetails';
 
 const ProductsPage = () => {
+	const [openFilter, setOpenFilter] = useState(false);
 	const { isLoading, products } = useAppSelector((state) => state.product);
+	const { data, searchInputs } = useAppSelector((state) => state.search);
 	const [openModel, setOpenModel] = useState(false);
 
 	const toggleModel = () => {
@@ -18,96 +30,180 @@ const ProductsPage = () => {
 
 	const dispatch = useAppDispatch();
 
+	const tokenInfo = fetchInfo();
+
+	manipulateSearchInput({
+		name: null,
+		minPrice: null,
+		maxPrice: null,
+		categoryName: null,
+	});
+
 	useEffect(() => {
-		if (products && !products.length) {
+		if (products && !products.length && tokenInfo) {
 			dispatch(getProducts()).unwrap();
 		}
 	}, [dispatch, products]);
 
+	useEffect(() => {
+		dispatch(getSearchedProducts(products));
+	}, [products, dispatch]);
+
+	useEffect(() => {
+		dispatch(search(searchInputs));
+	}, [dispatch, searchInputs]);
+
+	const HandleSearch = async (searchInput: searchInputs) => {
+		dispatch(manipulateSearchInput(searchInput));
+	};
+
 	return (
 		<>
-			<div className="perent_products_container min-h-screen relative mt-10 mobile:mt-32">
+			<div className="perent_products_container min-h-screen relative mt-10 mobile:mt-36">
 				{isLoading ? (
 					<div className="w-full h-full flex items-center justify-center absolute">
 						<ScaleLoader color="#256490" role="progressbar" />
 					</div>
 				) : (
-					<div className="products_container flex flex-col items-center laptop:flex-row laptop:items-start pl-[5%] w-full mt-16 laptop:gap-16">
-						<div className="departments flex p-4 w-[80%] mobile:w-[60%] ipad:w-[40%] laptop:w-[20%]">
-							<div className="depart_icon w-[90%] bg-primary-lightblue p-2 flex items-center h-12 justify-between gap-2 mt-6 rounded-t-md relative">
+					<div className="products_container flex flex-col items-center laptop:flex-row laptop:items-start pl-[5%] w-full mt-16 laptop:gap-5">
+						<div className="departments cursor-pointer flex ipad:p-4 w-[100%] mobile:w-[100%] ipad:w-[40%] laptop:w-[28%]">
+							<div className="depart_icon z-20 w-[60%] mobile:w-[50%] laptop:w-[90%] bg-primary-lightblue p-2 flex items-center h-12 justify-between gap-2 mt-6 rounded-t-md relative">
 								<img src={depart_icon} alt="depart_icon" className="w-6 h-10" />
 								<h1 className="text-md font-semibld text-neutral-white">
-									All departments
+									{searchInputs.categoryName
+										? searchInputs.categoryName
+										: 'All categories'}
 								</h1>
 								<FaCaretDown
 									className="text-3xl text-neutral-white"
 									onClick={toggleModel}
 								/>
-								<CategoryModel openModel={openModel} />
+								<CategoryModel
+									setOpenModel={setOpenModel}
+									openModel={openModel}
+								/>
 							</div>
 						</div>
-
-						<div className="product_card_container mt-4 max-h-[95vh] overflow-hidden overflow-y-scroll grid mobile:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-4 w-[80%] gap-10 h-full py-10 mr-[5%] place-items-center">
-							{Array.isArray(products) &&
-								products.map((item: DynamicData, idx: number) => (
-									<div
-										className="product_card bg-neutral-white p-4 flex flex-col rounded-md shadow laptop:max-w-[100%] h-full"
-										key={idx}
-									>
-										<div className="card_profile p-2 w-full flex-grow">
-											<div className="w-full h-48 relative">
-												<div className="w-full overflow-hidden flex shadow h-48">
-													<img
-														src={item.images && item.images[0]}
-														alt="card_profile"
-														className="w-full h-full object-cover rounded-lg"
-													/>
-												</div>
-												<div className="cart_icon cart_btn absolute right-3 bottom-3 text-neutral-white bg-primary-lightblue p-2 text-2xl rounded-full flex items-center justify-center cursor-pointer">
-													<FaCartPlus />
-												</div>
-												{item.discount > 0 && (
-													<div className="discount absolute p-1 rounded bg-action-warning text-neutral-white -right-2 -top-2 font-bold">
-														{item.discount}%
+						<div className="mr-10 tablet:w-full">
+							<div className=" mobile:relative absolute tablet:absolute laptop:relative w-full top-6 mobile:top-0 tablet:top-6 laptop:top-0  pr-[10%] mobile:pr-0 tablet:pr-[10%] laptop:pr-0 flex justify-end cursor-pointer">
+								<div
+									onClick={() => setOpenFilter(!openFilter)}
+									className=" text-primary-lightblue py-1 w-[30%] h-12 mobile:h-8 tablet:h-12 laptop:h-10 mobile:w-[10%] tablet:w-[20%] laptop:w-[12%] right-0 flex items-center gap-2 justify-center rounded-md border-2 border-primary-lightblue"
+								>
+									{' '}
+									<IoFilter color="#266491" size="20px" />
+									<p className="text-md">Filters</p>
+								</div>
+							</div>
+							{openFilter && (
+								<motion.form
+									initial={{ y: '100%', opacity: 1 }}
+									animate={{ y: '0%' }}
+									transition={{ ease: 'easeOut', duration: 1 }}
+									className=" flex w-full gap-5 py-3"
+								>
+									<FormInput
+										type="number"
+										placeholder="Minimum price"
+										otherStyles="h-12 rounded-md pl-3 primary-lightblue"
+										value={`${searchInputs.minPrice && searchInputs.minPrice}`}
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											e.target.value
+												? HandleSearch({ minPrice: e.target.value })
+												: HandleSearch({ minPrice: null })
+										}
+									/>
+									<FormInput
+										type="number"
+										placeholder="Maximum price"
+										otherStyles="h-12 rounded-md pl-3 primary-lightblue"
+										value={`${searchInputs.maxPrice && searchInputs.maxPrice}`}
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+											e.target.value
+												? HandleSearch({ maxPrice: e.target.value })
+												: HandleSearch({ maxPrice: null });
+										}}
+									/>
+								</motion.form>
+							)}
+							<div
+								className={` ${!data ? 'flex flex-1 justify-end items-center' : 'grid mobile:grid-cols-2 laptop:grid-cols-3 desktop:grid-cols-4 gap-10'} product_card_container max-h-[95vh] overflow-hidden overflow-y-scroll h-full py-2 place-items-center`}
+							>
+								{Array.isArray(data) ? (
+									data.map((item: DynamicData, idx: number) => (
+										<div
+											className="product_card bg-neutral-white p-4 flex flex-col rounded-md shadow laptop:max-w-[100%] h-full"
+											key={idx}
+										>
+											<div className="card_profile p-2 w-full flex-grow">
+												<div className="w-full h-48 relative">
+													<div className="w-full overflow-hidden flex shadow h-48">
+														<img
+															src={item.images && item.images[0]}
+															alt="card_profile"
+															className="w-full h-full object-cover rounded-lg"
+														/>
 													</div>
-												)}
-											</div>
-										</div>
-										<div className="card_description pl-2 flex-grow">
-											<h1 className="py-2">
-												{item.name.length > 20
-													? item.name.slice(0, 20) + '...'
-													: item.name}
-											</h1>
-											<div className="ratings flex">
-												<span className="ml-2 flex items-center gap-2">
-													<FaStar />
-													{item.ratings} ratings
-												</span>
-											</div>
-											<div className="price_wish flex justify-between items-center mt-2 gap-2 flex-wrap py-2">
-												<h1 className="text-2xl font-bold">
-													{item.price}
-													<small className="text-base font-normal"> RWF</small>
-												</h1>
-												<div className="wish flex items-center cursor-pointer">
-													<span className="mr-1">add to wish</span>
-													<FaHeart className=" text-action-error text-2xl cursor-pointer wish_btn" />
+													<div className="cart_icon cart_btn absolute right-3 bottom-3 text-neutral-white bg-primary-lightblue p-2 text-2xl rounded-full flex items-center justify-center cursor-pointer">
+														<FaCartPlus />
+													</div>
+													{item.discount > 0 && (
+														<div className="discount absolute p-1 rounded bg-action-warning text-neutral-white -right-2 -top-2 font-bold">
+															{item.discount}%
+														</div>
+													)}
 												</div>
 											</div>
+											<div className="card_description pl-2 flex-grow">
+												<h1 className="py-2">
+													{item.name.length > 20
+														? item.name.slice(0, 20) + '...'
+														: item.name}
+												</h1>
+												<div className="ratings flex">
+													<span className="ml-2 flex items-center gap-2">
+														<FaStar />
+														{item.ratings} ratings
+													</span>
+												</div>
+												<div className="price_wish flex justify-between items-center mt-2 gap-2 flex-wrap py-2">
+													<h1 className="text-2xl font-bold">
+														{item.price}
+														<small className="text-base font-normal">
+															{' '}
+															RWF
+														</small>
+													</h1>
+													<div className="wish flex items-center cursor-pointer">
+														<span className="mr-1">add to wish</span>
+														<FaHeart className=" text-action-error text-2xl cursor-pointer wish_btn" />
+													</div>
+												</div>
+											</div>
+											<div className="btn flex justify-center">
+												<Button
+													title="preview product"
+													url={`/products/${item.id}`}
+													otherStyles={
+														' rounded-l-full rounded-r-full mt-2 font-semibold'
+													}
+													buttonType={'button'}
+												/>
+											</div>
 										</div>
-										<div className="btn flex justify-center">
-											<Button
-												title="preview product"
-												url={`/products/${item.id}`}
-												otherStyles={
-													' rounded-l-full rounded-r-full mt-2 font-semibold'
-												}
-												buttonType={'button'}
-											/>
+									))
+								) : (
+									<div className="w-full h-64 flex items-center justify-center">
+										<div className=" text-primary-lightblue">
+											<h1 className="text-xl text-center">No results found</h1>
+											<p>
+												It seems we can not find any results based on your
+												search.
+											</p>
 										</div>
 									</div>
-								))}
+								)}
+							</div>
 						</div>
 					</div>
 				)}

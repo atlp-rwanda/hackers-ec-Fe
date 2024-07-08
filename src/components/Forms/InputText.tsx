@@ -8,6 +8,8 @@ interface InputProps {
 	placeholder: string;
 	otherStyles?: string;
 	error?: FieldError | undefined;
+	value?: string | number;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const FormInput = forwardRef(
