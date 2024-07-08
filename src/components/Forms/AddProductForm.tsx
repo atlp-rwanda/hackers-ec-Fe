@@ -24,8 +24,7 @@ const AddEditProductForm = () => {
 	const dispatch = useAppDispatch();
 	const { showErrorMessage, showSuccessMessage } = useToast();
 	const { isLoading, categories } = useAppSelector((state) => state.categories);
-
-	const [loading, setLoading] = useState(false);
+	const { isLoading: processing } = useAppSelector((state) => state.product);
 
 	const defaultProductData: productTypes = {
 		name: '',
@@ -94,7 +93,6 @@ const AddEditProductForm = () => {
 		formData: productTypes,
 	) => {
 		try {
-			setLoading(true);
 			if (productData.id) {
 				const res = await dispatch(
 					updateProduct({ productData: formData, id: productData.id }),
@@ -112,8 +110,6 @@ const AddEditProductForm = () => {
 					err?.message ||
 					'Unknown error occurred! Please try again!',
 			);
-		} finally {
-			setLoading(false);
 		}
 	};
 
@@ -257,11 +253,13 @@ const AddEditProductForm = () => {
 						buttonType="submit"
 						url={null}
 						title={
-							loading ? (
+							processing ? (
 								<>
 									<IconLoader className="animate-spin mr-1" />{' '}
 									{'processing....'}
 								</>
+							) : productData.id ? (
+								'Update'
 							) : (
 								'Save'
 							)
