@@ -115,7 +115,7 @@ const ProfileUser = () => {
 			/>
 			<div className="flex flex-col py-10 px-6 tablet:flex-row my-14 bg-overlay">
 				<div className="flex justify-center items-center w-[100%] font-poppins tablet:w-[10rem]">
-					<UserProfileSideBox top={'top-1'} />
+					<UserProfileSideBox />
 				</div>
 				<form
 					onSubmit={handleSubmit(onSubmit)}

@@ -17,10 +17,11 @@ import notificationSlice from './features/notificationSlice';
 import EnableAccountSlice from './features/EnableAccountSlice';
 import SearchSlice from './features/SearchSlice';
 import deleteProductSlice from './features/deleteProductSlice';
-
 import CreateReviewSlice from './features/CreateReviewSlice';
 import fetchReviewSlice from './features/getReviewSice';
 import editReviewSlice from './features/editReviewSlice';
+import passwordSlice from './features/passwordUpdateSlice';
+
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
@@ -44,6 +45,7 @@ export const store = configureStore({
 		createReview: CreateReviewSlice,
 		fetchReview: fetchReviewSlice,
 		editReview: editReviewSlice,
+		updatePassword: passwordSlice,
 	},
 });
 

@@ -31,6 +31,7 @@ import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
 import ProductsPage from '../pages/ProductsPage';
 import SingleProduct from '../pages/SingleProduct';
 import ReviewsPage from '../pages/product/ReviewsPage';
+import UpdatePassword from '../components/Layouts/UpdatePassword';
 
 function Routers() {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -54,6 +55,12 @@ function Routers() {
 				<Route path="users/account/verify/:token" element={<VerifyAccount />} />
 				<Route path="/users/2fa" element={<TwoFactorAuth />} />
 				<Route path="/success" element={<UserRedirection />} />
+				<Route
+					element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}
+				>
+					<Route path="/profile" element={<UserProfile />} />{' '}
+					<Route path="/password" element={<UpdatePassword />} />{' '}
+				</Route>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="about" element={<About />} />
@@ -62,7 +69,6 @@ function Routers() {
 						<Route
 							element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}
 						>
-							<Route path="/profile" element={<UserProfile />} />{' '}
 							<Route path="products">
 								<Route index element={<ProductsPage />} />
 								<Route path=":id" element={<SingleProduct />} />
