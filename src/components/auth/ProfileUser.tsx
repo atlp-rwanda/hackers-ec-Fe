@@ -27,7 +27,6 @@ const ProfileUser = () => {
 	const dispatch = useAppDispatch();
 	const { data, isLoading, error } = useAppSelector((state) => state.profile);
 	const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
 	const { showErrorMessage, showSuccessMessage } = useToast();
 
 	const [initialData, setInitialData] = useState<UserUpdateSchemaType>({

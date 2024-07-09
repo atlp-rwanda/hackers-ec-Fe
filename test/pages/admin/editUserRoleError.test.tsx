@@ -8,7 +8,6 @@ import { HttpResponse, http } from 'msw';
 import { describe, expect } from 'vitest';
 import EditUserForm from '../../../src/components/Forms/editUserForm';
 import GetUser from '../../../src/components/adminDashboard/getUser';
-import EditUser from '../../../src/pages/Admin/EditUserRoles';
 import AllProvider from '../../../src/utils/AllProvider';
 import { db } from '../../mock/db';
 import { server } from '../../mock/server';
@@ -62,34 +61,6 @@ describe('Dashboard Edit role page', () => {
 		db.users.deleteMany({ where: { id: { in: userIds } } });
 	});
 
-	const renderEditusePage = async () => {
-		server.use(
-			http.get(`${import.meta.env.VITE_API_BASE_URL}/roles`, () => {
-				return HttpResponse.json({
-					data: roleData,
-				});
-			}),
-		);
-		server.use(
-			http.get(`${import.meta.env.VITE_API_BASE_URL}/users`, () => {
-				return HttpResponse.json({
-					data: userData,
-				});
-			}),
-		);
-		if (userData.length > 0) {
-			render(
-				<AllProvider>
-					<EditUser />
-				</AllProvider>,
-			);
-			const loader = screen.getByTestId('role-form-loader');
-			expect(loader).toBeInTheDocument();
-			await waitForElementToBeRemoved(loader);
-			expect(loader).not.toBeInTheDocument();
-		}
-	};
-
 	const renderComponent = async () => {
 		server.use(
 			http.get(`${import.meta.env.VITE_API_BASE_URL}/roles`, () => {
@@ -109,9 +80,7 @@ describe('Dashboard Edit role page', () => {
 			http.post(
 				`${import.meta.env.VITE_API_BASE_URL}/users/${userData[0].id}/roles`,
 				() => {
-					return HttpResponse.json({
-						data: userData,
-					});
+					return new HttpResponse(null, { status: 403 });
 				},
 			),
 		);
@@ -132,60 +101,13 @@ describe('Dashboard Edit role page', () => {
 			);
 		}
 	};
-	test('it should test edit role page of user', async () => {
-		await renderEditusePage();
 
-		const firstName = screen.getByText(/kabera/i);
-		const lastName = screen.getByText(/joe/i);
-		const email = screen.getByText(/johndoe1@example.com/i);
-		expect(firstName).toBeInTheDocument();
-		expect(lastName).toBeInTheDocument();
-		expect(email).toBeInTheDocument();
-		const backButton = screen.getByRole('button', { name: /back/i });
-		expect(backButton).toBeInTheDocument();
-
-		const editUsersHeader = screen.getByText(/edit users/i);
-		expect(editUsersHeader).toBeInTheDocument();
-
-		const roleLabel = screen.getByLabelText(/update role/i);
-		expect(roleLabel).toBeInTheDocument();
-
-		const roleSelect = screen.getByRole('combobox', { name: /update role/i });
-		expect(roleSelect).toBeInTheDocument();
-
-		const updateButton = screen.getByRole('button', { name: /update/i });
-		expect(updateButton).toBeInTheDocument();
-	});
-	test('it should render role form', async () => {
+	test('it should provide errorr  the role of user ', async () => {
 		await renderComponent();
-
-		const backButton = screen.getByRole('button', { name: /back/i });
-		expect(backButton).toBeInTheDocument();
-
-		const editUsersHeader = screen.getByText(/edit users/i);
-		expect(editUsersHeader).toBeInTheDocument();
-
-		const roleLabel = screen.getByLabelText(/update role/i);
-		expect(roleLabel).toBeInTheDocument();
-
-		const roleSelect = screen.getByRole('combobox', { name: /update role/i });
-		expect(roleSelect).toBeInTheDocument();
-
-		const updateButton = screen.getByRole('button', { name: /update/i });
-		expect(updateButton).toBeInTheDocument();
-	});
-	test('it should select an admin in select', async () => {
-		await renderComponent();
-		const roleSelect = screen.getByRole('combobox', { name: /update role/i });
-		await userEvent.selectOptions(roleSelect, ['ADMIN']);
-		const selectedItem = screen.getByRole<HTMLOptionElement>('option', {
-			name: 'ADMIN',
-		});
-		expect(selectedItem.selected).toBe(true);
-	});
-
-	test('it should change  the role of user ', async () => {
-		await renderComponent();
+		const loader = screen.getByTestId('role-form-loader');
+		expect(loader).toBeInTheDocument();
+		await waitForElementToBeRemoved(loader);
+		expect(loader).not.toBeInTheDocument();
 		const roleSelect = screen.getByRole('combobox', { name: /update role/i });
 		await userEvent.selectOptions(roleSelect, ['SELLER']);
 
@@ -197,6 +119,6 @@ describe('Dashboard Edit role page', () => {
 		expect(updateButton).toBeInTheDocument();
 		await userEvent.click(updateButton);
 		expect(screen.getByText(/SELLER/i)).toBeInTheDocument();
-		expect(successMessage).toHaveBeenCalledOnce();
+		expect(errorMessage).toHaveBeenCalledOnce();
 	});
 });

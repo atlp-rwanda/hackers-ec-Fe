@@ -45,6 +45,7 @@ const GetUser = (props: getUserType) => {
 			dispatch(getUser()).unwrap();
 		}
 	}, [dispatch]);
+
 	const getRoleName = (roleId: string) => {
 		return roles?.data.find((role: roleType) => role.id === roleId).roleName;
 	};

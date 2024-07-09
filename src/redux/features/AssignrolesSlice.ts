@@ -11,7 +11,6 @@ interface rolesState {
 interface DatatType {
 	id: string;
 	role: string;
-	token: string;
 }
 const initialState: rolesState = {
 	data: [],
@@ -20,23 +19,16 @@ const initialState: rolesState = {
 };
 export const assignRoles = createAsyncThunk(
 	'assignRoles',
-	async ({ id, role, token }: DatatType, { rejectWithValue }) => {
+	async ({ id, role }: DatatType, { rejectWithValue }) => {
 		try {
-			const { data } = await API.post(
-				`/users/${id}/roles`,
-				{ role },
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				},
-			);
+			const { data } = await API.post(`/users/${id}/roles`, { role });
 			return data;
 		} catch (error) {
 			return rejectWithValue(error);
 		}
 	},
 );
+
 const AssignrolesSlice = createSlice({
 	name: 'assignRoles',
 	initialState,

@@ -1,14 +1,15 @@
-import { screen, render } from '@testing-library/react';
-import SingleProduct from '../../src/pages/SingleProduct';
-import { Provider } from 'react-redux';
-import { store } from '../../src/redux/store';
-import { MemoryRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { DynamicData } from '../../src/@types/DynamicData';
-import { db } from '../mock/db';
-import { server } from '../mock/server';
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
+import AllProvider from '../../../../src/utils/AllProvider';
+import { db } from '../../../mock/db';
+import { server } from '../../../mock/server';
 import { HttpResponse, http } from 'msw';
-import AllProvider from '../Utils/AllProvider';
+import AllReview from '../../../../src/components/product/review/AllReview';
+import { DynamicData } from '../../../../src/@types/DynamicData';
+import userEvent from '@testing-library/user-event';
 type userTYpe = {
 	id: string;
 	firstName: string;
@@ -35,19 +36,23 @@ type roleType = {
 	id: string;
 	roleName: string;
 };
-describe('Single product component', () => {
+
+describe('review test', () => {
 	const userData: userTYpe[] = [];
 	const reviewData: reviewType[] = [];
 	const roleData: roleType[] = [];
 	const productData: product[] = [];
+	const successMessage = vi.fn();
+	const errorMessage = vi.fn();
 
 	beforeAll(() => {
 		[1].map(() => {
-			const role = db.roles.create({ roleName: 'BUYER' });
+			const role = db.roles.create({ roleName: 'SELLER' });
 			roleData.push(role);
 		});
 
 		const users = db.users.create({
+			id: '0b52e82c-70a7-4ff3-aad7-8f6a3e406f5c',
 			firstName: 'kabera',
 			lastName: 'joe',
 			email: `johndoe${2}@example.com`,
@@ -64,12 +69,13 @@ describe('Single product component', () => {
 			userId: `${userData[0].id}`,
 			productId: `${productData[0].id}`,
 			feedBack: 'Awesome product',
-			ratings: 4,
+			ratings: 1,
 			user: users,
 			product: prod,
 		});
 		reviewData.push(rev);
 	});
+
 	afterAll(() => {
 		const userIds = userData.map((item) => item.id);
 		const roleIds = roleData.map((item) => item.id);
@@ -77,9 +83,11 @@ describe('Single product component', () => {
 		db.roles.deleteMany({ where: { id: { in: roleIds } } });
 		db.users.deleteMany({ where: { id: { in: userIds } } });
 		db.reviews.deleteMany({ where: { id: { in: reviewIds } } });
+		() => server.close();
 	});
+	afterEach(() => server.resetHandlers());
 
-	const renderProductwithReviewPage = async () => {
+	const renderReviewPage = async () => {
 		server.use(
 			http.get(`${import.meta.env.VITE_API_BASE_URL}/roles`, () => {
 				return HttpResponse.json({
@@ -114,45 +122,41 @@ describe('Single product component', () => {
 				},
 			),
 		);
+
+		server.use(
+			http.post(`${import.meta.env.VITE_API_BASE_URL}/reviews`, () => {
+				return new HttpResponse(null, { status: 403 });
+			}),
+		);
 		if (reviewData.length > 0) {
 			render(
 				<AllProvider>
-					<SingleProduct />
+					<AllReview
+						id={productData[0].id}
+						successMessage={successMessage}
+						Erromesage={errorMessage}
+					/>
 				</AllProvider>,
 			);
+			const loader = screen.getByRole('progressbar');
+			expect(loader).toBeInTheDocument();
+			await waitForElementToBeRemoved(loader);
+			expect(loader).not.toBeInTheDocument();
 		}
 	};
 
-	it('renders the single product component', async () => {
-		render(
-			<Provider store={store}>
-				<MemoryRouter>
-					<SingleProduct />
-				</MemoryRouter>
-			</Provider>,
-		);
-		expect(screen.getByText('Quantity')).toBeInTheDocument();
-		expect(screen.getByText(/Top reviews/i)).toBeInTheDocument();
-		expect(screen.getAllByText(/Submit your review/i)).toHaveLength(2);
-		expect(
-			screen.getByText(/share your feelings with us/i),
-		).toBeInTheDocument();
-		expect(screen.getByText(/Add to cart/i)).toBeInTheDocument();
-		expect(screen.getByText(/Next/i)).toBeInTheDocument();
-		expect(screen.getByText('Previous')).toBeInTheDocument();
-		const Customerreviews = screen.getByText(/Customer reviews/i);
-		const Reviewthisproduct = screen.getByText(/Review this product/i);
-		const Submityourreview = screen.getByTestId('first-button-submit-review');
-		expect(Customerreviews).toBeInTheDocument();
-		expect(Reviewthisproduct).toBeInTheDocument();
+	it('it should add review on product now', async () => {
+		await renderReviewPage();
+		const starRate = screen.getByTestId('star-rate-3');
+		expect(starRate).toBeInTheDocument();
+		await userEvent.click(starRate);
+		const textArea = screen.getByTitle('textArea');
+		expect(textArea).toBeInTheDocument();
+		await userEvent.type(textArea, 'awesome product!');
+		const Submityourreview = screen.getByTestId('submit-review-form');
 		expect(Submityourreview).toBeInTheDocument();
-		const dropBut = screen.getByTestId('drop-down-tab-rate');
-		expect(dropBut).toBeInTheDocument();
-		await userEvent.click(dropBut);
-		const star5 = screen.getByTestId('star-rate-5');
-		expect(star5).toBeInTheDocument();
-	});
-	it('it should render product with review', async () => {
-		await renderProductwithReviewPage();
+		await userEvent.click(Submityourreview);
+		expect(errorMessage).toHaveBeenCalledOnce();
+		expect(screen.getAllByText(/Submit your review/i)).toHaveLength(2);
 	});
 });

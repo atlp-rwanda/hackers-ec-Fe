@@ -20,6 +20,7 @@ import uploadImage from '../assets/uploadImage.svg';
 import world from '../assets/world.png';
 import notificationSound from '../assets/notificationSound.mp3';
 
+import yellowStar from '../assets/yellowStar.ico';
 export {
 	aboutImg,
 	appLogo,
@@ -42,4 +43,5 @@ export {
 	uploadImage,
 	world,
 	notificationSound,
+	yellowStar,
 };

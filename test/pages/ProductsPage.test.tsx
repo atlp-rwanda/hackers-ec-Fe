@@ -131,6 +131,5 @@ describe('Get all products', () => {
 
 		expect(maxPriceInput).toHaveValue(5);
 		expect(minPriceInput).toHaveValue(999999999999999);
-
 	});
 });
