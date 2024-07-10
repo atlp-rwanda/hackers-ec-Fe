@@ -13,8 +13,8 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 
 const SellerProductsPage = () => {
 	const { isLoading } = useAppSelector((state) => state.product);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const data = useAppSelector((state) => state.product.products) || [];
-
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -60,7 +60,7 @@ const SellerProductsPage = () => {
 							<div className="flex justify-between items-center">
 								<h1 className="mb-5">Products</h1>
 								<Link to={'new'}>
-									<button className="md:mx-3 px-4 py-1 laptop:py-2 text-neutral-white font-semibold text-white rounded-lg flex items-center space-x-2 bg-custom-gradient">
+									<button className="md:mx-3 px-4 py-1 laptop:py-2 text-neutral-white font-semibold rounded-lg flex items-center space-x-2 bg-custom-gradient">
 										<span>Add new</span>
 										<RiAddCircleFill className="text-xl" />
 									</button>

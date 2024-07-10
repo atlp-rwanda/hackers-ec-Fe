@@ -1,25 +1,37 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DynamicData } from '../../../@types/DynamicData';
 import API from '../../../utils/api';
+import { SalesResponse } from '../../../@types/SalesTypes';
 
-interface SalesState {
-	data: DynamicData[];
+export interface saleState {
+	allSalesData: DynamicData[];
+	singleSaleData: DynamicData | null;
 	isLoading: boolean;
 	error: string | null;
 	isModalOpen: boolean;
 	selectedSaleId: string | null;
 	deliveryDate: string;
-	action: string;
+	status: string;
+	productName: string;
+	productImage: string;
 }
 
-const initialState: SalesState = {
-	data: [],
+const initialState: saleState = {
+	allSalesData: [],
+	singleSaleData: null,
 	isLoading: false,
 	error: null,
 	isModalOpen: false,
 	selectedSaleId: null,
 	deliveryDate: '',
-	action: 'deliver',
+	status: '',
+	productName: '',
+	productImage: '',
+};
+
+const sortSales = (sales: DynamicData) => {
+	if (!Array.isArray(sales)) return [];
+	return sales.sort((a, b) => a.id.localeCompare(b.id));
 };
 
 export const getSales = createAsyncThunk(
@@ -34,30 +46,50 @@ export const getSales = createAsyncThunk(
 	},
 );
 
-type SalesResponse = {
-	message: string;
-	data: DynamicData[];
-};
+export const getSingleSale = createAsyncThunk(
+	'fetchSingleSale',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			const { data } = await API.get(`/sales/${id}`);
+			return data;
+		} catch (error) {
+			return rejectWithValue(error);
+		}
+	},
+);
 
-const salesSlice = createSlice({
+const sales = createSlice({
 	name: 'sales',
 	initialState,
 	reducers: {
-		openModal: (state, action: PayloadAction<string>) => {
+		openModal: (
+			state,
+			action: PayloadAction<{
+				id: string;
+				status: string;
+				productImage: string;
+				productName: string;
+				deliveryDate: string;
+			}>,
+		) => {
 			state.isModalOpen = true;
-			state.selectedSaleId = action.payload;
+			state.selectedSaleId = action.payload.id;
+			state.status = action.payload.status;
+			state.productImage = action.payload.productImage;
+			state.productName = action.payload.productName;
+			state.deliveryDate = action.payload.deliveryDate;
 		},
 		closeModal: (state) => {
 			state.isModalOpen = false;
 			state.selectedSaleId = null;
 			state.deliveryDate = '';
-			state.action = 'deliver';
+			state.status = '';
 		},
 		setDeliveryDate: (state, action: PayloadAction<string>) => {
 			state.deliveryDate = action.payload;
 		},
-		setAction: (state, action: PayloadAction<string>) => {
-			state.action = action.payload;
+		setStatus: (state, action: PayloadAction<string>) => {
+			state.status = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -69,18 +101,38 @@ const salesSlice = createSlice({
 			getSales.fulfilled,
 			(state, action: PayloadAction<SalesResponse>) => {
 				state.isLoading = false;
-				state.data = action.payload.data;
+				state.allSalesData = sortSales(action.payload.data);
 				state.error = null;
 			},
 		);
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		builder.addCase(getSales.rejected, (state, action: PayloadAction<any>) => {
 			state.isLoading = false;
-			state.error = action.payload;
+			state.error = action.payload.message || 'An error occurred';
 		});
+		builder.addCase(getSingleSale.pending, (state) => {
+			state.isLoading = true;
+			state.error = null;
+		});
+		builder.addCase(
+			getSingleSale.fulfilled,
+			(state, action: PayloadAction<DynamicData>) => {
+				state.isLoading = false;
+				state.singleSaleData = action.payload;
+				state.error = null;
+			},
+		);
+		builder.addCase(
+			getSingleSale.rejected,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			(state, action: PayloadAction<any>) => {
+				state.isLoading = false;
+				state.error = action.payload?.message || 'An error occurred';
+			},
+		);
 	},
 });
 
-export const { openModal, closeModal, setDeliveryDate, setAction } =
-	salesSlice.actions;
-export default salesSlice.reducer;
+export const { openModal, closeModal, setDeliveryDate, setStatus } =
+	sales.actions;
+export default sales.reducer;

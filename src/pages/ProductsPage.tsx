@@ -25,6 +25,7 @@ import Chat from '../components/chat/ChatComponent';
 import AddToWish from '../components/wishes/AddToWish';
 import useWish from '../hooks/useWishlist';
 import { ThemeContext } from '../hooks/useWishcontext';
+import SearchResultNotFound from './SearchResultNotFound';
 
 const ProductsPage = () => {
 	const [openFilter, setOpenFilter] = useState(false);
@@ -79,7 +80,7 @@ const ProductsPage = () => {
 	}, [products, dispatch]);
 
 	useEffect(() => {
-		dispatch(search(searchInputs));
+		dispatch(search(searchInputs)).unwrap();
 	}, [dispatch, searchInputs]);
 
 	const HandleSearch = async (searchInput: searchInputs) => {
@@ -223,15 +224,7 @@ const ProductsPage = () => {
 										</div>
 									))
 								) : (
-									<div className="w-full h-64 flex items-center justify-center">
-										<div className=" text-primary-lightblue">
-											<h1 className="text-xl text-center">No results found</h1>
-											<p>
-												It seems we can not find any results based on your
-												search.
-											</p>
-										</div>
-									</div>
+									<SearchResultNotFound />
 								)}
 							</div>
 						</div>
