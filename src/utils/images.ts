@@ -1,3 +1,4 @@
+import emptyOrder from '../assets/EmptyOrder.png';
 import nav_logo from '../assets/Home_logo.png';
 import aboutImg from '../assets/aboutImg.png';
 import benefits from '../assets/benefits.png';
@@ -12,6 +13,7 @@ import message from '../assets/message.png';
 import notfoundgif from '../assets/notFound.gif';
 import notificationSound from '../assets/notificationSound.mp3';
 import oneStep from '../assets/oneStep.png';
+import order_icon from '../assets/order-icon.svg';
 import roundedLogo from '../assets/otherLogo.svg';
 import payment from '../assets/payment.png';
 import dashProfileIcon from '../assets/profileIcon.svg';
@@ -19,11 +21,10 @@ import quality from '../assets/quality.png';
 import registerLoginBackground from '../assets/register-login-background.svg';
 import registerLoginCardImage from '../assets/register-login-card-img.png';
 import uploadImage from '../assets/uploadImage.svg';
-import world from '../assets/world.png';
-
-import order_icon from '../assets/order-icon.svg';
-import yellowStar from '../assets/yellowStar.ico';
 import wishlist from '../assets/wishlist.png';
+import world from '../assets/world.png';
+import yellowStar from '../assets/yellowStar.ico';
+
 export {
 	aboutImg,
 	appLogo,
@@ -32,6 +33,7 @@ export {
 	dashProfileIcon,
 	depart_icon,
 	emptyCart,
+	emptyOrder,
 	gift,
 	googleIcon,
 	message,
@@ -40,14 +42,14 @@ export {
 	notfoundgif,
 	notificationSound,
 	oneStep,
+	order_icon,
 	payment,
 	quality,
 	registerLoginBackground,
 	registerLoginCardImage,
 	roundedLogo,
 	uploadImage,
+	wishlist,
 	world,
 	yellowStar,
-	order_icon,
-	wishlist,
 };

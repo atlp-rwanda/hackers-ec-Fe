@@ -9,11 +9,12 @@ import { describe, expect, it } from 'vitest';
 import { DynamicData } from '../../src/@types/DynamicData';
 import Nav from '../../src/components/Nav';
 import cartReducer from '../../src/redux/features/cartSlice';
+import logoutReducer from '../../src/redux/features/logoutSlice';
 import navReducer from '../../src/redux/features/navSlice';
 import notificationReducer from '../../src/redux/features/notificationSlice';
 import profileReducer from '../../src/redux/features/userUpdateSlice';
+import fetchInfo from '../../src/utils/userDetails';
 import { localStorageMock } from '../mock/localStorage';
-import logoutReducer from '../../src/redux/features/logoutSlice';
 
 vi.mock('jwt-decode', () => ({
 	jwtDecode: vi.fn(),
@@ -79,6 +80,16 @@ describe('Nav Component', () => {
 		expect(searchField).toBeInTheDocument();
 	});
 	it('should render the span with numberOfItem when numberOfItem > 0', () => {
+		const mockToken = 'valid-token';
+		const mockDecoded = { id: 1, role: 'BUYER' };
+
+		localStorage.setItem('access_token', mockToken);
+		(jwtDecode as unknown as DynamicData).mockReturnValue(mockDecoded);
+
+		const result = fetchInfo();
+		expect(result).toEqual(mockDecoded);
+		expect(jwtDecode).toHaveBeenCalledWith(mockToken);
+
 		const preloadedState = {
 			cart: {
 				numberOfItem: 5,
@@ -95,6 +106,16 @@ describe('Nav Component', () => {
 	});
 
 	it('should not render the span when numberOfItem is 0', () => {
+		const mockToken = 'valid-token';
+		const mockDecoded = { id: 1, role: 'BUYER' };
+
+		localStorage.setItem('access_token', mockToken);
+		(jwtDecode as unknown as DynamicData).mockReturnValue(mockDecoded);
+
+		const result = fetchInfo();
+		expect(result).toEqual(mockDecoded);
+		expect(jwtDecode).toHaveBeenCalledWith(mockToken);
+
 		const preloadedState = {
 			cart: {
 				numberOfItem: 0,

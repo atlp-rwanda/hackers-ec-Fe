@@ -1,24 +1,38 @@
+import { useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import HandleGoogleLogin from '../components/HandleGoogleLogin';
 import Layout from '../components/Layout';
 import DashboardLayout from '../components/Layouts/DashboardLayout';
-import About from '../pages/About';
-import Home from '../pages/Home';
-import NotFound from '../pages/NotFound';
-import UserRedirection from '../pages/SellerRedirection';
-import Login from '../pages/auth/Login';
-import Register from '../pages/auth/Register';
-import UserProfile from '../pages/auth/Profile';
-import Contacts from '../pages/Contacts';
-import VerifyAccount from '../components/auth/VerifyAccount';
-import TwoFactorAuth from '../pages/auth/TwoFactor';
-import ForgotPassword from '../pages/forgottenPassword/ForgotPassword';
-import ResetPassword from '../pages/resetPassword/resetPassword';
-import UserRedirectionPage from '../pages/userRedirection';
-import EditUser from '../pages/Admin/EditUserRoles';
-import ErrorPage from '../pages/ErrorPage';
-import HandleGoogleLogin from '../components/HandleGoogleLogin';
 import PreventSeller from '../components/Layouts/PreventSeller';
 import ProtectedDashboard from '../components/Layouts/ProtectedDashboard';
+import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
+import UpdatePassword from '../components/Layouts/UpdatePassword';
+import VerifyAccount from '../components/auth/VerifyAccount';
+import About from '../pages/About';
+import EditUser from '../pages/Admin/EditUserRoles';
+import Contacts from '../pages/Contacts';
+import ErrorPage from '../pages/ErrorPage';
+import Home from '../pages/Home';
+import NotFound from '../pages/NotFound';
+import PaymentSuccess from '../pages/PaymentSuccess';
+import ProductsPage from '../pages/ProductsPage';
+import UserRedirection from '../pages/SellerRedirection';
+import SingleProduct from '../pages/SingleProduct';
+import Wishlist from '../pages/Wishlist';
+import Login from '../pages/auth/Login';
+import UserProfile from '../pages/auth/Profile';
+import Register from '../pages/auth/Register';
+import TwoFactorAuth from '../pages/auth/TwoFactor';
+import Cart from '../pages/carts/Carts';
+import Orders from '../pages/dashboard/buyer/order/Orders';
+import SingleOrders from '../pages/dashboard/buyer/order/SingleOrders';
+import SalesPage from '../pages/dashboard/seller/Sales/SalesPage';
+import SingleSale from '../pages/dashboard/seller/Sales/SingleSale';
+import ForgotPassword from '../pages/forgottenPassword/ForgotPassword';
+import ReviewsPage from '../pages/product/ReviewsPage';
+import ResetPassword from '../pages/resetPassword/resetPassword';
+import UserRedirectionPage from '../pages/userRedirection';
+import { useAppSelector } from '../redux/hooks/hooks';
 import {
 	AddProducts,
 	DashboardContent,
@@ -27,19 +41,6 @@ import {
 	UserRoles,
 	Users,
 } from '../utils/DashboardUtils';
-import ProtectedRoutes from '../components/Layouts/ProtectedRoutes';
-import ProductsPage from '../pages/ProductsPage';
-import SingleProduct from '../pages/SingleProduct';
-import ReviewsPage from '../pages/product/ReviewsPage';
-import UpdatePassword from '../components/Layouts/UpdatePassword';
-import Cart from '../pages/carts/Carts';
-import Wishlist from '../pages/Wishlist';
-import SalesPage from '../pages/dashboard/seller/Sales/SalesPage';
-import SingleSale from '../pages/dashboard/seller/Sales/SingleSale';
-import { useEffect } from 'react';
-import { useAppSelector } from '../redux/hooks/hooks';
-import PaymentSuccess from '../pages/PaymentSuccess';
-import SingleOrders from '../pages/dashboard/buyer/order/SingleOrders';
 
 function Routers() {
 	const { isLoggedOut } = useAppSelector((state) => state.logout);
@@ -85,6 +86,8 @@ function Routers() {
 
 					<Route element={<ProtectedRoutes roles={['BUYER']} />}>
 						<Route path="/wishes" element={<Wishlist />} />
+						<Route path="/orders" element={<Orders />} />
+						<Route path="/orders/:id" element={<SingleOrders />} />
 					</Route>
 
 					<Route element={<ProtectedRoutes roles={['BUYER']} />}>

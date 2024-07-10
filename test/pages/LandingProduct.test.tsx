@@ -4,15 +4,15 @@ import {
 	screen,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
-import LandingProduct from '../../src/pages/LandingProduct';
-import { db } from '../mock/db';
-import { server } from '../mock/server';
-import AllProvider from '../../src/AllProvider';
-import { http, HttpResponse } from 'msw';
-import { localStorageMock } from '../mock/localStorage';
-import fetchInfo from '../../src/utils/userDetails';
 import { jwtDecode } from 'jwt-decode';
+import { http, HttpResponse } from 'msw';
 import { DynamicData } from '../../src/@types/DynamicData';
+import AllProvider from '../../src/AllProvider';
+import LandingProduct from '../../src/pages/LandingProduct';
+import fetchInfo from '../../src/utils/userDetails';
+import { db } from '../mock/db';
+import { localStorageMock } from '../mock/localStorage';
+import { server } from '../mock/server';
 import userEvent from '@testing-library/user-event';
 
 type ProductType = {
@@ -137,9 +137,8 @@ describe('Get all products', () => {
 		const filterButton = screen.getByText(/Filters/i);
 		const user = userEvent.setup();
 		await user.click(filterButton);
-
-		const minPriceInput = await screen.findByPlaceholderText(/Minimum price/i);
-		const maxPriceInput = await screen.findByPlaceholderText(/Maximum price/i);
+		const minPriceInput = screen.getByPlaceholderText('Minimum price');
+		const maxPriceInput = screen.getByPlaceholderText('Maximum price');
 
 		await user.type(maxPriceInput, '5');
 		await user.type(minPriceInput, '999999999999999');

@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
-import fetchInfo from '../utils/userDetails';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { DynamicData } from '../@types/DynamicData';
 import useToast from '../hooks/useToast';
 import { Logout, resetLogoutState } from '../redux/features/logoutSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import fetchInfo from '../utils/userDetails';
 import { ButtonIcon } from './buttons/ButtonIcon';
 import IconLoader from './Loaders/IconLoader';
-import { DynamicData } from '../@types/DynamicData';
 
 interface ProfileDropdownProps {
 	image: string | undefined;
@@ -15,6 +15,8 @@ interface ProfileDropdownProps {
 
 const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 	const [isOpen, setIsOpen] = useState(false);
+
+	const userData = fetchInfo();
 
 	const toggleDropdown = () => {
 		setIsOpen(!isOpen);
@@ -82,15 +84,17 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 						>
 							My profile
 						</Link>
-						<Link
-							to="/orders"
-							className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-lightblue hover:text-neutral-white"
-							role="menuitem"
-							onClick={toggleDropdown}
-						>
-							My orders
-						</Link>
-						{fetchInfo()?.role === 'BUYER' && (
+						{userData?.role === 'BUYER' && (
+							<Link
+								to="/orders"
+								className="block px-4 py-2 text-sm text-gray-700 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+								role="menuitem"
+								onClick={toggleDropdown}
+							>
+								My orders
+							</Link>
+						)}
+						{userData?.role === 'BUYER' && (
 							<Link
 								to="/wishes"
 								className="block px-4 py-2 text-sm text-gray-700 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"

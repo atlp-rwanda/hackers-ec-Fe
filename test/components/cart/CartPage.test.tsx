@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { Mock, vi } from 'vitest';
-import CartPage from '../../../src/components/carts/CartPage';
-import { useAppSelector } from '../../../src/redux/hooks/hooks';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { Mock, vi } from 'vitest';
+import CartPage from '../../../src/components/carts/CartPage';
 import { payModel } from '../../../src/redux/features/toggleSlice';
+import { useAppSelector } from '../../../src/redux/hooks/hooks';
 
 const mockStore = configureStore([]);
 

@@ -7,6 +7,7 @@ import { manipulateSearchInput } from '../redux/features/SearchSlice';
 import { fetchUserProfile } from '../redux/features/userUpdateSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { nav_logo, nav_logo_mobile } from '../utils/images';
+import fetchInfo from '../utils/userDetails';
 import { ButtonIcon } from './buttons/ButtonIcon';
 import Notification from './notification/Notification';
 import ProfileDropdown from './ProfileDropdown';
@@ -16,10 +17,10 @@ const Nav = () => {
 	const accessToken = localStorage.getItem('access_token') || '';
 	const dispatch = useAppDispatch();
 	const openModel = useAppSelector((state) => state.nav.openModel);
-
 	const { data } = useAppSelector((state) => state.profile) || {};
 	const { isLoggedOut } = useAppSelector((state) => state.logout);
 	const { numberOfItem } = useAppSelector((state) => state.cart);
+	const userData = fetchInfo();
 
 	// Fetch user data when the component mounts
 	useEffect(() => {
@@ -92,19 +93,21 @@ const Nav = () => {
 							</div>
 						</div>
 						<div className="right_navigations w-full ipad:w-max flex items-center justify-end gap-6">
-							<Link to={'/carts'}>
-								<div className="cart relative">
-									<IoCart className="text-3xl mobile:text-xl ipad:text-3xl text-primary-lightblue" />
-									{numberOfItem > 0 ? (
-										<span
-											data-testid="number-of-item"
-											className="bg-neutral-darkRed text-sm mobile:text-base p-1 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6"
-										>
-											{numberOfItem}
-										</span>
-									) : null}
-								</div>
-							</Link>
+							{userData?.role === 'BUYER' && (
+								<Link to={'/carts'}>
+									<div className="cart relative">
+										<IoCart className="text-3xl mobile:text-xl ipad:text-3xl text-primary-lightblue" />
+										{numberOfItem > 0 ? (
+											<span
+												data-testid="number-of-item"
+												className="bg-neutral-darkRed text-sm mobile:text-base p-1 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6"
+											>
+												{numberOfItem}
+											</span>
+										) : null}
+									</div>
+								</Link>
+							)}
 
 							{accessToken && !isLoggedOut ? (
 								<>
