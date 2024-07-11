@@ -92,3 +92,39 @@ export const departmentItemVariants = {
 	hidden: { opacity: 0, x: -50 },
 	visible: { opacity: 1, x: 0, transition: { duration: 1 } },
 };
+
+export const chatModalVariants = {
+	initial: {
+		scale: 0,
+		y: '60%',
+	},
+	animate: {
+		scale: 1,
+		y: '0%',
+		transition: {
+			duration: 0.3,
+			ease: 'easeInOut',
+		},
+	},
+	exit: {
+		scale: 0,
+		y: '60%',
+		transition: {
+			duration: 0.3,
+			ease: 'easeInOut',
+		},
+	},
+};
+
+export const chartRejectVariants = {
+	initial: {
+		scale: 0,
+	},
+	animate: {
+		scale: 1,
+		transition: {
+			duration: 0.3,
+			ease: 'easeInOut',
+		},
+	},
+};

@@ -17,7 +17,7 @@ const Home = () => {
 		<>
 			<div className="parent_container min-h-screen pt-[8rem]">
 				<div className="wrapper flex flex-col ipad:flex-row">
-					<div className="right_hero flex flex-col gap-4 mobile:gap-6 tablet:gap-10 ipad:justify-center w-full absolute z-30 ipad:z-0 ipad:relative top-[15%] px-[5%]">
+					<div className="right_hero flex flex-col gap-4 mobile:gap-6 tablet:gap-10 ipad:justify-center w-full absolute z-10 ipad:z-0 ipad:relative top-[15%] px-[5%]">
 						<motion.div
 							className="text ipad:absolute ipad:w-[120%] top-[30%] ipad:top-[25%] laptop:top-[20%] desktop:top-[26%] flex flex-col gap-2"
 							initial={{ y: '10%', opacity: 1 }}

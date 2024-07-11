@@ -16,6 +16,7 @@ export default defineConfig({
 				'src/redux',
 				'src/main.tsx',
 				'src/utils/variants.ts',
+				'src/utils/MockNavigate.ts',
 			],
 		},
 	},
