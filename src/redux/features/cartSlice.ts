@@ -101,6 +101,7 @@ const cartsSlice = createSlice({
 			(state, action: PayloadAction<DynamicData>) => {
 				state.isLoading = false;
 				state.carts = action.payload.data;
+				state.carts.products = sortProducts(state.carts?.products);
 				state.numberOfItem = action.payload.data.products.length;
 			},
 		);

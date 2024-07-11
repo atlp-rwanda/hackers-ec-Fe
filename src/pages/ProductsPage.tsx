@@ -9,6 +9,7 @@ import Button from '../components/buttons/Button';
 import ProductPageAddToCart from '../components/carts/ProductPageAddToCart';
 import CategoryModel from '../components/CategoryModel';
 import FormInput from '../components/Forms/InputText';
+import useToast from '../hooks/useToast';
 import { getCarts } from '../redux/features/cartSlice';
 import { getProducts } from '../redux/features/productSlice';
 import {
@@ -26,6 +27,7 @@ const ProductsPage = () => {
 	const { data, searchInputs } = useAppSelector((state) => state.search);
 	const { carts } = useAppSelector((state) => state.cart);
 	const [openModel, setOpenModel] = useState(false);
+	const { showErrorMessage } = useToast();
 
 	const toggleModel = () => {
 		setOpenModel(!openModel);
@@ -43,15 +45,29 @@ const ProductsPage = () => {
 	});
 
 	useEffect(() => {
-		if (products && !products.length && tokenInfo) {
-			dispatch(getProducts()).unwrap();
-		}
+		const fetchProducts = async () => {
+			try {
+				if (products && !products.length && tokenInfo) {
+					await dispatch(getProducts()).unwrap();
+				}
+			} catch (error) {
+				showErrorMessage('Error fetching products!');
+			}
+		};
+		fetchProducts();
 	}, [dispatch, products, tokenInfo]);
 
 	useEffect(() => {
-		if (carts && !carts.length) {
-			dispatch(getCarts()).unwrap();
-		}
+		const fetchCarts = async () => {
+			try {
+				if (carts && !carts.length) {
+					await dispatch(getCarts()).unwrap();
+				}
+			} catch (error) {
+				showErrorMessage('Error fetching carts!');
+			}
+		};
+		fetchCarts();
 	}, [dispatch]);
 
 	useEffect(() => {
