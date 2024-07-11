@@ -1,30 +1,19 @@
-import SuccessPageInput from '../../../src/components/Redirection/userRedirectionInput';
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { describe, expect, it } from 'vitest';
-import { store } from '../../../src/redux/store';
+import { describe, it, expect } from 'vitest';
+import UserRedirectionInput from '../../../src/components/redirections/UserRedirectionInput';
 
-describe('SuccessPageInput', () => {
-	it('renders without crashing', () => {
-		render(
-			<Provider store={store}>
-				<BrowserRouter>
-					<SuccessPageInput text={'test'} />
-				</BrowserRouter>
-			</Provider>,
-		);
+describe('UserRedirectionInput Component', () => {
+	it('renders the text correctly', () => {
+		const text = 'This is a message';
+		render(<UserRedirectionInput text={text} />);
+		expect(screen.getByText(text)).toBeInTheDocument();
 	});
 
-	it('displays the correct text', () => {
-		render(
-			<Provider store={store}>
-				<BrowserRouter>
-					<SuccessPageInput text={'test'} />
-				</BrowserRouter>
-			</Provider>,
-		);
-
-		expect(screen.getByText('test')).toBeInTheDocument();
+	it('applies additional styles correctly', () => {
+		const text = 'Styled text';
+		const otherStyles = 'text-blue-500 font-bold';
+		render(<UserRedirectionInput text={text} otherStyles={otherStyles} />);
+		const element = screen.getByText(text);
+		expect(element).toHaveClass(otherStyles);
 	});
 });

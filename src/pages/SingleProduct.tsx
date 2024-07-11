@@ -1,23 +1,24 @@
-import { FaHeart, FaCartPlus, FaPlus, FaMinus } from 'react-icons/fa';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { useEffect, useState } from 'react';
-import { getSinleProducts } from '../redux/features/productSlice';
-import { ButtonIcon } from '../components/buttons/ButtonIcon';
+import { FaHeart } from 'react-icons/fa';
+import { IoMdArrowDropdown } from 'react-icons/io';
+import { IoChevronBackSharp } from 'react-icons/io5';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Slider from 'react-slick';
 import { ScaleLoader } from 'react-spinners';
-import { IoChevronBackSharp } from 'react-icons/io5';
-import ProductImageCard from '../components/cards/ProductImageCard';
-import StarsRatings from '../components/product/review/Stars';
 import { DynamicData } from '../@types/DynamicData';
-import { IoMdArrowDropdown } from 'react-icons/io';
-import useToken from '../hooks/useToken';
-import { fetchReview } from '../redux/features/getReviewSice';
+import { ButtonIcon } from '../components/buttons/ButtonIcon';
+import ProductImageCard from '../components/cards/ProductImageCard';
+import SinglePageAddToCart from '../components/carts/SingleProductAddToCart';
 import ReviewForm from '../components/Forms/ReviewForm';
 import RatingModel from '../components/product/review/ratingModel';
-import fetchInfo from '../utils/userDetails';
-import useToast from '../hooks/useToast';
+import StarsRatings from '../components/product/review/Stars';
 import UseScrollBarRemove from '../hooks/UseScrollBarRemove';
+import useToast from '../hooks/useToast';
+import useToken from '../hooks/useToken';
+import { fetchReview } from '../redux/features/getReviewSice';
+import { getSinleProducts } from '../redux/features/productSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import fetchInfo from '../utils/userDetails';
 
 const SingleProduct = () => {
 	const { isLoading, singleProduct } = useAppSelector((state) => state.product);
@@ -98,7 +99,7 @@ const SingleProduct = () => {
 					</div>
 				) : (
 					<>
-						<div className="single_product_wrapper relative bg-neutral-white product_card w-[98%] mobile:max-w-[80%] m-auto h-auto rounded-2xl laptop:mt-44">
+						<div className="single_product_wrapper relative bg-neutral-white product_card w-[98%] mobile:max-w-[80%] m-auto h-auto rounded-2xl laptop:mt-44 laptop:mb-[6%]">
 							<div className="top_single_product flex flex-col laptop:flex-row gap-10 p-[5%] ipad:p-[6%] laptop:p-[4%] ">
 								<div className="images flex flex-col w-full laptop:w-[50%]">
 									<div className="image flex w-full h-[40vh] mobile:h-[40vh] laptop:h-[50vh] rounded-2xl overflow-hidden relative">
@@ -129,22 +130,7 @@ const SingleProduct = () => {
 										{singleProduct[0]?.price}{' '}
 										<small className="text-base font-normal">RWF</small>
 									</h1>
-
-									<div className="action flex justify-between gap-3">
-										<div className="quantity flex flex-col gap-2">
-											<h1>Quantity</h1>
-											<div className="buttons flex gap-3">
-												<FaMinus className=" p-1 rounded-full text-2xl border-2 border-primary-lightblue cursor-pointer" />{' '}
-												1{' '}
-												<FaPlus className=" bg-primary-lightblue p-1 rounded-full text-2xl border-2 border-primary-lightblue text-neutral-white cursor-pointer" />
-											</div>
-										</div>
-										<div className="add_to_cart  flex items-center">
-											<ButtonIcon>
-												<FaCartPlus /> Add to cart
-											</ButtonIcon>
-										</div>
-									</div>
+									{id && <SinglePageAddToCart productId={id} />}
 								</div>
 							</div>
 							<Link to={'/products'}>
@@ -244,7 +230,6 @@ const SingleProduct = () => {
 								</div>
 							</div>
 						</div>
-
 						<div
 							className={`${reviewForm ? 'fixed top-0 left-0  h-full w-full z-[200] b-neutral-white flex items-center justify-center' : 'hidden'}`}
 						>

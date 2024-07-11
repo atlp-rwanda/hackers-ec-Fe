@@ -1,23 +1,24 @@
-import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
-import { toggleModel } from '../redux/features/navSlice';
+import { useEffect } from 'react';
+import { IoCart, IoMenu } from 'react-icons/io5';
 import { Link, NavLink } from 'react-router-dom';
 import LandingPageModel from '../components/LandingPageModel';
-import { nav_logo } from '../utils/images';
-import { nav_logo_mobile } from '../utils/images';
-import { IoCart, IoMenu } from 'react-icons/io5';
-import { ButtonIcon } from './buttons/ButtonIcon';
-import ProfileDropdown from './ProfileDropdown';
-import { fetchUserProfile } from '../redux/features/userUpdateSlice';
-import { useEffect } from 'react';
-import Notification from './notification/Notification';
+import { toggleModel } from '../redux/features/navSlice';
 import { manipulateSearchInput } from '../redux/features/SearchSlice';
+import { fetchUserProfile } from '../redux/features/userUpdateSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import { nav_logo, nav_logo_mobile } from '../utils/images';
+import { ButtonIcon } from './buttons/ButtonIcon';
+import Notification from './notification/Notification';
+import ProfileDropdown from './ProfileDropdown';
 
 const Nav = () => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const accessToken = localStorage.getItem('access_token') || '';
 	const dispatch = useAppDispatch();
 	const openModel = useAppSelector((state) => state.nav.openModel);
 
 	const { data } = useAppSelector((state) => state.profile) || {};
+	const { numberOfItem } = useAppSelector((state) => state.cart);
 
 	// Fetch user data when the component mounts
 	useEffect(() => {
@@ -90,12 +91,20 @@ const Nav = () => {
 							</div>
 						</div>
 						<div className="right_navigations w-full ipad:w-max flex items-center justify-end gap-6">
-							<div className="cart relative pt-2">
-								<IoCart className="text-3xl mobile:text-3xl text-primary-lightblue" />
-								<span className="bg-neutral-darkRed text-sm mobile:text-base p-1 mt-2 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6">
-									10
-								</span>
-							</div>
+							<Link to={'/carts'}>
+								<div className="cart relative">
+									<IoCart className="text-3xl mobile:text-xl ipad:text-3xl text-primary-lightblue" />
+									{numberOfItem > 0 ? (
+										<span
+											data-testid="number-of-item"
+											className="bg-neutral-darkRed text-sm mobile:text-base p-1 absolute -top-3 -right-3 rounded-full flex items-center justify-center text-neutral-white font-semibold mobile:w-6 w-5 h-5 mobile:h-6"
+										>
+											{numberOfItem}
+										</span>
+									) : null}
+								</div>
+							</Link>
+
 							{accessToken ? (
 								<>
 									<Notification />

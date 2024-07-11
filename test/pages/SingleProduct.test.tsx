@@ -131,13 +131,11 @@ describe('Single product component', () => {
 				</MemoryRouter>
 			</Provider>,
 		);
-		expect(screen.getByText('Quantity')).toBeInTheDocument();
 		expect(screen.getByText(/Top reviews/i)).toBeInTheDocument();
 		expect(screen.getAllByText(/Submit your review/i)).toHaveLength(2);
 		expect(
 			screen.getByText(/share your feelings with us/i),
 		).toBeInTheDocument();
-		expect(screen.getByText(/Add to cart/i)).toBeInTheDocument();
 		expect(screen.getByText(/Next/i)).toBeInTheDocument();
 		expect(screen.getByText('Previous')).toBeInTheDocument();
 		const Customerreviews = screen.getByText(/Customer reviews/i);
