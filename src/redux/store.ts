@@ -18,12 +18,13 @@ import resetPasswordSlice from './features/resetSlice';
 import SearchSlice from './features/SearchSlice';
 import profileSlice from './features/userUpdateSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
-
 import CreateReviewSlice from './features/CreateReviewSlice';
 import editReviewSlice from './features/editReviewSlice';
 import fetchReviewSlice from './features/getReviewSice';
 import passwordSlice from './features/passwordUpdateSlice';
 import chatSlice from './features/chatSlice';
+import AllSaleSlice from './features/Sales/AllSaleSlice';
+import statisticsSlice from './features/statisticsSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -51,6 +52,8 @@ export const store = configureStore({
 		updatePassword: passwordSlice,
 		cart: cartSlice,
 		chat: chatSlice,
+		sales: AllSaleSlice,
+		statistics: statisticsSlice,
 	},
 });
 

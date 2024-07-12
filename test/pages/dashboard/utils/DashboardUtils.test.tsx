@@ -8,7 +8,7 @@ import {
 	UserRoles,
 	Users,
 } from '../../../../src/utils/DashboardUtils';
-import { localStorageMock } from '../../../mock/localStorage';
+import { localStorageMock, ResizeObserver } from '../../../mock/localStorage';
 import { jwtDecode } from 'jwt-decode';
 import { DynamicData } from '../../../../src/@types/DynamicData';
 import AllProvider from '../../../Utils/AllProvider';
@@ -19,6 +19,7 @@ vi.mock('jwt-decode', () => ({
 	jwtDecode: vi.fn(),
 }));
 
+global.ResizeObserver = ResizeObserver;
 Object.defineProperty(global, 'localStorage', { value: localStorageMock });
 
 describe('Dashboard products', () => {
@@ -82,7 +83,7 @@ describe('Dashboard products', () => {
 			</AllProvider>,
 		);
 
-		expect(screen.getByText(/Hello Seller/i)).toBeInTheDocument();
+		expect(screen.getByText(/wait/i)).toBeInTheDocument();
 	});
 
 	it('should', () => {

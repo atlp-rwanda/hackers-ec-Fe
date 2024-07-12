@@ -1,9 +1,9 @@
 import { UserInfoTypes } from '../@types/userType';
 import AdminDashboardAllUser from '../pages/Admin/DashboardGetUser';
 import EditUser from '../pages/Admin/EditUserRoles';
-import Roles from '../pages/Admin/Roles';
 import NotFound from '../pages/NotFound';
 import AddProduct from '../pages/dashboard/seller/AddProduct';
+import SellerDashboard from '../pages/dashboard/seller/SellerDashboard';
 import SellerProductsPage from '../pages/dashboard/seller/SellerProductsPage';
 import SellerSingleProduct from '../pages/dashboard/seller/SellerSingleProduct';
 import fetchInfo from './userDetails';
@@ -37,7 +37,7 @@ export const DashboardContent = () => {
 	return decoded.role === 'ADMIN' ? (
 		<div>Hello Admin</div>
 	) : decoded.role === 'SELLER' ? (
-		<div>Hello Seller</div>
+		<SellerDashboard />
 	) : (
 		<div>Unauthorized access</div>
 	);
@@ -71,7 +71,7 @@ export const UserRoles = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
 	return decoded.role === 'ADMIN' ? (
-		<Roles />
+		<div>role</div>
 	) : decoded.role === 'SELLER' ? (
 		<NotFound />
 	) : (
