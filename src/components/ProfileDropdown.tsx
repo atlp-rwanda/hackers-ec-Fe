@@ -1,5 +1,7 @@
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import fetchInfo from '../utils/userDetails';
 
 interface ProfileDropdownProps {
 	image: string | undefined;
@@ -32,7 +34,10 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 			</div>
 
 			{isOpen && (
-				<div
+				<motion.div
+					initial={{ opacity: 0, scale: 0.5 }}
+					animate={{ opacity: 1, scale: 1 }}
+					transition={{ duration: 0.4 }}
 					className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-neutral-white ring-1 ring-black ring-opacity-5"
 					role="menu"
 					aria-orientation="vertical"
@@ -41,20 +46,40 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 					<div className="py-1" role="none">
 						<Link
 							to="/profile"
-							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
 							role="menuitem"
+							onClick={toggleDropdown}
 						>
-							Profile
+							My profile
 						</Link>
 						<Link
-							to="/logout"
-							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+							to="/orders"
+							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
 							role="menuitem"
+							onClick={toggleDropdown}
+						>
+							My orders
+						</Link>
+						{fetchInfo()?.role === 'BUYER' && (
+							<Link
+								to="/wishes"
+								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+								role="menuitem"
+								onClick={toggleDropdown}
+							>
+								<p> My wishlist</p>
+							</Link>
+						)}
+						<Link
+							to="/logout"
+							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+							role="menuitem"
+							onClick={toggleDropdown}
 						>
 							Logout
 						</Link>
 					</div>
-				</div>
+				</motion.div>
 			)}
 		</div>
 	);

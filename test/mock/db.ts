@@ -56,4 +56,10 @@ export const db = factory({
 		currentProductsValue: () => parseFloat(faker.commerce.price(1000, 500000)),
 		totalRemainingProducts: () => faker.number.int(),
 	},
+	wishes: {
+		id: primaryKey(() => faker.string.uuid()),
+		productId: () => faker.commerce.productName(),
+		user: oneOf('users'),
+		product: oneOf('products'),
+	},
 });

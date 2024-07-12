@@ -8,7 +8,7 @@ describe('profile DropDown component', () => {
 		const { img, dropDownbtn } = renderComponents();
 		const downToggle = userEvent.setup();
 		await downToggle.click(dropDownbtn);
-		expect(screen.getByText('Profile')).toBeInTheDocument();
+		expect(screen.getByText('My profile')).toBeInTheDocument();
 		expect(img).toBeInTheDocument();
 		expect(dropDownbtn).toBeInTheDocument();
 	});

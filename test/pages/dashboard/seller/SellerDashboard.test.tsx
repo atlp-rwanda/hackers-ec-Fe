@@ -74,8 +74,6 @@ describe('Seller dashboard', () => {
 		await waitForElementToBeRemoved(loader);
 		expect(loader).not.toBeInTheDocument();
 
-		screen.debug();
-
 		expect(await screen.getByLabelText('container')).toBeInTheDocument();
 	});
 });

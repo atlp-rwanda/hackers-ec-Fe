@@ -21,7 +21,9 @@ import registerLoginCardImage from '../assets/register-login-card-img.png';
 import uploadImage from '../assets/uploadImage.svg';
 import world from '../assets/world.png';
 
+import order_icon from '../assets/order-icon.svg';
 import yellowStar from '../assets/yellowStar.ico';
+import wishlist from '../assets/wishlist.png';
 export {
 	aboutImg,
 	appLogo,
@@ -46,4 +48,6 @@ export {
 	uploadImage,
 	world,
 	yellowStar,
+	order_icon,
+	wishlist,
 };

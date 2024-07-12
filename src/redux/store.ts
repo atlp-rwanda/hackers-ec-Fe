@@ -26,6 +26,8 @@ import chatSlice from './features/chatSlice';
 import AllSaleSlice from './features/Sales/AllSaleSlice';
 import statisticsSlice from './features/statisticsSlice';
 import recommendedProductsSlice from './features/recommendedProductSlice';
+import fetchWishesSlice from './features/getUserwishes';
+import createWishesSlice from './features/createWishesSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -56,6 +58,8 @@ export const store = configureStore({
 		sales: AllSaleSlice,
 		statistics: statisticsSlice,
 		recommendedProducts: recommendedProductsSlice,
+		fetchWishes: fetchWishesSlice,
+		createWishes: createWishesSlice,
 	},
 });
 

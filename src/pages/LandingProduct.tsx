@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FaCaretDown, FaHeart, FaStar } from 'react-icons/fa';
+import { FaCaretDown, FaStar } from 'react-icons/fa';
 import { IoFilter } from 'react-icons/io5';
 import { ScaleLoader } from 'react-spinners';
 import { DynamicData } from '../@types/DynamicData';
@@ -18,6 +18,9 @@ import {
 } from '../redux/features/SearchSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import fetchInfo from '../utils/userDetails';
+import AddToWish from '../components/wishes/AddToWish';
+import { ThemeContext } from '../hooks/useWishcontext';
+import useWish from '../hooks/useWishlist';
 
 const LandingProduct = () => {
 	const { isLoading, products } = useAppSelector((state) => state.product);
@@ -49,6 +52,7 @@ const LandingProduct = () => {
 	useEffect(() => {
 		dispatch(search(searchInputs));
 	}, [dispatch, searchInputs]);
+	const { data: wishes } = useWish();
 
 	return (
 		<>
@@ -180,7 +184,10 @@ const LandingProduct = () => {
 													</h1>
 													<div className="wish flex items-center cursor-pointer">
 														<span className="mr-1">add to wish</span>
-														<FaHeart className=" text-action-error text-2xl cursor-pointer wish_btn" />
+														{/* <FaHeart className=" text-action-error text-2xl cursor-pointer wish_btn" /> */}
+														<ThemeContext.Provider value={wishes}>
+															<AddToWish productId={item.id} />
+														</ThemeContext.Provider>
 													</div>
 												</div>
 											</div>

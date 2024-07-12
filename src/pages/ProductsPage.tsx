@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { FaCaretDown, FaHeart, FaStar } from 'react-icons/fa';
+import { FaCaretDown, FaStar } from 'react-icons/fa';
 import { IoFilter } from 'react-icons/io5';
 import { ScaleLoader } from 'react-spinners';
 import { DynamicData } from '../@types/DynamicData';
@@ -21,6 +22,9 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { depart_icon } from '../utils/images';
 import fetchInfo from '../utils/userDetails';
 import Chat from '../components/chat/ChatComponent';
+import AddToWish from '../components/wishes/AddToWish';
+import useWish from '../hooks/useWishlist';
+import { ThemeContext } from '../hooks/useWishcontext';
 
 const ProductsPage = () => {
 	const [openFilter, setOpenFilter] = useState(false);
@@ -33,7 +37,6 @@ const ProductsPage = () => {
 	const toggleModel = () => {
 		setOpenModel(!openModel);
 	};
-
 	const dispatch = useAppDispatch();
 
 	const tokenInfo = fetchInfo();
@@ -82,6 +85,7 @@ const ProductsPage = () => {
 	const HandleSearch = async (searchInput: searchInputs) => {
 		dispatch(manipulateSearchInput(searchInput));
 	};
+	const { data: wishes } = useWish();
 
 	return (
 		<>
@@ -200,7 +204,9 @@ const ProductsPage = () => {
 													</h1>
 													<div className="wish flex items-center cursor-pointer">
 														<span className="mr-1">add to wish</span>
-														<FaHeart className=" text-action-error text-2xl cursor-pointer wish_btn" />
+														<ThemeContext.Provider value={wishes}>
+															<AddToWish productId={item.id} />
+														</ThemeContext.Provider>
 													</div>
 												</div>
 											</div>

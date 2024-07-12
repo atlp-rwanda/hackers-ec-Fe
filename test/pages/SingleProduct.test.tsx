@@ -35,11 +35,17 @@ type roleType = {
 	id: string;
 	roleName: string;
 };
+type wishType = {
+	id: string;
+	product?: DynamicData;
+};
+
 describe('Single product component', () => {
 	const userData: userTYpe[] = [];
 	const reviewData: reviewType[] = [];
 	const roleData: roleType[] = [];
 	const productData: product[] = [];
+	const wishData: wishType[] = [];
 
 	beforeAll(() => {
 		[1].map(() => {
@@ -69,6 +75,10 @@ describe('Single product component', () => {
 			product: prod,
 		});
 		reviewData.push(rev);
+		const wish = db.wishes.create({
+			product: prod,
+		});
+		wishData.push(wish);
 	});
 	afterAll(() => {
 		const userIds = userData.map((item) => item.id);
@@ -114,6 +124,14 @@ describe('Single product component', () => {
 				},
 			),
 		);
+		server.use(
+			http.get(`${import.meta.env.VITE_API_BASE_URL}/wishes`, () => {
+				return HttpResponse.json({
+					data: wishData,
+				});
+			}),
+		);
+
 		if (reviewData.length > 0) {
 			render(
 				<AllProvider>

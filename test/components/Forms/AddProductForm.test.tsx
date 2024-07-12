@@ -158,11 +158,9 @@ describe('Add product form component', () => {
 		);
 
 		const loader = screen.getByRole('progressbar');
-
 		expect(loader).toBeInTheDocument();
 		await waitForElementToBeRemoved(loader);
 		expect(loader).not.toBeInTheDocument();
-
 		expect(screen.getByPlaceholderText(/name/i)).toBeInTheDocument();
 		expect(screen.getByPlaceholderText(/price/i)).toBeInTheDocument();
 		expect(screen.getByPlaceholderText(/discount/i)).toBeInTheDocument();
