@@ -1,13 +1,22 @@
 import { DynamicData } from '../../@types/DynamicData';
 import CartQuantity from '../../components/buttons/CartQuantity';
 import RemoveCartButton from '../../components/buttons/RemoveCart';
-import { useAppSelector } from '../../redux/hooks/hooks';
+import { payModel } from '../../redux/features/toggleSlice';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks/hooks';
+import PaymentToggleModel from '../payment/PaymentToggleModel';
 
 const CartPage = () => {
 	const { carts, numberOfItem } = useAppSelector((state) => state.cart);
+	const dispatch = useAppDispatch();
+	const { openTaggle } = useAppSelector((state) => state.toggle);
+	const paymentToggleModel = (): boolean => {
+		dispatch(payModel());
+		return true;
+	};
 
 	return (
 		<>
+			{openTaggle && <PaymentToggleModel />}
 			<div className="grid grid-cols-1 ipad:grid-cols-2 gap-4 ipad:gap-8 mt-16 tablet:mt-24 ipad:mt-36 h-full bg-neutral-white px-5 py-10">
 				<div className="bg-neutral-greyLight rounded-xl p-6 flex flex-col justify-center ipad:order-1">
 					<div className="bg-inputBg rounded-xl p-5 text-sm mb-3">
@@ -23,7 +32,10 @@ const CartPage = () => {
 								</p>
 							</div>
 						</div>
-						<button className="bg-action-success py-2 px-3 mobile:py-3 rounded-3xl text-neutral-white w-full text-sm hover:bg-action-success/90">
+						<button
+							onClick={paymentToggleModel}
+							className="bg-action-success py-2 px-3 mobile:py-3 rounded-3xl text-neutral-white w-full text-sm hover:bg-action-success/90"
+						>
 							Checkout ( <span>{carts?.total}</span> Rwf )
 						</button>
 					</div>

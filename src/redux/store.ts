@@ -30,6 +30,10 @@ import fetchWishesSlice from './features/getUserwishes';
 import createWishesSlice from './features/createWishesSlice';
 import UpdateorderSlice from './features/Sales/UpdateorderSlice';
 import logoutSlice from './features/logoutSlice';
+import StripePaymentSlice from './features/StripePaymentSlice';
+import OrderDetailSlice from './features/PaidOrderSlice';
+import toggleSlice from './features/toggleSlice';
+import OrdersSlice from './features/OrdersSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -64,6 +68,10 @@ export const store = configureStore({
 		createWishes: createWishesSlice,
 		updateOrder: UpdateorderSlice,
 		logout: logoutSlice,
+		stripe: StripePaymentSlice,
+		userOrder: OrderDetailSlice,
+		toggle: toggleSlice,
+		order: OrdersSlice,
 	},
 });
 

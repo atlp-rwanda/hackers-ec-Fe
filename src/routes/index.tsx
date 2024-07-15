@@ -38,6 +38,8 @@ import SalesPage from '../pages/dashboard/seller/Sales/SalesPage';
 import SingleSale from '../pages/dashboard/seller/Sales/SingleSale';
 import { useEffect } from 'react';
 import { useAppSelector } from '../redux/hooks/hooks';
+import PaymentSuccess from '../pages/PaymentSuccess';
+import SingleOrders from '../pages/dashboard/buyer/order/SingleOrders';
 
 function Routers() {
 	const { isLoggedOut } = useAppSelector((state) => state.logout);
@@ -56,7 +58,7 @@ function Routers() {
 					path="/forgot-password-success"
 					element={<UserRedirectionPage />}
 				/>
-
+				<Route path="/payments/success" element={<PaymentSuccess />} />
 				<Route
 					path="/login"
 					element={accessToken ? <Navigate to="/" /> : <Login />}
@@ -85,6 +87,9 @@ function Routers() {
 						<Route path="/wishes" element={<Wishlist />} />
 					</Route>
 
+					<Route element={<ProtectedRoutes roles={['BUYER']} />}>
+						<Route path="/orders/:id" element={<SingleOrders />} />
+					</Route>
 					<Route element={<PreventSeller roles={['']} />}>
 						<Route
 							element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}
