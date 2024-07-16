@@ -4,7 +4,7 @@ import { FaCaretDown, FaHeart, FaStar } from 'react-icons/fa';
 import { IoFilter } from 'react-icons/io5';
 import { ScaleLoader } from 'react-spinners';
 import { DynamicData } from '../@types/DynamicData';
-import { searchInputs } from '../@types/SearchType';
+import { searchInputs as SearchInputsType } from '../@types/SearchType';
 import depart_icon from '../assets/departments_icon.svg';
 import Button from '../components/buttons/Button';
 import ProductPageAddToCart from '../components/carts/ProductPageAddToCart';
@@ -36,19 +36,20 @@ const LandingProduct = () => {
 		if (products && !products.length && tokenInfo) {
 			dispatch(getProducts()).unwrap();
 		}
-	}, [dispatch, products]);
+	}, [dispatch, products, tokenInfo]);
 
 	useEffect(() => {
 		dispatch(getSearchedProducts(products));
 	}, [products, dispatch]);
 
-	const HandleSearch = async (searchInput: searchInputs) => {
+	const handleSearch = async (searchInput: Partial<SearchInputsType>) => {
 		dispatch(manipulateSearchInput(searchInput));
 	};
 
 	useEffect(() => {
 		dispatch(search(searchInputs));
 	}, [dispatch, searchInputs]);
+
 	return (
 		<>
 			<div className="perent_products_container min-h-screen relative">
@@ -99,22 +100,34 @@ const LandingProduct = () => {
 										type="number"
 										placeholder="Minimum price"
 										otherStyles="h-12 rounded-md pl-3 primary-lightblue"
-										value={`${searchInputs.minPrice && searchInputs.minPrice}`}
+										value={
+											searchInputs.minPrice !== null
+												? String(searchInputs.minPrice)
+												: ''
+										}
 										onChange={(e) =>
-											e.target.value
-												? HandleSearch({ minPrice: e.target.value })
-												: HandleSearch({ minPrice: null })
+											handleSearch({
+												minPrice: e.target.value
+													? String(e.target.value)
+													: null,
+											})
 										}
 									/>
 									<FormInput
 										type="number"
 										placeholder="Maximum price"
 										otherStyles="h-12 rounded-md pl-3 primary-lightblue"
-										value={`${searchInputs.maxPrice && searchInputs.maxPrice}`}
+										value={
+											searchInputs.maxPrice !== null
+												? String(searchInputs.maxPrice)
+												: ''
+										}
 										onChange={(e) =>
-											e.target.value
-												? HandleSearch({ maxPrice: e.target.value })
-												: HandleSearch({ maxPrice: null })
+											handleSearch({
+												maxPrice: e.target.value
+													? String(e.target.value)
+													: null,
+											})
 										}
 									/>
 								</motion.form>
