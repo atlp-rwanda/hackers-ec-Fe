@@ -101,7 +101,7 @@ describe('Get all products', () => {
 		expect(name).toBeDefined();
 	});
 
-	it('it should display the minimum and maximum search fields', async () => {
+	it('should display the minimum and maximum search fields', async () => {
 		await renderComponent();
 		const filterButton = screen.getByText(/Filters/i);
 		fireEvent.click(filterButton);
@@ -118,8 +118,8 @@ describe('Get all products', () => {
 		const user = userEvent.setup();
 		await user.click(filterButton);
 
-		const minPriceInput = screen.getByPlaceholderText(/Minimum price/i);
-		const maxPriceInput = screen.getByPlaceholderText(/Maximum price/i);
+		const minPriceInput = await screen.findByPlaceholderText(/Minimum price/i);
+		const maxPriceInput = await screen.findByPlaceholderText(/Maximum price/i);
 
 		await user.type(maxPriceInput, '5');
 		await user.type(minPriceInput, '999999999999999');
