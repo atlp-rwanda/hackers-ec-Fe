@@ -6,6 +6,7 @@ import { FaFacebookF } from 'react-icons/fa6';
 import { FaInstagram } from 'react-icons/fa6';
 import { FaLinkedinIn } from 'react-icons/fa6';
 import useHandleResize from '../hooks/useHandleResize';
+import Chat from '../components/chat/ChatComponent';
 
 const Contacts = () => {
 	const { show } = useHandleResize();
@@ -83,6 +84,7 @@ const Contacts = () => {
 					</div>
 				</div>
 			</div>
+			<Chat />
 		</>
 	);
 };

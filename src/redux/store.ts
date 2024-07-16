@@ -23,6 +23,7 @@ import CreateReviewSlice from './features/CreateReviewSlice';
 import editReviewSlice from './features/editReviewSlice';
 import fetchReviewSlice from './features/getReviewSice';
 import passwordSlice from './features/passwordUpdateSlice';
+import chatSlice from './features/chatSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -49,6 +50,7 @@ export const store = configureStore({
 		editReview: editReviewSlice,
 		updatePassword: passwordSlice,
 		cart: cartSlice,
+		chat: chatSlice,
 	},
 });
 

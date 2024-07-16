@@ -11,6 +11,7 @@ import {
 	benefits,
 	cart,
 } from '../utils/images';
+import Chat from '../components/chat/ChatComponent';
 
 const About = () => {
 	return (
@@ -116,6 +117,7 @@ const About = () => {
 					</p>
 				</div>
 			</div>
+			<Chat />
 		</div>
 	);
 };

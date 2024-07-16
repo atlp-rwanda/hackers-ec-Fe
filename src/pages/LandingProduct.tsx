@@ -59,7 +59,7 @@ const LandingProduct = () => {
 				) : (
 					<div className="products_container flex flex-col items-center laptop:flex-row laptop:items-start pl-[5%] w-full mt-16 laptop:gap-5">
 						<div className="departments cursor-pointer flex ipad:p-4 w-[100%] mobile:w-[100%] ipad:w-[40%] laptop:w-[28%]">
-							<div className="depart_icon z-20 w-[60%] mobile:w-[50%] laptop:w-[90%] bg-primary-lightblue p-2 flex items-center h-12 justify-between gap-2 mt-6 rounded-t-md relative">
+							<div className="depart_icon z-10 w-[60%] mobile:w-[50%] laptop:w-[90%] bg-primary-lightblue p-2 flex items-center h-12 justify-between gap-2 mt-6 rounded-t-md relative">
 								<img src={depart_icon} alt="depart_icon" className="w-6 h-10" />
 								<h1 className="text-md font-semibld text-neutral-white">
 									{searchInputs.categoryName

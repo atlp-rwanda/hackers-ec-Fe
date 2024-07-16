@@ -41,7 +41,7 @@ const Nav = () => {
 				toggleModel={() => dispatch(toggleModel())}
 			/>
 
-			<nav className="parent_div fixed top-0 left-0 w-full bg-neutral-white z-50 shadow">
+			<nav className="parent_div fixed top-0 left-0 w-full bg-neutral-white z-20">
 				<div className="wrapper flex gap-4 ipad:gap-0 laptop:gap-10">
 					<div className="logo w-[50%] bimobile:w-[30%] ipad:w-[30%]">
 						<img

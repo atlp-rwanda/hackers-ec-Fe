@@ -20,6 +20,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { depart_icon } from '../utils/images';
 import fetchInfo from '../utils/userDetails';
+import Chat from '../components/chat/ChatComponent';
 
 const ProductsPage = () => {
 	const [openFilter, setOpenFilter] = useState(false);
@@ -231,6 +232,7 @@ const ProductsPage = () => {
 					</div>
 				)}
 			</div>
+			<Chat />
 		</>
 	);
 };
