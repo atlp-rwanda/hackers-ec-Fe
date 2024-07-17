@@ -25,6 +25,7 @@ import passwordSlice from './features/passwordUpdateSlice';
 import chatSlice from './features/chatSlice';
 import AllSaleSlice from './features/Sales/AllSaleSlice';
 import statisticsSlice from './features/statisticsSlice';
+import recommendedProductsSlice from './features/recommendedProductSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -54,6 +55,7 @@ export const store = configureStore({
 		chat: chatSlice,
 		sales: AllSaleSlice,
 		statistics: statisticsSlice,
+		recommendedProducts: recommendedProductsSlice,
 	},
 });
 
