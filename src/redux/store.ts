@@ -29,6 +29,7 @@ import recommendedProductsSlice from './features/recommendedProductSlice';
 import fetchWishesSlice from './features/getUserwishes';
 import createWishesSlice from './features/createWishesSlice';
 import UpdateorderSlice from './features/Sales/UpdateorderSlice';
+import logoutSlice from './features/logoutSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -62,6 +63,7 @@ export const store = configureStore({
 		fetchWishes: fetchWishesSlice,
 		createWishes: createWishesSlice,
 		updateOrder: UpdateorderSlice,
+		logout: logoutSlice,
 	},
 });
 

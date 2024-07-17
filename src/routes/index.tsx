@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import DashboardLayout from '../components/Layouts/DashboardLayout';
 import About from '../pages/About';
@@ -36,9 +36,17 @@ import Cart from '../pages/carts/Carts';
 import Wishlist from '../pages/Wishlist';
 import SalesPage from '../pages/dashboard/seller/Sales/SalesPage';
 import SingleSale from '../pages/dashboard/seller/Sales/SingleSale';
+import { useEffect } from 'react';
+import { useAppSelector } from '../redux/hooks/hooks';
 
 function Routers() {
+	const { isLoggedOut } = useAppSelector((state) => state.logout);
+
+	const navigate = useNavigate();
 	const accessToken = localStorage.getItem('access_token') || '';
+	useEffect(() => {
+		if (isLoggedOut) navigate('/');
+	});
 	return (
 		<>
 			<Routes>

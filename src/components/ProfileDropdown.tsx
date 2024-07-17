@@ -1,7 +1,13 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import fetchInfo from '../utils/userDetails';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import useToast from '../hooks/useToast';
+import { Logout, resetLogoutState } from '../redux/features/logoutSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import { ButtonIcon } from './buttons/ButtonIcon';
+import IconLoader from './Loaders/IconLoader';
+import { DynamicData } from '../@types/DynamicData';
 
 interface ProfileDropdownProps {
 	image: string | undefined;
@@ -13,6 +19,30 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 	const toggleDropdown = () => {
 		setIsOpen(!isOpen);
 	};
+
+	const dispatch = useAppDispatch();
+	const { isLoading } = useAppSelector((state) => state.logout);
+	const { showErrorMessage, showWorningMessage } = useToast();
+
+	const handleLogout = async () => {
+		try {
+			const res = await dispatch(Logout()).unwrap();
+			showWorningMessage(res.message);
+		} catch (error) {
+			const err = error as DynamicData;
+			showErrorMessage(
+				err?.data?.message ||
+					err?.message ||
+					'Unknown error occurred! Please try again!',
+			);
+		}
+	};
+
+	useEffect(() => {
+		return () => {
+			dispatch(resetLogoutState());
+		};
+	}, [dispatch]);
 
 	return (
 		<div className="relative inline-block text-left">
@@ -46,7 +76,7 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 					<div className="py-1" role="none">
 						<Link
 							to="/profile"
-							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+							className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-lightblue hover:text-neutral-white"
 							role="menuitem"
 							onClick={toggleDropdown}
 						>
@@ -54,7 +84,7 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 						</Link>
 						<Link
 							to="/orders"
-							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+							className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-lightblue hover:text-neutral-white"
 							role="menuitem"
 							onClick={toggleDropdown}
 						>
@@ -63,21 +93,29 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 						{fetchInfo()?.role === 'BUYER' && (
 							<Link
 								to="/wishes"
-								className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+								className="block px-4 py-2 text-sm text-gray-700 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
 								role="menuitem"
 								onClick={toggleDropdown}
 							>
 								<p> My wishlist</p>
 							</Link>
 						)}
-						<Link
-							to="/logout"
-							className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100  hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+						<ButtonIcon
+							onClick={() => {
+								handleLogout(), toggleDropdown();
+							}}
+							className="w-full rounded-none bg-transparent text-neutral-black px-4 hover:bg-primary-lightblue hover:text-neutral-white"
 							role="menuitem"
-							onClick={toggleDropdown}
 						>
-							Logout
-						</Link>
+							{isLoading ? (
+								<>
+									<IconLoader className="animate-spin mr-1" />{' '}
+									{'processing....'}
+								</>
+							) : (
+								'Logout'
+							)}
+						</ButtonIcon>
 					</div>
 				</motion.div>
 			)}

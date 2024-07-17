@@ -18,6 +18,7 @@ const Nav = () => {
 	const openModel = useAppSelector((state) => state.nav.openModel);
 
 	const { data } = useAppSelector((state) => state.profile) || {};
+	const { isLoggedOut } = useAppSelector((state) => state.logout);
 	const { numberOfItem } = useAppSelector((state) => state.cart);
 
 	// Fetch user data when the component mounts
@@ -105,7 +106,7 @@ const Nav = () => {
 								</div>
 							</Link>
 
-							{accessToken ? (
+							{accessToken && !isLoggedOut ? (
 								<>
 									<Notification />
 									<ProfileDropdown image={data?.profileImage} />

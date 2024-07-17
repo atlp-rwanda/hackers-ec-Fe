@@ -15,7 +15,7 @@ const BackButton = ({ url, isBordered, otherStyles, title }: BackBtnType) => {
 		if (url) {
 			navigate(url);
 		} else {
-			navigate(-1);
+			navigate('/');
 		}
 	};
 	return (

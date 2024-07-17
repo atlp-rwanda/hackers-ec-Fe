@@ -9,14 +9,6 @@ describe('Search Result Not Found Components', () => {
 				<SearchResultNotFound />
 			</AllProvider>,
 		);
-	});
-
-	it('should render the correct content', () => {
-		render(
-			<AllProvider>
-				<SearchResultNotFound />
-			</AllProvider>,
-		);
 
 		expect(screen.getByText(/No results found/i));
 	});
