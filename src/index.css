@@ -51,6 +51,9 @@ body {
 		background-size: cover;
 		background-position: center;
 	}
+	.waves-floating {
+		@apply absolute w-[400px] h-[400px] ml-[-150px] mb-[-280px] rounded-[43%];
+	}
 }
 
 nav a.active {
@@ -194,6 +197,7 @@ table thead tr th:last-child {
 	scale: 1.1;
 	background-color: #ffffff;
 	transition: 0.5s ease-in-out;
+	color: #660b0b;
 	color: #256490;
 	border-radius: 5px;
 }
@@ -230,7 +234,6 @@ table thead tr th:last-child {
 	border-radius: 5px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: linear-gradient(
 		90deg,
@@ -239,4 +242,39 @@ table thead tr th:last-child {
 		rgba(38, 100, 145) 92%,
 		rgba(41, 106, 154) 100%
 	);
+}
+
+circle {
+	stroke-width: 14px;
+	stroke-linecap: round;
+	fill: transparent;
+}
+
+.floating-box {
+	transform: translate3d(0, 0, 0);
+}
+
+.wave {
+	opacity: 0.4;
+	left: 30%;
+	transform-origin: 48% 50%;
+	animation: waving 4000ms infinite linear;
+}
+
+.wave.-three {
+	animation: waving 5000ms infinite linear;
+}
+
+.wave.-two {
+	animation: waving 7000ms infinite linear;
+	opacity: 0.1;
+}
+
+@keyframes waving {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }

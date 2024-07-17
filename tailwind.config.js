@@ -57,6 +57,9 @@ export default {
 				'2px 2px 4px rgba(0, 0, 0, 0.5), -2px 2px 4px rgba(0, 0, 0, 0.5)',
 			'dark-lg':
 				'0 10px 10px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.2)',
+			'custom-light': '0 2px 4px rgba(0, 0, 0, 0.1)',
+			'custom-medium': '0 4px 8px rgba(0, 0, 0, 0.2)',
+			'custom-heavy': '0 8px 16px rgba(0, 0, 0, 0.4)',
 		},
 	},
 	variants: {

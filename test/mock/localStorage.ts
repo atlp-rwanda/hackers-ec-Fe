@@ -15,3 +15,13 @@ export const localStorageMock = (() => {
 		},
 	};
 })();
+
+export class ResizeObserver {
+	callback: DynamicData;
+	constructor(callback: DynamicData) {
+		this.callback = callback;
+	}
+	observe() {}
+	unobserve() {}
+	disconnect() {}
+}

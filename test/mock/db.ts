@@ -37,4 +37,23 @@ export const db = factory({
 		user: oneOf('users'),
 		product: oneOf('products'),
 	},
+	sales: {
+		id: primaryKey(() => faker.string.uuid()),
+		createdAt: () => faker.date.past().toISOString(),
+		status: () =>
+			faker.helpers.arrayElement(['delivered', 'canceled', 'pending']),
+		soldProducts: {
+			price: () => parseFloat(faker.commerce.price()),
+		},
+		quantitySold: () => faker.number.int(),
+	},
+	stats: {
+		id: primaryKey(() => faker.string.uuid()),
+		totalProducts: () => faker.number.int(),
+		allProductsValue: () => parseFloat(faker.commerce.price(10000, 1000000)),
+		numberOfExpiredProducts: () => faker.number.int(),
+		loss: () => parseFloat(faker.commerce.price(1000, 100000)),
+		currentProductsValue: () => parseFloat(faker.commerce.price(1000, 500000)),
+		totalRemainingProducts: () => faker.number.int(),
+	},
 });
