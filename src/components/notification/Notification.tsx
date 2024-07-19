@@ -8,19 +8,22 @@ import { UserInfoTypes } from '../../@types/userType';
 import useToken from '../../hooks/useToken';
 import {
 	addNotification,
+	markAllRead,
 	userNotification,
 } from '../../redux/features/notificationSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { notificationSound } from '../../utils/images';
 import fetchInfo from '../../utils/userDetails';
 import NotificationItem from '../cards/NotificationItem';
+import { DynamicData } from '../../@types/DynamicData';
+import NotificationSkeleton from '../cards/NotificationSkeleton';
 
 const Notification = () => {
 	const dispatch = useAppDispatch();
 	const { accessToken } = useToken();
 	const notificationPlayer = useRef<HTMLAudioElement>(null);
 	const [notificationActive, setNotificationActive] = useState(false);
-	const { notifications, value } = useAppSelector(
+	const { notifications, value, isLoading } = useAppSelector(
 		(state) => state.notifications,
 	);
 
@@ -59,6 +62,19 @@ const Notification = () => {
 		notifications as unknown as NotificationTypes[],
 	);
 
+	const readAllNotification = async () => {
+		try {
+			await dispatch(markAllRead()).unwrap();
+		} catch (e) {
+			const err = e as DynamicData;
+			toast.error(
+				err?.data?.message ||
+					err?.message ||
+					'Unknown error occurred! Please try again!',
+			);
+		}
+	};
+
 	return (
 		<div className="relative flex-center transition-colors border border-neutral-grey p-2 h-max rounded-lg cursor-pointer hover:bg-neutral-grey/20">
 			<BellRing
@@ -79,24 +95,33 @@ const Notification = () => {
 			)}
 			{notificationActive && (
 				<div
-					className="absolute top-full -right-[100px] ipad:-right-[50px] mt-5 p-2 bg-neutral-white shadow-inner-bottom rounded-xl w-[80vw] ipad:w-[350px] h-[80vh] md:h-[70vh] z-50"
+					className="absolute top-full -right-[100px] ipad:-right-[50px] mt-5 p-2 bg-neutral-white shadow-custom-heavy rounded-xl w-[80vw] ipad:w-[350px] h-max max-h-[80vh] md:max-h-[70vh] overflow-y-scroll no-scrollbar z-50"
 					aria-label="notification-tab"
 				>
 					<div className="w-full h-full overflow-hidden">
-						<h2 className="text-md ipad:text-lg font-semibold text-start pl-4">
+						<h2 className="text-md ipad:text-lg font-semibold text-start pl-4 pt-4">
 							Notifications
 						</h2>
 						<div className="flex items-center justify-end p-5">
-							<div className="flex items-center gap-2 text-[11px] text-neutral-black bg-primary-lightblue/20 px-3 py-1 rounded-full hover:text-neutral-black/50">
+							<div
+								onClick={readAllNotification}
+								aria-label="mark-button"
+								className={`flex items-center gap-2 text-[11px] text-neutral-black bg-primary-lightblue/20 px-3 py-1 rounded-full hover:text-neutral-black/50 ${notifications?.filter((not) => not.unread === true).length === 0 && 'hidden'}`}
+							>
 								Mark all as read
 								<FaCheckDouble fill={'black'} />
 							</div>
 						</div>
-						<div className="w-full flex-1 h-[90%] overflow-y-scroll no-scrollbar px-2 pb-10">
-							{sortedNotification && sortedNotification.length > 0 ? (
+						<div className="w-full flex-1 h-[90%] no-scrollbar px-2 pb-10">
+							{isLoading ? (
+								Array.from({ length: 12 }).map((_, i) => (
+									<NotificationSkeleton key={i} />
+								))
+							) : sortedNotification && sortedNotification.length > 0 ? (
 								sortedNotification.map((item) => (
 									<NotificationItem
 										key={item.id}
+										id={item.id}
 										unread={item.unread}
 										text={item.message}
 										date={`${item.createdAt.getHours()}:${item.createdAt.getMinutes() < 10 ? `0${item.createdAt.getMinutes()}` : item.createdAt.getMinutes()} - ${item.createdAt.getDate()}/${item.createdAt.getMonth()}`}

@@ -5,6 +5,7 @@ export type NotificationItemTypes = {
 	text: string;
 	date: string;
 	unread: boolean;
+	id: string;
 };
 
 export type NotificationProps = {
