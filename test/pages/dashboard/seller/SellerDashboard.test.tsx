@@ -11,6 +11,7 @@ import { DynamicData } from '../../../../src/@types/DynamicData';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../../mock/server';
 import { ResizeObserver } from '../../../mock/localStorage';
+import 'vitest-canvas-mock';
 
 global.ResizeObserver = ResizeObserver;
 

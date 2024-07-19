@@ -117,7 +117,11 @@ describe('Get all products', () => {
 	});
 
 	it('handles search input changes', async () => {
-		await renderComponent();
+		render(
+			<AllProvider>
+				<ProductsPage />
+			</AllProvider>,
+		);
 
 		const filterButton = screen.getByText(/Filters/i);
 		const user = userEvent.setup();

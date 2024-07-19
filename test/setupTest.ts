@@ -2,6 +2,7 @@ import * as matchers from '@testing-library/jest-dom/matchers';
 import { expect } from 'vitest';
 import { server } from './mock/server';
 import { DynamicData } from '../src/@types/DynamicData';
+import 'vitest-canvas-mock';
 
 beforeAll(() => {
 	server.listen();
