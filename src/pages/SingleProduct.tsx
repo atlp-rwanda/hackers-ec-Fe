@@ -19,6 +19,7 @@ import { fetchReview } from '../redux/features/getReviewSice';
 import { getSinleProducts } from '../redux/features/productSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import fetchInfo from '../utils/userDetails';
+import RecommendedProduct from './RecommendedProduct';
 
 const SingleProduct = () => {
 	const { isLoading, singleProduct } = useAppSelector((state) => state.product);
@@ -250,6 +251,9 @@ const SingleProduct = () => {
 									isVisible={reviewForm}
 								/>
 							</div>
+						</div>
+						<div className="relative w-[98%] mobile:max-w-[80%] m-auto h-auto mobile:mt-5 laptop:mt-14 laptop:mb-[3%]">
+							<RecommendedProduct prodId={id as string} />
 						</div>
 					</>
 				)}
