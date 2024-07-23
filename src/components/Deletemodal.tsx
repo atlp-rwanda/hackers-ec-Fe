@@ -42,7 +42,7 @@ function DeleteModal({ setDeleteModal, productId }: DeleteModalType) {
 					className="overflow-y-auto overflow-x-hidden fixed top-[30%] mobile:top-[40%] mobile:left-[25%] ipad:left-[35%] right-0 left-0 z-[150] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
 				>
 					<div className="relative  px-4 w-full max-w-[23rem] max-h-full bg-action-sucess">
-						<div className=" py-5 bg-neutral-white rounded-lg shadow dark:bg-gray-700">
+						<div className=" py-5 bg-neutral-white/90 rounded-lg shadow ">
 							<div className="flex px-4  bg-actio-success text-[2rem]">
 								<RiDeleteBinFill className=" text-action-error" />
 								<button

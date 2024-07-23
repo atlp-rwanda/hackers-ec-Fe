@@ -13,6 +13,10 @@ type product = {
 	id: string;
 	name: string;
 };
+vi.mock('../../../src/utils/userDetails', () => ({
+	__esModule: true,
+	default: () => ({ data: {} }),
+}));
 
 describe('review test', () => {
 	const wishData: wishType[] = [];
