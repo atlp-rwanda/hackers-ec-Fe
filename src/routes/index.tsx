@@ -34,6 +34,8 @@ import ReviewsPage from '../pages/product/ReviewsPage';
 import UpdatePassword from '../components/Layouts/UpdatePassword';
 import Cart from '../pages/carts/Carts';
 import Wishlist from '../pages/Wishlist';
+import SalesPage from '../pages/dashboard/seller/Sales/SalesPage';
+import SingleSale from '../pages/dashboard/seller/Sales/SingleSale';
 
 function Routers() {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -95,6 +97,10 @@ function Routers() {
 							<Route path=":id" element={<DashboardSingleProducts />} />
 							<Route path="new" element={<AddProducts />} />
 							<Route path="edit/:id" element={<AddProducts />} />
+						</Route>
+						<Route path="sales">
+							<Route index element={<SalesPage />} />
+							<Route path=":id" element={<SingleSale />} />
 						</Route>
 						<Route path="users">
 							<Route index element={<Users />} />

@@ -1,4 +1,3 @@
-// mockNavigate.ts
-export const mockNavigate = () => {}; // Define a mock implementation
+export const mockNavigate = () => {};
 const useNavigate = () => mockNavigate;
 export default useNavigate;

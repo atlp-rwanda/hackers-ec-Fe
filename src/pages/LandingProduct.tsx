@@ -21,6 +21,7 @@ import fetchInfo from '../utils/userDetails';
 import AddToWish from '../components/wishes/AddToWish';
 import { ThemeContext } from '../hooks/useWishcontext';
 import useWish from '../hooks/useWishlist';
+import SearchResultNotFound from './SearchResultNotFound';
 
 const LandingProduct = () => {
 	const { isLoading, products } = useAppSelector((state) => state.product);
@@ -50,7 +51,7 @@ const LandingProduct = () => {
 	};
 
 	useEffect(() => {
-		dispatch(search(searchInputs));
+		dispatch(search(searchInputs)).unwrap();
 	}, [dispatch, searchInputs]);
 	const { data: wishes } = useWish();
 
@@ -204,15 +205,7 @@ const LandingProduct = () => {
 										</div>
 									))
 								) : (
-									<div className="w-full h-64 flex items-center justify-center">
-										<div className=" text-primary-lightblue">
-											<h1 className="text-xl text-center">No results found</h1>
-											<p>
-												It seems we can not find any results based on your
-												search.
-											</p>
-										</div>
-									</div>
+									<SearchResultNotFound />
 								)}
 							</div>
 						</div>

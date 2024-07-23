@@ -37,7 +37,7 @@ const SellerDashboard = () => {
 	const dispatch = useAppDispatch();
 	const { show } = useHandleResize();
 	const [VALUES, setVALUES] = useState(initialValues);
-	const { isLoading, data } = useAppSelector((state) => state.sales);
+	const { isLoading, allSalesData } = useAppSelector((state) => state.sales);
 	const {
 		isLoading: processing,
 		data: statisticsData,
@@ -46,24 +46,24 @@ const SellerDashboard = () => {
 	} = useAppSelector((state) => state.statistics);
 
 	useEffect(() => {
-		if (data.length === 0) {
+		if (allSalesData.length === 0) {
 			dispatch(getSales());
 		}
 		if (!statisticsData || Object.keys(statisticsData).length === 0) {
 			dispatch(getStats());
 		}
-	}, [data.length, dispatch, statisticsData]);
+	}, [allSalesData.length, dispatch, statisticsData]);
 
 	useEffect(() => {
 		const updateChart = () => {
-			if (data.length > 0) {
+			if (allSalesData.length > 0) {
 				chartData.forEach((monthData) => {
 					monthData.approvals = 0;
 					monthData.rejected = 0;
 				});
 
 				const monthlyTotals = chartData.map((monthData) => {
-					const monthSales = data.filter(
+					const monthSales = allSalesData.filter(
 						(sale) =>
 							new Date(sale.createdAt).getMonth() + 1 === monthData.numberMonth,
 					);
@@ -95,17 +95,18 @@ const SellerDashboard = () => {
 
 				setVALUES((prev) => ({
 					...prev,
-					NUMBER_PENDING: data.filter((item) => item.status === 'pending')
-						.length,
+					NUMBER_PENDING: allSalesData.filter(
+						(item) => item.status === 'pending',
+					).length,
 				}));
 
-				const totalAmountForAllSales = data.reduce((acc, item) => {
+				const totalAmountForAllSales = allSalesData.reduce((acc, item) => {
 					const itemTotal = item.soldProducts.price * item.quantitySold;
 					return acc + itemTotal;
 				}, 0);
 
 				const totalAmountFor = (status: string) => {
-					const amount = data
+					const amount = allSalesData
 						.filter((item) => item.status === status)
 						.reduce((acc, item) => {
 							const itemTotal = item.soldProducts.price * item.quantitySold;
@@ -130,11 +131,11 @@ const SellerDashboard = () => {
 					...prev,
 					TAMOUNT_PENDING: totalAmountFor('pending'),
 				}));
-				setVALUES((prev) => ({ ...prev, NUMBER_SALES: data.length }));
+				setVALUES((prev) => ({ ...prev, NUMBER_SALES: allSalesData.length }));
 			}
 		};
 		updateChart();
-	}, [statisticsData, data]);
+	}, [statisticsData, allSalesData]);
 
 	if (isLoading || processing) {
 		return (
