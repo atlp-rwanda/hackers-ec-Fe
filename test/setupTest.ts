@@ -7,15 +7,12 @@ import 'vitest-canvas-mock';
 beforeAll(() => {
 	server.listen();
 });
-
 afterEach(() => {
 	server.resetHandlers();
 });
-
 afterAll(() => {
 	server.close();
 });
-
 expect.extend(matchers);
 
 global.matchMedia =

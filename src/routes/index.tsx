@@ -33,6 +33,7 @@ import SingleProduct from '../pages/SingleProduct';
 import ReviewsPage from '../pages/product/ReviewsPage';
 import UpdatePassword from '../components/Layouts/UpdatePassword';
 import Cart from '../pages/carts/Carts';
+import Wishlist from '../pages/Wishlist';
 
 function Routers() {
 	const accessToken = localStorage.getItem('access_token') || '';
@@ -69,6 +70,11 @@ function Routers() {
 					<Route index element={<Home />} />
 					<Route path="about" element={<About />} />
 					<Route path="contacts" element={<Contacts />} />
+
+					<Route element={<ProtectedRoutes roles={['BUYER']} />}>
+						<Route path="/wishes" element={<Wishlist />} />
+					</Route>
+
 					<Route element={<PreventSeller roles={['']} />}>
 						<Route
 							element={<ProtectedRoutes roles={['ADMIN', 'SELLER', 'BUYER']} />}

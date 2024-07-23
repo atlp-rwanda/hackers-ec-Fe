@@ -20,7 +20,6 @@ describe('It should render the messages', () => {
 			</AllProvider>,
 		);
 
-		screen.debug();
 		expect(screen.getByText(/hello/i)).toBeInTheDocument();
 		if (message.sender.id !== userId) {
 			expect(screen.getByText(/garrix/i)).toBeInTheDocument();

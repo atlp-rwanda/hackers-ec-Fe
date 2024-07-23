@@ -1,9 +1,13 @@
 import ProductPageAddToCart from './carts/ProductPageAddToCart';
 import Button from './buttons/Button';
-import { FaHeart, FaStar } from 'react-icons/fa6';
+import { FaStar } from 'react-icons/fa6';
 import { DynamicData } from '../@types/DynamicData';
+import useWish from '../hooks/useWishlist';
+import { ThemeContext } from '../hooks/useWishcontext';
+import AddToWish from './wishes/AddToWish';
 
 function RecommendedDesign({ item }: DynamicData) {
+	const { data: wishes } = useWish();
 	return (
 		<div
 			key={item.id}
@@ -43,7 +47,9 @@ function RecommendedDesign({ item }: DynamicData) {
 					</h1>
 					<div className="wish flex items-center cursor-pointer">
 						<span className="mr-1">add to wish</span>
-						<FaHeart className=" text-action-error text-2xl cursor-pointer wish_btn" />
+						<ThemeContext.Provider value={wishes}>
+							<AddToWish productId={item.id || ''} btnCss="cursor-pointer" />
+						</ThemeContext.Provider>
 					</div>
 				</div>
 			</div>

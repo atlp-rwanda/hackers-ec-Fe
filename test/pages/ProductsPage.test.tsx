@@ -4,7 +4,6 @@ import {
 	screen,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { jwtDecode } from 'jwt-decode';
 import { http, HttpResponse } from 'msw';
 import { DynamicData } from '../../src/@types/DynamicData';
@@ -15,6 +14,7 @@ import fetchInfo from '../../src/utils/userDetails';
 import { db } from '../mock/db';
 import { localStorageMock } from '../mock/localStorage';
 import { server } from '../mock/server';
+import userEvent from '@testing-library/user-event';
 
 type ProductType = {
 	id: string;
@@ -53,7 +53,7 @@ describe('Get all products', () => {
 		[1, 2, 3, 4, 5, 6, 7].map((item) => {
 			const product = db.products.create({
 				name: `Iphone ${item}`,
-				price: `10 ${item}`,
+				price: `10${item}`,
 				discount: `1 ${item}`,
 			});
 			products.push(product);

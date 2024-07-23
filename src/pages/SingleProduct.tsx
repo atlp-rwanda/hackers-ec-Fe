@@ -1,5 +1,6 @@
+//import { FaCartPlus, FaPlus, FaMinus } from 'react-icons/fa';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { useEffect, useState } from 'react';
-import { FaHeart } from 'react-icons/fa';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { IoChevronBackSharp } from 'react-icons/io5';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -17,9 +18,11 @@ import useToast from '../hooks/useToast';
 import useToken from '../hooks/useToken';
 import { fetchReview } from '../redux/features/getReviewSice';
 import { getSinleProducts } from '../redux/features/productSlice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import fetchInfo from '../utils/userDetails';
 import RecommendedProduct from './RecommendedProduct';
+import AddToWish from '../components/wishes/AddToWish';
+import { ThemeContext } from '../hooks/useWishcontext';
+import useWish from '../hooks/useWishlist';
 
 const SingleProduct = () => {
 	const { isLoading, singleProduct } = useAppSelector((state) => state.product);
@@ -81,6 +84,8 @@ const SingleProduct = () => {
 	if (review) {
 		userRev = review?.filter((item: DynamicData) => item.userId === user[0].id);
 	}
+	const { data: wishes } = useWish();
+
 	return (
 		<>
 			<div
@@ -113,7 +118,13 @@ const SingleProduct = () => {
 											alt="single_product_image"
 											className="w-full object-cover h-full"
 										/>
-										<FaHeart className="wish_btn absolute right-4 top-4 text-2xl text-action-error" />
+
+										<ThemeContext.Provider value={wishes}>
+											<AddToWish
+												productId={id || ''}
+												btnCss="absolute right-4 top-4"
+											/>
+										</ThemeContext.Provider>
 									</div>
 									<Slider {...settings}>
 										{singleProduct[0]?.images?.map(

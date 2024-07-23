@@ -25,6 +25,10 @@ type ProductType = {
 	status: string;
 	images: string;
 };
+type wishType = {
+	id: string;
+	product?: DynamicData;
+};
 
 global.URL.createObjectURL = vi.fn(() => 'mocked-url');
 vi.mock('jwt-decode', () => ({
@@ -45,6 +49,7 @@ describe('Landing page products components', () => {
 
 describe('Get all products', () => {
 	const products: ProductType[] = [];
+	const wishData: wishType[] = [];
 
 	beforeAll(() => {
 		[1, 2, 3, 4, 5, 6, 7].map((item) => {
@@ -55,6 +60,10 @@ describe('Get all products', () => {
 			});
 			products.push(product);
 		});
+		const wish = db.wishes.create({
+			product: products[0],
+		});
+		wishData.push(wish);
 	});
 
 	afterAll(() => {
@@ -69,6 +78,13 @@ describe('Get all products', () => {
 					data: products,
 				}),
 			),
+		);
+		server.use(
+			http.get(`${import.meta.env.VITE_API_BASE_URL}/wishes`, () => {
+				return HttpResponse.json({
+					data: wishData,
+				});
+			}),
 		);
 
 		render(

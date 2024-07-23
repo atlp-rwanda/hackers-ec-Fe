@@ -9,6 +9,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { DynamicData } from '../../src/@types/DynamicData';
 import { describe, it, expect } from 'vitest';
 
+vi.mock('../../src/hooks/useWishlist', () => ({
+	__esModule: true,
+	default: () => ({ isLoading: true, data: [] }),
+}));
 const mockProducts: DynamicData[] = [
 	{
 		id: '0b52e82c-70a7-4ff3-aad7-8f6a3e406f5c',

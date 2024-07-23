@@ -20,7 +20,6 @@ type userTYpe = {
 	Active: string;
 	role: string;
 };
-
 type roleType = {
 	id: string;
 	roleName: string;
