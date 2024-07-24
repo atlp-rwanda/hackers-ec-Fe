@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { FaCaretDown, FaStar } from 'react-icons/fa';
@@ -54,7 +55,6 @@ const LandingProduct = () => {
 		dispatch(search(searchInputs)).unwrap();
 	}, [dispatch, searchInputs]);
 	const { data: wishes } = useWish();
-
 	return (
 		<>
 			<div className="perent_products_container min-h-screen relative">

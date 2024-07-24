@@ -3,8 +3,10 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { fetchWishes } from '../redux/features/getUserwishes';
 import useToast from './useToast';
+import fetchInfo from '../utils/userDetails';
 
 const useWish = () => {
+	const tokenInfo = fetchInfo();
 	const data = useAppSelector(
 		(state) => state.fetchWishes.data[state.fetchWishes.data.length - 1]?.data,
 	);
@@ -12,11 +14,13 @@ const useWish = () => {
 	const { showErrorMessage } = useToast();
 	const dispatch = useAppDispatch();
 	useEffect(() => {
-		dispatch(fetchWishes())
-			.unwrap()
-			.catch((error) => {
-				showErrorMessage(error.message || 'Failed to load wishes');
-			});
+		if (tokenInfo) {
+			dispatch(fetchWishes())
+				.unwrap()
+				.catch((error) => {
+					showErrorMessage(error.message || 'Failed to load wishes');
+				});
+		}
 	}, [dispatch]);
 	return { data, isLoading };
 };

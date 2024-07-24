@@ -69,7 +69,7 @@ function Wishlist() {
 			) : (
 				<div className="products_container bg-neutral-white ipad:rounded-md ipad:shadow ipad:w-[60%] ipad:max-w-[65rem] ipad:m-auto flex flex-col items-center laptop:items-start pl-5 w-full mt-16 laptop:gap-5">
 					<div
-						className=" flex flex-col m-auto  items-center bg-blue-500 text-white text-sm font-bold px-4 py-3"
+						className=" flex flex-col m-auto  items-center text-black text-sm font-bold px-4 py-3"
 						role="alert"
 					>
 						<div className="flex items-center w-full m-auto">
@@ -80,12 +80,12 @@ function Wishlist() {
 							/>
 						</div>
 						<div className="flex items-center justify-center w-full m-auto">
-							<h1 className="mb-3 mt-3 text-[1rem] bimobile:text-[1.2rem] tablet:text-[2rem] ipad:text-[2.2rem] font-bold leading-tight  sm:text-4xl lg:text-5xl dark:text-white">
+							<h1 className="mb-3 mt-3 text-[1rem] bimobile:text-[1.2rem] tablet:text-[2rem] ipad:text-[2.2rem] font-bold leading-tight  sm:text-4xl lg:text-5xl ">
 								Your wishlist is currently empty{' '}
 							</h1>
 						</div>
 						<div className="flex items-center w-full m-auto justify-center">
-							<p className="mb-5 text-[0.7rem] tablet:text-[1.3rem] font-normal text-gray-500 md:text-lg dark:text-gray-400">
+							<p className="mb-5 text-[0.7rem] tablet:text-[1.3rem] font-normal  md:text-lg ">
 								Start adding some items to see them here!
 							</p>
 						</div>
