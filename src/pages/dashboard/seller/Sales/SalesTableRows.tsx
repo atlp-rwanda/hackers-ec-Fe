@@ -44,7 +44,7 @@ const SalesTableRow: React.FC<SalesTableRowProps> = ({
 
 	return (
 		<tr
-			className={`relative text-sm ${index % 2 === 1 ? 'bg-evenRawsbg' : ''}`}
+			className={`hover:bg-primary-lightblue/30 relative text-sm ${index % 2 === 1 ? 'bg-evenRawsbg' : ''}`}
 			onClick={handleRowClick}
 			style={{ cursor: 'pointer' }}
 		>

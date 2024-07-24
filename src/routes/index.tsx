@@ -28,6 +28,7 @@ import Orders from '../pages/dashboard/buyer/order/Orders';
 import SingleOrders from '../pages/dashboard/buyer/order/SingleOrders';
 import SalesPage from '../pages/dashboard/seller/Sales/SalesPage';
 import SingleSale from '../pages/dashboard/seller/Sales/SingleSale';
+import WishlistPage from '../pages/dashboard/seller/wishlist/wishlistPage';
 import ForgotPassword from '../pages/forgottenPassword/ForgotPassword';
 import ReviewsPage from '../pages/product/ReviewsPage';
 import ResetPassword from '../pages/resetPassword/resetPassword';
@@ -113,6 +114,9 @@ function Routers() {
 							<Route path=":id" element={<DashboardSingleProducts />} />
 							<Route path="new" element={<AddProducts />} />
 							<Route path="edit/:id" element={<AddProducts />} />
+						</Route>
+						<Route path="wishlists">
+							<Route index element={<WishlistPage />} />
 						</Route>
 						<Route path="sales">
 							<Route index element={<SalesPage />} />

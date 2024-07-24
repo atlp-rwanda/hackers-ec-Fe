@@ -9,6 +9,7 @@ const Pagination = ({ pageCount, onPageChange }: paginationProps) => {
 	return (
 		<div className="flex items-center justify-center">
 			<ReactPaginate
+				data-testid="pagination-component"
 				previousLabel={<GrPrevious />}
 				nextLabel={<GrNext />}
 				breakLabel={'...'}
