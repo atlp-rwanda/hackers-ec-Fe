@@ -13,6 +13,7 @@ import navReducer from '../../src/redux/features/navSlice';
 import notificationReducer from '../../src/redux/features/notificationSlice';
 import profileReducer from '../../src/redux/features/userUpdateSlice';
 import { localStorageMock } from '../mock/localStorage';
+import logoutReducer from '../../src/redux/features/logoutSlice';
 
 vi.mock('jwt-decode', () => ({
 	jwtDecode: vi.fn(),
@@ -30,6 +31,7 @@ const renderWithProviders = (
 			cart: cartReducer,
 			profile: profileReducer,
 			notifications: notificationReducer,
+			logout: logoutReducer,
 		},
 		preloadedState,
 	});

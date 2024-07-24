@@ -8,9 +8,13 @@ const useToast = () => {
 	const showErrorMessage = (message: string) => {
 		toast.error(message);
 	};
+	const showWorningMessage = (message: string) => {
+		toast.warning(message);
+	};
 	return {
 		showSuccessMessage,
 		showErrorMessage,
+		showWorningMessage,
 	};
 };
 

@@ -5,6 +5,7 @@ vi.mock('sonner', () => ({
 	toast: {
 		success: vi.fn(),
 		error: vi.fn(),
+		warning: vi.fn(),
 	},
 }));
 
@@ -19,5 +20,10 @@ describe('useToast', () => {
 		const { showErrorMessage } = useToast();
 		showErrorMessage('Error message');
 		expect(toast.error).toHaveBeenCalledWith('Error message');
+	});
+	it('should call toast.warning with the correct message', (message: string) => {
+		const { showWorningMessage } = useToast();
+		showWorningMessage(message);
+		expect(toast.warning).toHaveBeenCalledWith(message);
 	});
 });

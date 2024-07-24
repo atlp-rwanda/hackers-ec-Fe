@@ -11,9 +11,9 @@ import fetchInfo from './userDetails';
 export const DashboardProducts = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
-	return decoded.role === 'ADMIN' ? (
+	return decoded?.role === 'ADMIN' ? (
 		<NotFound />
-	) : decoded.role === 'SELLER' ? (
+	) : decoded?.role === 'SELLER' ? (
 		<SellerProductsPage />
 	) : (
 		<div>Unauthorized access</div>
@@ -22,9 +22,9 @@ export const DashboardProducts = () => {
 export const DashboardSingleProducts = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
-	return decoded.role === 'ADMIN' ? (
+	return decoded?.role === 'ADMIN' ? (
 		<NotFound />
-	) : decoded.role === 'SELLER' ? (
+	) : decoded?.role === 'SELLER' ? (
 		<SellerSingleProduct />
 	) : (
 		<div>Unauthorized access</div>
@@ -34,9 +34,9 @@ export const DashboardSingleProducts = () => {
 export const DashboardContent = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
-	return decoded.role === 'ADMIN' ? (
+	return decoded?.role === 'ADMIN' ? (
 		<div>Hello Admin</div>
-	) : decoded.role === 'SELLER' ? (
+	) : decoded?.role === 'SELLER' ? (
 		<SellerDashboard />
 	) : (
 		<div>Unauthorized access</div>
@@ -46,9 +46,9 @@ export const DashboardContent = () => {
 export const AddProducts = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
-	return decoded.role === 'ADMIN' ? (
+	return decoded?.role === 'ADMIN' ? (
 		<NotFound />
-	) : decoded.role === 'SELLER' ? (
+	) : decoded?.role === 'SELLER' ? (
 		<AddProduct />
 	) : (
 		<div>Unauthorized access</div>
@@ -58,9 +58,9 @@ export const AddProducts = () => {
 export const Users = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
-	return decoded.role === 'ADMIN' ? (
+	return decoded?.role === 'ADMIN' ? (
 		<AdminDashboardAllUser />
-	) : decoded.role === 'SELLER' ? (
+	) : decoded?.role === 'SELLER' ? (
 		<NotFound />
 	) : (
 		<div>Unauthorized access</div>
@@ -70,9 +70,9 @@ export const Users = () => {
 export const UserRoles = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
-	return decoded.role === 'ADMIN' ? (
+	return decoded?.role === 'ADMIN' ? (
 		<div>role</div>
-	) : decoded.role === 'SELLER' ? (
+	) : decoded?.role === 'SELLER' ? (
 		<NotFound />
 	) : (
 		<div>Unauthorized access</div>
@@ -82,9 +82,9 @@ export const UserRoles = () => {
 export const EditRole = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
-	return decoded.role === 'ADMIN' ? (
+	return decoded?.role === 'ADMIN' ? (
 		<EditUser />
-	) : decoded.role === 'SELLER' ? (
+	) : decoded?.role === 'SELLER' ? (
 		<NotFound />
 	) : (
 		<div>Unauthorized access</div>

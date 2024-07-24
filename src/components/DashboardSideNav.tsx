@@ -1,8 +1,9 @@
 import { Triangle } from 'lucide-react';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { fetchUserProfile } from '../redux/features/userUpdateSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { appLogo } from '../utils/images';
-import Button from './buttons/Button';
-import { dashProfileIcon } from '../utils/images';
+import LogoutCard from './cards/LogoutCard';
 
 const DashboardSideNav = ({
 	children,
@@ -14,6 +15,12 @@ const DashboardSideNav = ({
 	role: string;
 }) => {
 	const [active, setActive] = useState(false);
+	const dispatch = useAppDispatch();
+	const { data } = useAppSelector((state) => state.profile);
+	useEffect(() => {
+		dispatch(fetchUserProfile()).unwrap();
+	}, [dispatch]);
+
 	return (
 		<aside
 			className={`${otherStyles} h-screen bg-neutral-white fixed ipad:sticky top-0 left-0 z-40`}
@@ -25,10 +32,14 @@ const DashboardSideNav = ({
 				</div>
 				<ul className="flex-1 mt-3">{children}</ul>
 				<div className="relative flex gap-3 items-center p-3">
-					<img src={dashProfileIcon} alt="website logo" className="w-14" />
+					<img
+						src={data?.profileImage}
+						alt="website logo"
+						className="w-14 h-14 rounded-full"
+					/>
 					<div className="flex flex-col flex-1 p-2">
 						<h4 className="text-lg">{role}</h4>
-						<p className="text-xs text-neutral-black/60">John Doe</p>
+						<p className="text-xs text-neutral-black/60">{data?.lastName}</p>
 					</div>
 					<div
 						onClick={() => setActive((curr) => !curr)}
@@ -40,17 +51,7 @@ const DashboardSideNav = ({
 							className={`${active ? '' : 'rotate-180'}`}
 						/>
 					</div>
-					{active && (
-						<div className="absolute bottom-full right-6 mb-6 w-[80%] p-3 bg-primary-lightblue/10 flex-center rounded-lg">
-							<Button
-								url={null}
-								buttonType="button"
-								title="Logout"
-								color="bg-neutral-darkRed"
-								otherStyles="rounded-lg hover:bg-neutral-darkRed/80 w-full"
-							/>
-						</div>
-					)}
+					{active && <LogoutCard />}
 				</div>
 			</nav>
 		</aside>

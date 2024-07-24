@@ -1,12 +1,20 @@
 import { Menu, Search, X } from 'lucide-react';
+import { useContext, useEffect } from 'react';
 import useHandleResize from '../hooks/useHandleResize';
-import { useContext } from 'react';
+import { fetchUserProfile } from '../redux/features/userUpdateSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { toggleMenuContext } from './Layouts/DashboardLayout';
 import Notification from './notification/Notification';
 
 const DashboardTopNav = () => {
 	const { show } = useHandleResize();
 	const { setShowMenu, showMenu } = useContext(toggleMenuContext);
+	const { data } = useAppSelector((state) => state.profile);
+
+	const dispatch = useAppDispatch();
+	useEffect(() => {
+		dispatch(fetchUserProfile());
+	}, [dispatch]);
 
 	return (
 		<div className="p-5 flex items-center justify-between border-b border-neutral-grey bg-neutral-white">
@@ -14,7 +22,7 @@ const DashboardTopNav = () => {
 				<span className="font-semibold text-neutral-black text-base ipad:text-xl">
 					Hello!
 				</span>{' '}
-				John Doe
+				{data?.lastName}
 			</h1>
 			<div className="flex items-center gap-5 mr-5">
 				<Notification />

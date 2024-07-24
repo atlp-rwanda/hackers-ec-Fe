@@ -46,27 +46,27 @@ const SellerProductsPage = () => {
 	return (
 		<>
 			<div className="parent_container relative max-h-[80%] overflow-y-scroll overflow-hidden pb-4 mt-4 h-full">
-				{isLoading ? (
-					<div className="w-full absolute h-full flex items-center justify-center">
-						<ScaleLoader
-							color="#256490"
-							role="progressbar"
-							aria-label="single_product_loder"
-						/>
-					</div>
-				) : (
-					<>
-						<div className="tableWrapper mt-1 text-[1rem] mx-5 laptop:mx-10 bg-neutral-white p-4 rounded-md max-w-[95%]">
-							<div className="flex justify-between items-center">
-								<h1 className="mb-5">Products</h1>
-								<Link to={'new'}>
-									<button className="md:mx-3 px-4 py-1 laptop:py-2 text-neutral-white font-semibold rounded-lg flex items-center space-x-2 bg-custom-gradient">
-										<span>Add new</span>
-										<RiAddCircleFill className="text-xl" />
-									</button>
-								</Link>
-							</div>
-							<>
+				<>
+					<div className="tableWrapper mt-1 text-[1rem] mx-5 laptop:mx-10 bg-neutral-white p-4 rounded-md max-w-[95%]">
+						<div className="flex justify-between items-center">
+							<h1 className="mb-5">Products</h1>
+							<Link to={'new'}>
+								<button className="md:mx-3 px-4 py-1 laptop:py-2 text-neutral-white font-semibold rounded-lg flex items-center space-x-2 bg-custom-gradient">
+									<span>Add new</span>
+									<RiAddCircleFill className="text-xl" />
+								</button>
+							</Link>
+						</div>
+						<>
+							{isLoading ? (
+								<div className="w-full absolute h-full flex items-center justify-center">
+									<ScaleLoader
+										color="#256490"
+										role="progressbar"
+										aria-label="single_product_loder"
+									/>
+								</div>
+							) : (
 								<table className="tables pt-2 p-3 overflow-hidden overflow-x-scroll max-w-[18rem] tablet:max-w-[100%]">
 									<thead className="bg-[#256490] text-neutral-white text-left overflow-hidden rounded-3xl p2">
 										<tr className="rounded-xl text-sm">
@@ -120,24 +120,24 @@ const SellerProductsPage = () => {
 										))}
 									</tbody>
 								</table>
-							</>
-						</div>
-						<div className="flex items-center justify-center">
-							<ReactPaginate
-								previousLabel={<GrPrevious />}
-								nextLabel={<GrNext />}
-								breakLabel={'...'}
-								breakClassName={'break-me'}
-								pageCount={pageCount}
-								marginPagesDisplayed={2}
-								pageRangeDisplayed={5}
-								onPageChange={handlePageClick}
-								containerClassName={'pagination'}
-								activeClassName={'active'}
-							/>
-						</div>
-					</>
-				)}
+							)}
+						</>
+					</div>
+					<div className="flex items-center justify-center">
+						<ReactPaginate
+							previousLabel={<GrPrevious />}
+							nextLabel={<GrNext />}
+							breakLabel={'...'}
+							breakClassName={'break-me'}
+							pageCount={pageCount}
+							marginPagesDisplayed={2}
+							pageRangeDisplayed={5}
+							onPageChange={handlePageClick}
+							containerClassName={'pagination'}
+							activeClassName={'active'}
+						/>
+					</div>
+				</>
 			</div>
 		</>
 	);
