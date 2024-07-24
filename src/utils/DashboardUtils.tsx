@@ -1,4 +1,5 @@
 import { UserInfoTypes } from '../@types/userType';
+import AdminStat from '../components/adminDashboard/AdminStat';
 import AdminDashboardAllUser from '../pages/Admin/DashboardGetUser';
 import EditUser from '../pages/Admin/EditUserRoles';
 import NotFound from '../pages/NotFound';
@@ -35,7 +36,9 @@ export const DashboardContent = () => {
 	const decoded = fetchInfo() as UserInfoTypes;
 
 	return decoded?.role === 'ADMIN' ? (
-		<div>Hello Admin</div>
+		<div className="w-full">
+			<AdminStat />
+		</div>
 	) : decoded?.role === 'SELLER' ? (
 		<SellerDashboard />
 	) : (

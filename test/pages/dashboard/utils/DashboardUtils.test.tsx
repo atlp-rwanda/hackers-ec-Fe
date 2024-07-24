@@ -19,6 +19,15 @@ vi.mock('jwt-decode', () => ({
 	jwtDecode: vi.fn(),
 }));
 
+vi.mock('../../../../src/components/adminDashboard/AdminStat', () => ({
+	__esModule: true,
+	default: () => (
+		<div>
+			<p>Admin Dashboard Statistics</p>
+		</div>
+	),
+}));
+
 global.ResizeObserver = ResizeObserver;
 Object.defineProperty(global, 'localStorage', { value: localStorageMock });
 
@@ -67,8 +76,7 @@ describe('Dashboard products', () => {
 				<DashboardContent />
 			</AllProvider>,
 		);
-
-		expect(screen.getByText(/Hello Admin/i)).toBeInTheDocument();
+		expect(screen.getByText(/Admin Dashboard Statistics/i)).toBeInTheDocument();
 	});
 	it('should', () => {
 		const mockToken = 'valid-token';

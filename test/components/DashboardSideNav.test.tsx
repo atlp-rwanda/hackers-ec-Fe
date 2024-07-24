@@ -8,10 +8,10 @@ test('renders DashboardSideNav component', () => {
 
 	render(
 		<AllProvider>
+			,
 			<DashboardSideNav role={role} otherStyles={otherStyles}>
 				<div>Side bar</div>
 			</DashboardSideNav>
-			,
 		</AllProvider>,
 	);
 

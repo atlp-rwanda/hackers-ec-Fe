@@ -37,6 +37,7 @@ import profileSlice from './features/userUpdateSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
 import productAvailabilitySlice from './features/productAvailabilitySlice';
 import momoSlice from './features/momoPaymentSlice';
+import adminStatsSlice from './features/adminStatsSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -78,6 +79,7 @@ export const store = configureStore({
 		sellerWishes: sellerWishlistSlice,
 		productAvailability: productAvailabilitySlice,
 		momo: momoSlice,
+		adminStatsSlice,
 	},
 });
 
