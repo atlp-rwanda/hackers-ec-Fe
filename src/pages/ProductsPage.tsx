@@ -9,8 +9,12 @@ import { searchInputs } from '../@types/SearchType';
 import Button from '../components/buttons/Button';
 import ProductPageAddToCart from '../components/carts/ProductPageAddToCart';
 import CategoryModel from '../components/CategoryModel';
+import Chat from '../components/chat/ChatComponent';
 import FormInput from '../components/Forms/InputText';
+import AddToWish from '../components/wishes/AddToWish';
 import useToast from '../hooks/useToast';
+import { ThemeContext } from '../hooks/useWishcontext';
+import useWish from '../hooks/useWishlist';
 import { getCarts } from '../redux/features/cartSlice';
 import { getProducts } from '../redux/features/productSlice';
 import {
@@ -21,10 +25,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { depart_icon } from '../utils/images';
 import fetchInfo from '../utils/userDetails';
-import Chat from '../components/chat/ChatComponent';
-import AddToWish from '../components/wishes/AddToWish';
-import useWish from '../hooks/useWishlist';
-import { ThemeContext } from '../hooks/useWishcontext';
 import SearchResultNotFound from './SearchResultNotFound';
 
 const ProductsPage = () => {

@@ -19,6 +19,18 @@ const initialState: OrderState = {
 	error: null,
 };
 
+export const getOrders = createAsyncThunk(
+	'getOrders',
+	async (_, { rejectWithValue }) => {
+		try {
+			const { data } = await API.get('/orders');
+			return data;
+		} catch (error) {
+			return rejectWithValue((error as DynamicData).response);
+		}
+	},
+);
+
 export const getSingleOrder = createAsyncThunk(
 	'getSingleOrder',
 	async (orderId: string, { rejectWithValue }) => {
@@ -36,6 +48,23 @@ const ordersSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
+		// ****** get orders ***********
+		builder.addCase(getOrders.pending, (state) => {
+			state.isLoading = true;
+			state.error = null;
+		});
+		builder.addCase(
+			getOrders.fulfilled,
+			(state, action: PayloadAction<DynamicData>) => {
+				state.isLoading = false;
+				state.orders = action.payload.data;
+				state.numberOfOrder = action.payload?.data?.length;
+			},
+		);
+		builder.addCase(getOrders.rejected, (state, action: PayloadAction<any>) => {
+			state.error = action.payload;
+		});
+
 		// ****** get single orders ***********
 		builder.addCase(getSingleOrder.pending, (state) => {
 			state.isLoading = true;

@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { ScaleLoader } from 'react-spinners';
 import { DynamicData } from '../../../../@types/DynamicData';
 import BackButton from '../../../../components/buttons/BackButton';
+import Pagination from '../../../../components/dashboard/buyer/Pagination';
 import { getSingleOrder } from '../../../../redux/features/OrdersSlice';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks/hooks';
 import getStatusColor from '../../../../utils/statusColor';
-import Pagination from '../../../../components/dashboard/buyer/Pagination';
 
 const SingleOrders = () => {
 	const dispatch = useAppDispatch();
@@ -53,6 +53,7 @@ const SingleOrders = () => {
 								<div className="flex justify-end items-center ">
 									<BackButton
 										isBordered
+										url="/orders"
 										title={''}
 										otherStyles="bg-primary-lightblue text-neutral-white _shadow hover:bg-primary-lightblue/85"
 									/>

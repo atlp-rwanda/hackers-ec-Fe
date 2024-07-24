@@ -11,6 +11,9 @@ import Button from '../components/buttons/Button';
 import ProductPageAddToCart from '../components/carts/ProductPageAddToCart';
 import CategoryModel from '../components/CategoryModel';
 import FormInput from '../components/Forms/InputText';
+import AddToWish from '../components/wishes/AddToWish';
+import { ThemeContext } from '../hooks/useWishcontext';
+import useWish from '../hooks/useWishlist';
 import { getProducts } from '../redux/features/productSlice';
 import {
 	getSearchedProducts,
@@ -19,9 +22,6 @@ import {
 } from '../redux/features/SearchSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import fetchInfo from '../utils/userDetails';
-import AddToWish from '../components/wishes/AddToWish';
-import { ThemeContext } from '../hooks/useWishcontext';
-import useWish from '../hooks/useWishlist';
 import SearchResultNotFound from './SearchResultNotFound';
 
 const LandingProduct = () => {
@@ -185,7 +185,6 @@ const LandingProduct = () => {
 													</h1>
 													<div className="wish flex items-center cursor-pointer">
 														<span className="mr-1">add to wish</span>
-														{/* <FaHeart className=" text-action-error text-2xl cursor-pointer wish_btn" /> */}
 														<ThemeContext.Provider value={wishes}>
 															<AddToWish productId={item.id} />
 														</ThemeContext.Provider>
