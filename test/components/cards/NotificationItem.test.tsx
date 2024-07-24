@@ -1,21 +1,93 @@
-import { render, screen } from '@testing-library/react';
-import { it, expect, describe } from 'vitest';
-import NotificationItem from '../../../src/components/cards/NotificationItem';
+import { configureStore } from '@reduxjs/toolkit';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import NotificationItem from '../../../src/components/cards/NotificationItem';
+import notificationSlice from '../../../src/redux/features/notificationSlice';
 
-describe('Notification item component', () => {
-	it('should render a notification items with correct props', async () => {
-		const text =
-			'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat voluptate repellat quas sit explicabo itaque eveniet ex eum sapiente libero repellendus, velit quisquam ea. Totam libero voluptatum velit mollitia error.';
+const mockStore = configureStore({
+	reducer: {
+		notification: notificationSlice,
+	},
+});
 
-		render(<NotificationItem text={text} date="11:34" isSelected unread />);
-		const showMore = screen.getByText(/more/i);
-		expect(showMore).toBeInTheDocument();
+const mockDispatch = vi.fn();
+vi.mock('../../redux/hooks/hooks', () => ({
+	useAppDispatch: () => mockDispatch,
+}));
 
-		const user = userEvent.setup();
+const mockShowErrorMessage = vi.fn();
+vi.mock('../../../src/hooks/useToast', () => ({
+	default: () => ({
+		showErrorMessage: mockShowErrorMessage,
+	}),
+}));
 
-		await user.click(showMore);
+const renderWithProviders = (ui: React.ReactElement) => {
+	return render(<Provider store={mockStore}>{ui}</Provider>);
+};
 
-		expect(screen.getByText(/less/i)).toBeInTheDocument();
+describe('NotificationItem Component', () => {
+	const mockProps = {
+		text: 'This is a test notification',
+		date: '2024-07-19',
+		unread: true,
+		id: '123',
+	};
+
+	const user = userEvent.setup();
+
+	it('renders component', () => {
+		renderWithProviders(<NotificationItem {...mockProps} />);
+		expect(
+			screen.getByText(/This is a test notification/i),
+		).toBeInTheDocument();
+	});
+
+	it('displays "New" badge when notification is unread', () => {
+		renderWithProviders(<NotificationItem {...mockProps} />);
+		expect(screen.getByText(/New/i)).toBeInTheDocument();
+	});
+
+	it('does not display "New" badge when notification is read', () => {
+		renderWithProviders(<NotificationItem {...mockProps} unread={false} />);
+		expect(screen.queryByText(/New/i)).not.toBeInTheDocument();
+	});
+
+	it('toggles text length when "see more" or "show less" is clicked', async () => {
+		renderWithProviders(
+			<NotificationItem
+				{...mockProps}
+				text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, architecto recusandae nisi facere placeat consequatur incidunt illum iure saepe labore tempora. Ullam non tempore iste quos eveniet incidunt quo exercitationem!"
+			/>,
+		);
+		const seeMore = screen.getByText(/see more/i);
+		await user.click(seeMore);
+		expect(screen.getByText(/show less/i)).toBeInTheDocument();
+		await user.click(screen.getByText(/show less/i));
+		expect(screen.getByText(/see more/i)).toBeInTheDocument();
+	});
+
+	it('calls dispatch to mark notification as read when clicked', async () => {
+		renderWithProviders(<NotificationItem {...mockProps} />);
+		const notificationItem = screen.getByText(/This is a test notification/i);
+		await user.click(notificationItem);
+		expect(screen.getByText(/notification/i)).toBeInTheDocument();
+	});
+
+	it('handles error during notification reading', async () => {
+		mockDispatch.mockImplementationOnce(() => {
+			throw Error('Error');
+		});
+
+		renderWithProviders(<NotificationItem {...mockProps} />);
+		const notificationItem = screen.getByText(/This is a test notification/i);
+		await user.click(notificationItem);
+
+		await waitFor(() => {
+			expect(mockShowErrorMessage).toHaveBeenCalledWith(
+				'Unknown error occurred! Please try again!',
+			);
+		});
 	});
 });

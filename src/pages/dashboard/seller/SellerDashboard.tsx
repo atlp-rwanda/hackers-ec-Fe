@@ -207,7 +207,7 @@ const SellerDashboard = () => {
 								Loss
 							</h2>
 							<WaterPercentCard
-								percent={Math.round(lossPercent * 100)}
+								percent={isNaN(lossPercent) ? 0 : Math.round(lossPercent * 100)}
 								background="bg-[#ffa500]"
 								borderColor="border-[#ffa500]/70"
 							/>
@@ -217,7 +217,11 @@ const SellerDashboard = () => {
 								Expired products
 							</h2>
 							<WaterPercentCard
-								percent={Math.round(expiredProductPercent * 100)}
+								percent={
+									isNaN(expiredProductPercent)
+										? 0
+										: Math.round(expiredProductPercent * 100)
+								}
 								background="bg-[#808080]"
 								borderColor="border-[#808080]/70"
 							/>

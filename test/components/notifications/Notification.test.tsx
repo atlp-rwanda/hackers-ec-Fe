@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import Notification from '../../../src/components/notification/Notification';
-import { DynamicData } from '../../../src/@types/DynamicData';
 import { Toaster } from 'sonner';
-import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
+import { DynamicData } from '../../../src/@types/DynamicData';
+import Notification from '../../../src/components/notification/Notification';
 
 vi.mock('socket.io-client');
 
@@ -105,7 +105,7 @@ describe('Notification Component', () => {
 						id: '1',
 						message: 'Test Notification 1',
 						createdAt: new Date(),
-						unread: true,
+						unread: false,
 					},
 					{
 						id: '2',
@@ -133,5 +133,43 @@ describe('Notification Component', () => {
 		expect(screen.getByLabelText('notification-tab')).toBeInTheDocument();
 		expect(screen.getByText('Test Notification 1')).toBeInTheDocument();
 		expect(screen.getByText('Test Notification 2')).toBeInTheDocument();
+
+		expect(screen.queryByText(/new/i)).not.toBeInTheDocument();
+	});
+
+	it('should show a skeleton', async () => {
+		const modifiedStore = mockStore({
+			notifications: {
+				notifications: [
+					{
+						id: '1',
+						message: 'Test Notification 1',
+						createdAt: new Date(),
+						unread: false,
+					},
+					{
+						id: '2',
+						message: 'Test Notification 2',
+						createdAt: new Date(),
+						unread: false,
+					},
+				],
+				value: 2,
+				isLoading: true,
+			},
+		});
+
+		render(
+			<Provider store={modifiedStore}>
+				<Notification />
+				<Toaster position="top-right" richColors />
+			</Provider>,
+		);
+		const user = userEvent.setup();
+
+		const bellIcon = screen.getByRole('img', { name: 'bell-image' });
+		await user.click(bellIcon);
+
+		expect(screen.getAllByLabelText('skeleton'));
 	});
 });

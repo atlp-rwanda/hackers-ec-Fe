@@ -1,11 +1,25 @@
 import { useState } from 'react';
 import { NotificationItemTypes } from '../../@types/notification';
+import { useAppDispatch } from '../../redux/hooks/hooks';
+import useToast from '../../hooks/useToast';
+import { DynamicData } from '../../@types/DynamicData';
+import {
+	markOneRead,
+	readOneNotification,
+} from '../../redux/features/notificationSlice';
 
-const NotificationItem = ({ text, date, unread }: NotificationItemTypes) => {
+const NotificationItem = ({
+	text,
+	date,
+	unread,
+	id,
+}: NotificationItemTypes) => {
 	const [expanded, setExpanded] = useState(false);
 	const [notificationText, setNotificationText] = useState(
 		text.length > 100 ? `${text.substring(0, 100)}...` : text,
 	);
+	const dispath = useAppDispatch();
+	const { showErrorMessage } = useToast();
 
 	const changeTextLength = () => {
 		if (expanded) {
@@ -17,8 +31,23 @@ const NotificationItem = ({ text, date, unread }: NotificationItemTypes) => {
 		}
 	};
 
+	const readNotification = async () => {
+		try {
+			await dispath(markOneRead(id)).unwrap();
+			dispath(readOneNotification(id));
+		} catch (e) {
+			const err = e as DynamicData;
+			showErrorMessage(
+				err?.data?.message ||
+					err?.message ||
+					'Unknown error occurred! Please try again!',
+			);
+		}
+	};
+
 	return (
 		<div
+			onClick={readNotification}
 			className={`p-5 w-full my-2 bg-neutral-white rounded-xl relative shadow-dark-lg`}
 		>
 			<div className="p-2 rounded-full bg-neutral-grey absolute right-2 top-5" />
@@ -29,9 +58,6 @@ const NotificationItem = ({ text, date, unread }: NotificationItemTypes) => {
 				{unread && (
 					<div className="py-1 px-3 rounded-full bg-action-success/20">New</div>
 				)}
-				{/* <div>
-					<X />
-				</div> */}
 			</div>
 			<div className="h-max w-full text-xs py-2 transition-transform">
 				{notificationText}
