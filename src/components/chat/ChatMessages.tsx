@@ -4,10 +4,10 @@ const ChatMessages = ({ index, message, id }: DynamicData) => {
 	return (
 		<div
 			key={index}
-			className={`msgs p-3 rounded-xl flex items-start gap-2 ${
+			className={`msgs p-1 rounded-xl flex items-start gap-2 ${
 				message.sender.id === id
-					? 'bg-blue-500 text-white self-end'
-					: 'bg-gray-200 text-black self-start'
+					? 'text-white self-end'
+					: 'text-black self-start'
 			}`}
 		>
 			<div>
@@ -15,7 +15,7 @@ const ChatMessages = ({ index, message, id }: DynamicData) => {
 					{message.sender.id !== id ? message.sender.firstName : null}
 				</h1>
 				<p
-					className={`${message.sender.id === id ? `p-3 rounded-l-xl rounded-br-xl text-xl bg-[#266591] text-[#fff]` : `p-3 rounded-r-xl rounded-bl-xl text-xl bg-[#EAF0F6] text-black`}`}
+					className={`${message.sender.id === id ? `p-3 rounded-l-xl rounded-br-xl text-xl bg-[#266591] text-[#fff]` : `p-3 rounded-r-xl rounded-bl-xl text-xl bg-[#ccdae9] text-black`}`}
 				>
 					{message.message}
 				</p>
