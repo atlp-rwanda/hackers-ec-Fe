@@ -32,8 +32,6 @@ const errorHandler = (error: AxiosError): Promise<never> => {
 		toast.error('Password outdated, Update it!');
 	} else if (error.message === 'Network Error') {
 		toast.error('Network Error: Connect to Server');
-	} else {
-		toast.error(error.message);
 	}
 	return Promise.reject(error);
 };
