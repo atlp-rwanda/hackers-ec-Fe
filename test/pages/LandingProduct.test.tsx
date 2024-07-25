@@ -115,7 +115,7 @@ describe('Get all products', () => {
 		expect(loader).not.toBeInTheDocument();
 
 		expect(name).toBeDefined();
-		expect(screen.getByText("11%")).toBeInTheDocument();
+		expect(screen.getByText('11%')).toBeInTheDocument();
 	});
 
 	it('should display the minimum and maximum search fields', async () => {
