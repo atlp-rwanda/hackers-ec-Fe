@@ -24,10 +24,12 @@ const Nav = () => {
 	const userData = fetchInfo();
 
 	useEffect(() => {
-		if (!data && accessToken) {
-			dispatch(fetchUserProfile()).unwrap();
+		if (accessToken) {
+			if (!data) {
+				dispatch(fetchUserProfile()).unwrap();
+			}
+			dispatch(getCarts()).unwrap();
 		}
-		dispatch(getCarts()).unwrap();
 	}, [accessToken, data, dispatch]);
 
 	const links = [

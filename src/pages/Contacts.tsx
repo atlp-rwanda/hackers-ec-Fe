@@ -1,15 +1,81 @@
-import { IoLocationOutline } from 'react-icons/io5';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BsTelephone } from 'react-icons/bs';
+import {
+	FaFacebookF,
+	FaInstagram,
+	FaLinkedinIn,
+	FaXTwitter,
+} from 'react-icons/fa6';
 import { HiOutlineMail } from 'react-icons/hi';
-import { FaXTwitter } from 'react-icons/fa6';
-import { FaFacebookF } from 'react-icons/fa6';
-import { FaInstagram } from 'react-icons/fa6';
-import { FaLinkedinIn } from 'react-icons/fa6';
-import useHandleResize from '../hooks/useHandleResize';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { IoLocationOutline } from 'react-icons/io5';
 import Chat from '../components/chat/ChatComponent';
+import useHandleResize from '../hooks/useHandleResize';
+import {
+	queryTypes,
+	queryValidation,
+} from '../validations/Queries/queryValidations';
+import { sendQuery } from '../redux/features/Queries/querySlice';
+import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
+import useToast from '../hooks/useToast';
+import { DynamicData } from '../@types/DynamicData';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { HashLoader } from 'react-spinners';
 
 const Contacts = () => {
 	const { show } = useHandleResize();
+	const dispatch = useAppDispatch();
+	const { isLoading } = useAppSelector((state) => state.queries);
+	const { showSuccessMessage, showErrorMessage } = useToast();
+
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm<queryTypes>({
+		resolver: zodResolver(queryValidation),
+	});
+
+	const onSubmit: SubmitHandler<queryTypes> = async (formData: queryTypes) => {
+		try {
+			const data = await dispatch(
+				sendQuery({
+					lastName: formData.lastName,
+					firstName: formData.firstName,
+					subject: formData.subject,
+					email: formData.email,
+					message: formData.message,
+				}),
+			)
+				.unwrap()
+				.catch((err) => {
+					showErrorMessage(
+						err?.data?.message || 'Unknown error occurred! Please try again!',
+					);
+				});
+			showSuccessMessage(data.message);
+
+			reset();
+		} catch (err: unknown) {
+			const error = err as DynamicData;
+			showErrorMessage(
+				error?.data?.message ||
+					(err as any)?.message ||
+					'Unknown error occurred! Please try again!',
+			);
+		}
+	};
+
+	if (isLoading) {
+		return (
+			<div className="flex-1 h-full flex-center flex-col gap-4">
+				<HashLoader color="#266491" size={60} role="progressbar" />
+				<p className="text-xs">Please wait ...</p>
+			</div>
+		);
+	}
+
 	return (
 		<>
 			<div
@@ -51,33 +117,86 @@ const Contacts = () => {
 							</div>
 						</div>
 					)}
-					<div className=" gap-6 mt-1 laptop:gap-5 laptop:w-[50%] w-full flex flex-col laptop:px-5 laptop:h-full justify-between ">
-						<form className=" gap-6 laptop:gap-5 w-full flex flex-col laptop:h-full justify-between ">
-							<input
-								type="text"
-								placeholder="Last name"
-								className="px-8 py-2 rounded-md bg-inputBg text-inputCaption "
-							/>
-							<input
-								type="text"
-								placeholder="First name"
-								className="px-8 py-2 rounded-md bg-inputBg text-inputCaption"
-							/>
-							<input
-								type="text"
-								placeholder="Subject"
-								className="px-8 py-2 rounded-md bg-inputBg text-inputCaption"
-							/>
-							<input
-								type="text"
-								placeholder="Email"
-								className="px-8 py-2 rounded-md bg-inputBg text-inputCaption"
-							/>
-							<textarea
-								placeholder="Message"
-								className="px-8 py-2 rounded-md bg-inputBg text-inputCaption  h-[200px]"
-							/>
-							<button className="bg-custom-gradient text-neutral-white w-[100%] h-[44px] rounded-[10px]">
+					<div className="gap-6 mt-1 laptop:gap-5 laptop:w-[50%] w-full flex flex-col laptop:px-5 laptop:h-full justify-between">
+						<form
+							onSubmit={handleSubmit(onSubmit)}
+							className="flex flex-col gap-4 w-full h-auto"
+						>
+							<div className="">
+								<input
+									type="text"
+									placeholder="Last name"
+									{...register('lastName')}
+									className="px-8 py-2 rounded-md bg-inputBg text-inputCaption w-full"
+								/>
+								{errors.lastName && (
+									<p className="text-action-error text-[13px]  bottom-[-16px] left-0">
+										{errors.lastName?.message}
+									</p>
+								)}
+							</div>
+
+							<div className="">
+								<input
+									type="text"
+									placeholder="First name"
+									{...register('firstName')}
+									className="px-8 py-2 rounded-md bg-inputBg text-inputCaption w-full"
+								/>
+								{errors.firstName && (
+									<p className="text-action-error text-[13px]  bottom-[-16px] left-0">
+										{errors.firstName?.message}
+									</p>
+								)}
+							</div>
+
+							<div className="">
+								<input
+									type="text"
+									placeholder="Subject"
+									{...register('subject')}
+									className="px-8 py-2 rounded-md bg-inputBg text-inputCaption w-full"
+								/>
+								{errors.subject && (
+									<p className="text-action-error text-[13px]  bottom-[-16px] left-0">
+										{errors.subject?.message}
+									</p>
+								)}
+							</div>
+
+							<div className="">
+								<input
+									type="text"
+									placeholder="Email"
+									{...register('email')}
+									className="px-8 py-2 rounded-md bg-inputBg text-inputCaption w-full"
+								/>
+								{errors.email && (
+									<p className="text-action-error text-[13px]  bottom-[-16px] left-0">
+										{errors.email?.message}
+									</p>
+								)}
+							</div>
+
+							<div className="">
+								<textarea
+									rows={1000}
+									cols={1000}
+									placeholder="Message"
+									{...register('message')}
+									className="px-8 py-2 rounded-md bg-inputBg text-inputCaption h-[200px] w-full"
+								/>
+								{errors.message && (
+									<p className="text-action-error text-[13px]  bottom-[-16px] left-0">
+										{errors.message?.message}
+									</p>
+								)}
+							</div>
+
+							<button
+								type="submit"
+								className="bg-custom-gradient text-neutral-white w-full h-[44px] rounded-[10px] mt-4"
+							>
 								Send Message
 							</button>
 						</form>

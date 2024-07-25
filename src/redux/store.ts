@@ -38,6 +38,7 @@ import VerifyAccountSlice from './features/VerifyAccountSlice';
 import productAvailabilitySlice from './features/productAvailabilitySlice';
 import momoSlice from './features/momoPaymentSlice';
 import adminStatsSlice from './features/adminStatsSlice';
+import querySlice from './features/Queries/querySlice';
 
 export const store = configureStore({
 	reducer: {
@@ -80,6 +81,7 @@ export const store = configureStore({
 		productAvailability: productAvailabilitySlice,
 		momo: momoSlice,
 		adminStatsSlice,
+		queries: querySlice,
 	},
 });
 

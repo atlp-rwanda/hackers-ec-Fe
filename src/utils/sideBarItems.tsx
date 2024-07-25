@@ -3,10 +3,10 @@ import {
 	GanttChart,
 	Kanban,
 	LayoutDashboard,
+	MessageSquareMore,
 	ShoppingBasket,
 } from 'lucide-react';
-import { FaNetworkWired, FaUsers } from 'react-icons/fa';
-import { IoSettingsSharp } from 'react-icons/io5';
+import { FaUsers } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 
 export const sideBarItems = [
@@ -52,18 +52,10 @@ export const sideBarItems = [
 		icon: <GanttChart />,
 		scope: ['SELLER'],
 	},
-
 	{
-		path: '/dashboard/roles',
-		name: 'Roles',
-		icon: <FaNetworkWired />,
+		path: '/dashboard/querries',
+		name: 'Querries',
+		icon: <MessageSquareMore />,
 		scope: ['ADMIN'],
-	},
-
-	{
-		path: '/dashboard/settings',
-		name: 'Setting',
-		icon: <IoSettingsSharp />,
-		scope: ['BUYER', 'SELLER', 'ADMIN'],
 	},
 ];

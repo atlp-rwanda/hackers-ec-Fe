@@ -94,6 +94,16 @@ const ProfileDropdown = ({ image }: ProfileDropdownProps) => {
 								My orders
 							</Link>
 						)}
+						{(userData?.role === 'ADMIN' || userData?.role === 'SELLER') && (
+							<Link
+								to="/dashboard"
+								className="block px-4 py-2 text-sm text-gray-700 hover:text-[1rem] hover:text-neutral-white hover:bg-primary-lightblue"
+								role="menuitem"
+								onClick={toggleDropdown}
+							>
+								<p> Dashboard</p>
+							</Link>
+						)}
 						{userData?.role === 'BUYER' && (
 							<Link
 								to="/wishes"
