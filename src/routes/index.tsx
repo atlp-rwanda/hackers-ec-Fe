@@ -36,6 +36,7 @@ import UserRedirectionPage from '../pages/userRedirection';
 import { useAppSelector } from '../redux/hooks/hooks';
 import {
 	AddProducts,
+	DashboardCategories,
 	DashboardContent,
 	DashboardProducts,
 	DashboardSingleProducts,
@@ -128,6 +129,9 @@ function Routers() {
 						<Route path="roles">
 							<Route index element={<UserRoles />} />
 							<Route path=":id" element={<EditUser />} />
+						</Route>
+						<Route path="categories">
+							<Route index element={<DashboardCategories />} />
 						</Route>
 					</Route>
 				</Route>

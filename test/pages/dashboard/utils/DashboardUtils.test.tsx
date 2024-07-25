@@ -1,6 +1,7 @@
 import { screen, render } from '@testing-library/react';
 import {
 	AddProducts,
+	DashboardCategories,
 	DashboardContent,
 	DashboardProducts,
 	DashboardSingleProducts,
@@ -408,5 +409,21 @@ describe('Dashboard products', () => {
 		);
 
 		expect(screen.queryByText(/Unauthorized access/i)).not.toBeInTheDocument();
+	});
+
+	it('It should render categories page', () => {
+		const mockToken = 'valid-token';
+		const mockDecoded = { id: 1, role: 'BUYER' };
+
+		localStorage.setItem('access_token', mockToken);
+		(jwtDecode as unknown as DynamicData).mockReturnValue(mockDecoded);
+
+		render(
+			<AllProvider>
+				<DashboardCategories />
+			</AllProvider>,
+		);
+
+		expect(screen.getByText(/Unauthorized access/i)).toBeInTheDocument();
 	});
 });
