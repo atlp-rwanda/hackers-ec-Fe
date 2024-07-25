@@ -29,6 +29,7 @@ import resetPasswordSlice from './features/resetSlice';
 import AllSaleSlice from './features/Sales/AllSaleSlice';
 import UpdateorderSlice from './features/Sales/UpdateorderSlice';
 import SearchSlice from './features/SearchSlice';
+import sellerWishlistSlice from './features/sellerWishlistSlice';
 import statisticsSlice from './features/statisticsSlice';
 import StripePaymentSlice from './features/StripePaymentSlice';
 import toggleSlice from './features/toggleSlice';
@@ -72,6 +73,7 @@ export const store = configureStore({
 		userOrder: OrderDetailSlice,
 		toggle: toggleSlice,
 		order: OrdersSlice,
+		sellerWishes: sellerWishlistSlice,
 	},
 });
 
