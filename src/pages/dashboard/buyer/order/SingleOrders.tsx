@@ -89,7 +89,12 @@ const SingleOrders = () => {
 										<span className="text-primary-lightblue mr-1">
 											{item.sales.reduce(
 												(acc: number, sale: DynamicData) =>
-													acc + sale.soldProducts.price * sale.quantitySold,
+													acc +
+													(sale.soldProducts.price -
+														(sale.soldProducts.price *
+															sale.soldProducts.discount) /
+															100) *
+														sale.quantitySold,
 												0,
 											)}
 										</span>
