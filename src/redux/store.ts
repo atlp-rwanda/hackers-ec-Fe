@@ -35,7 +35,7 @@ import StripePaymentSlice from './features/StripePaymentSlice';
 import toggleSlice from './features/toggleSlice';
 import profileSlice from './features/userUpdateSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
-
+import productAvailabilitySlice from './features/productAvailabilitySlice';
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
@@ -74,6 +74,7 @@ export const store = configureStore({
 		toggle: toggleSlice,
 		order: OrdersSlice,
 		sellerWishes: sellerWishlistSlice,
+		productAvailability: productAvailabilitySlice,
 	},
 });
 
