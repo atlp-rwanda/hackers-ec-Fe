@@ -119,8 +119,10 @@ const SingleOrders = () => {
 													<div>
 														<p className="font-bold">
 															Product:{' '}
-															<span className="font-medium">
-																{sale.soldProducts.name}
+															<span className="font-medium line-clamp-1">
+																{sale.soldProducts.name.length > 25
+																	? `${sale.soldProducts.name.substring(0, 25)}...`
+																	: sale.soldProducts.name}
 															</span>
 														</p>
 													</div>

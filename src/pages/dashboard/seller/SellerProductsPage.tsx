@@ -18,7 +18,7 @@ const SellerProductsPage = () => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		if (data && !data.length) {
+		if (!data && (data as DynamicData)?.length === 0) {
 			dispatch(getProducts()).unwrap();
 		}
 	}, [dispatch, data]);
@@ -67,59 +67,72 @@ const SellerProductsPage = () => {
 									/>
 								</div>
 							) : (
-								<table className="tables pt-2 p-3 overflow-hidden overflow-x-scroll max-w-[18rem] tablet:max-w-[100%]">
-									<thead className="bg-[#256490] text-neutral-white text-left overflow-hidden rounded-3xl p2">
-										<tr className="rounded-xl text-sm">
-											<th className="">Image</th>
-											<th>Name</th>
-											<th>Category</th>
-											<th>Quantity</th>
-											<th>Discount</th>
-											<th>Price</th>
-											<th className="expand">Action</th>
-										</tr>
-									</thead>
-									<tbody className="text-slate-700">
-										{currentItems.map((item: DynamicData, idx: number) => (
-											<tr
-												key={idx}
-												className={`relative text-sm ${idx % 2 !== 0 ? 'bg-[#DDDD]' : ''}`}
-											>
-												<td className="w-20 h-16">
-													<img
-														src={item?.images[0]}
-														alt="product_images"
-														className="w-full h-full object-cover rounded-lg"
-													/>
-												</td>
-												<td className=" text-sm">
-													{item?.name?.length > 20
-														? item.name.slice(0, 20) + '...'
-														: item.name}
-												</td>
-												<td>{item?.category?.name}</td>
-												<td>{item?.quantity}</td>
-												<td>{item?.discount}</td>
-												<td>{item?.price}</td>
-												<td className="cursor-pointer ">
-													<BsThreeDotsVertical
-														onClick={() => toggleItemModel(idx)}
-														aria-label="toggle_modal"
-													/>
-													{openModels[idx] && (
-														<SellerProductsModal
-															id={item.id}
-															idx={idx}
-															item={item}
-															state={item}
-															handleToggle={toggleItemModel}
-														/>
-													)}
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
+								<>
+									{data && data.length === 0 ? (
+										<div className="w-full h-[550px] flex items-center flex-col justify-center">
+											<h2 className="font-bold text-center text-xl text-blue-950">
+												No Products Found!
+											</h2>
+											<p className="text-sm mt-5">
+												Work with ShopTrove by starting creating some!
+											</p>
+										</div>
+									) : (
+										<table className="tables pt-2 p-3 overflow-hidden overflow-x-scroll max-w-[18rem] tablet:max-w-[100%]">
+											<thead className="bg-[#256490] text-neutral-white text-left overflow-hidden rounded-3xl p2">
+												<tr className="rounded-xl text-sm">
+													<th className="">Image</th>
+													<th>Name</th>
+													<th>Category</th>
+													<th>Quantity</th>
+													<th>Discount</th>
+													<th>Price</th>
+													<th className="expand">Action</th>
+												</tr>
+											</thead>
+											<tbody className="text-slate-700">
+												{currentItems.map((item: DynamicData, idx: number) => (
+													<tr
+														key={idx}
+														className={`relative text-sm ${idx % 2 !== 0 ? 'bg-[#DDDD]' : ''}`}
+													>
+														<td className="w-20 h-16">
+															<img
+																src={item?.images[0]}
+																alt="product_images"
+																className="w-full h-full object-cover rounded-lg"
+															/>
+														</td>
+														<td className=" text-sm">
+															{item?.name?.length > 20
+																? item.name.slice(0, 20) + '...'
+																: item.name}
+														</td>
+														<td>{item?.category?.name}</td>
+														<td>{item?.quantity}</td>
+														<td>{item?.discount}</td>
+														<td>{item?.price}</td>
+														<td className="cursor-pointer ">
+															<BsThreeDotsVertical
+																onClick={() => toggleItemModel(idx)}
+																aria-label="toggle_modal"
+															/>
+															{openModels[idx] && (
+																<SellerProductsModal
+																	id={item.id}
+																	idx={idx}
+																	item={item}
+																	state={item}
+																	handleToggle={toggleItemModel}
+																/>
+															)}
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									)}
+								</>
 							)}
 						</>
 					</div>

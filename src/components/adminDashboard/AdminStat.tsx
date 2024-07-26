@@ -130,7 +130,7 @@ function AdminStat() {
 													>
 														<th
 															scope="row"
-															className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap flex gap-4 items-center"
+															className="px-6 py-4 max-w-[300px] text-wrap font-medium text-gray-900 whitespace-nowrap flex gap-4 items-center"
 														>
 															<img
 																src={item?.sales[0]?.soldProducts?.images[0]}
