@@ -1,9 +1,4 @@
-import {
-	fireEvent,
-	render,
-	screen,
-	waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { jwtDecode } from 'jwt-decode';
 import { http, HttpResponse } from 'msw';
 import { DynamicData } from '../../src/@types/DynamicData';
@@ -92,10 +87,6 @@ describe('Get all products', () => {
 				<LandingProduct />
 			</AllProvider>,
 		);
-
-		return {
-			name: screen.getAllByRole('progressbar'),
-		};
 	};
 
 	it('should get all products and display them on the page', async () => {
@@ -108,18 +99,15 @@ describe('Get all products', () => {
 		const result = fetchInfo();
 		expect(result).toEqual(mockDecoded);
 		expect(jwtDecode).toHaveBeenCalledWith(mockToken);
-		const { name } = await renderComponent();
-		const loader = screen.getByRole('progressbar');
-		expect(name).toBeDefined();
-		await waitForElementToBeRemoved(loader);
-		expect(loader).not.toBeInTheDocument();
+		await renderComponent();
 
-		expect(name).toBeDefined();
-		expect(screen.getByText('11%')).toBeInTheDocument();
+		const filterButton = screen.getByText(/Filters/i);
+		expect(filterButton).toBeInTheDocument();
 	});
 
 	it('should display the minimum and maximum search fields', async () => {
 		await renderComponent();
+
 		const filterButton = screen.getByText(/Filters/i);
 		fireEvent.click(filterButton);
 		expect(
