@@ -4,7 +4,9 @@ import { faker } from '@faker-js/faker';
 export const db = factory({
 	categories: {
 		id: primaryKey(() => faker.string.uuid()),
-		name: () => faker.commerce.product.name,
+		name: () => faker.commerce.productName(),
+		description: () => faker.commerce.productDescription(),
+		products: () => [],
 	},
 	users: {
 		id: primaryKey(() => faker.string.uuid()),

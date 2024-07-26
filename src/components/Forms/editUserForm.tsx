@@ -130,7 +130,7 @@ const EditUserForm = (props: userFormType) => {
 		<>
 			{roleLoading ? (
 				<div className="setEditMainDiv   fixed  w-full  top-0 shadow-2xl z-[100] h-full tablet:flex  tablet:items-center tablet:justify-center">
-					<div className=" fixed w-full h-full  z-[100]  bg-primary-lightblue/30 backdrop-blur-sm  left-0  top-0">
+					<div className=" fixed w-full h-full  z-[100]  bg-primary-lightblue/30 backdrop-sm  left-0  top-0">
 						<div className=" bg-neutral-whit w-full h-full flex  justify-center items-center z-[200] ">
 							<div
 								className="flex-1 h-full flex-center flex-col gap-4 z-[500]  "

@@ -7,6 +7,7 @@ import AddProduct from '../pages/dashboard/seller/AddProduct';
 import SellerDashboard from '../pages/dashboard/seller/SellerDashboard';
 import SellerProductsPage from '../pages/dashboard/seller/SellerProductsPage';
 import SellerSingleProduct from '../pages/dashboard/seller/SellerSingleProduct';
+import CategoriesPage from '../pages/dashboard/seller/categories/CategoriesPage';
 import fetchInfo from './userDetails';
 
 export const DashboardProducts = () => {
@@ -88,6 +89,17 @@ export const EditRole = () => {
 	return decoded?.role === 'ADMIN' ? (
 		<EditUser />
 	) : decoded?.role === 'SELLER' ? (
+		<NotFound />
+	) : (
+		<div>Unauthorized access</div>
+	);
+};
+
+export const DashboardCategories = () => {
+	const decoded = fetchInfo() as UserInfoTypes;
+	return decoded?.role === 'SELLER' ? (
+		<CategoriesPage />
+	) : decoded?.role === 'ADMIN' ? (
 		<NotFound />
 	) : (
 		<div>Unauthorized access</div>
