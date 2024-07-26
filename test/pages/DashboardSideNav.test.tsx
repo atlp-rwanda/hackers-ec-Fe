@@ -1,25 +1,21 @@
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from '../../src/redux/store';
-import { BrowserRouter } from 'react-router-dom';
 import DashboardSideNav from '../../src/components/DashboardSideNav';
+import AllProvider from '../../src/AllProvider';
 
 describe('Dah sidebar components', () => {
 	it('render the correct content', () => {
 		const otherStyles = 'space-x-12';
 		const role = 'SELLER';
 		render(
-			<Provider store={store}>
-				<BrowserRouter>
-					<DashboardSideNav
-						children={<div>Hello World!</div>}
-						otherStyles={otherStyles}
-						role={role}
-					/>
-				</BrowserRouter>
-			</Provider>,
+			<AllProvider>
+				<DashboardSideNav
+					children={<div>Hello World!</div>}
+					otherStyles={otherStyles}
+					role={role}
+				/>
+				,
+			</AllProvider>,
 		);
-
 		expect(screen.getByText('ShopTrove'));
 	});
 });
