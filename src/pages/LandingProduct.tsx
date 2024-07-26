@@ -38,7 +38,7 @@ const LandingProduct = () => {
 	const tokenInfo = fetchInfo();
 
 	useEffect(() => {
-		if (!products && tokenInfo) {
+		if (products && !products.length && tokenInfo) {
 			dispatch(getProducts()).unwrap();
 		}
 	}, [dispatch, products, tokenInfo]);
@@ -55,7 +55,6 @@ const LandingProduct = () => {
 		dispatch(search(searchInputs)).unwrap();
 	}, [dispatch, searchInputs]);
 	const { data: wishes } = useWish();
-
 	return (
 		<>
 			<div className="perent_products_container min-h-screen relative">
