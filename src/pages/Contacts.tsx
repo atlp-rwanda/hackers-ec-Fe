@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import useToast from '../hooks/useToast';
 import { DynamicData } from '../@types/DynamicData';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { HashLoader } from 'react-spinners';
+import IconLoader from '../components/Loaders/IconLoader';
 
 const Contacts = () => {
 	const { show } = useHandleResize();
@@ -66,15 +66,6 @@ const Contacts = () => {
 			);
 		}
 	};
-
-	if (isLoading) {
-		return (
-			<div className="flex-1 h-full flex-center flex-col gap-4">
-				<HashLoader color="#266491" size={60} role="progressbar" />
-				<p className="text-xs">Please wait ...</p>
-			</div>
-		);
-	}
 
 	return (
 		<>
@@ -195,9 +186,15 @@ const Contacts = () => {
 
 							<button
 								type="submit"
-								className="bg-custom-gradient text-neutral-white w-full h-[44px] rounded-[10px] mt-4"
+								className="bg-custom-gradient text-neutral-white flex items-center justify-center gap-2 w-full h-[44px] rounded-[10px] mt-4"
 							>
-								Send Message
+								{isLoading ? (
+									<>
+										<IconLoader className="animate-spin mr-1" /> {'sending....'}
+									</>
+								) : (
+									'Send Message'
+								)}
 							</button>
 						</form>
 					</div>

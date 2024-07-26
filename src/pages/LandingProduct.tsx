@@ -38,10 +38,11 @@ const LandingProduct = () => {
 	const tokenInfo = fetchInfo();
 
 	useEffect(() => {
-		if (products && !products.length && tokenInfo) {
+		if (tokenInfo) {
 			dispatch(getProducts()).unwrap();
 		}
-	}, [dispatch, products, tokenInfo]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dispatch]);
 
 	useEffect(() => {
 		dispatch(getSearchedProducts(products));
