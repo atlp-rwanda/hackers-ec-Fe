@@ -43,6 +43,8 @@ import {
 	UserRoles,
 	Users,
 } from '../utils/DashboardUtils';
+import Querries from '../pages/Admin/Querries';
+import SingleQuerries from '../pages/Admin/SingleQuerries';
 
 function Routers() {
 	const { isLoggedOut } = useAppSelector((state) => state.logout);
@@ -118,6 +120,10 @@ function Routers() {
 						</Route>
 						<Route path="wishlists">
 							<Route index element={<WishlistPage />} />
+						</Route>
+						<Route path="querries">
+							<Route index element={<Querries />} />
+							<Route path=":id" element={<SingleQuerries />} />
 						</Route>
 						<Route path="sales">
 							<Route index element={<SalesPage />} />

@@ -4,6 +4,7 @@ import { fetchUserProfile } from '../redux/features/userUpdateSlice';
 import { useAppDispatch, useAppSelector } from '../redux/hooks/hooks';
 import { appLogo } from '../utils/images';
 import LogoutCard from './cards/LogoutCard';
+import { Link } from 'react-router-dom';
 
 const DashboardSideNav = ({
 	children,
@@ -26,10 +27,10 @@ const DashboardSideNav = ({
 			className={`${otherStyles} h-screen bg-neutral-white fixed ipad:sticky top-0 left-0 z-40`}
 		>
 			<nav className="h-full flex flex-col justify-between border-r border-neutral-grey/30 shadow-sm">
-				<div className="p-5 pb-2 flex gap-3 items-center">
+				<Link to={'/'} className="p-5 pb-2 flex gap-3 items-center">
 					<img src={appLogo} alt="website logo" className="w-16" />
 					<h2 className="text-2xl font-semibold">ShopTrove</h2>
-				</div>
+				</Link>
 				<ul className="flex-1 mt-3">{children}</ul>
 				<div className="relative flex gap-3 items-center p-3">
 					<img
