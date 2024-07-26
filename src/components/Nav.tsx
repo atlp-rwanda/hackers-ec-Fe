@@ -11,6 +11,7 @@ import fetchInfo from '../utils/userDetails';
 import { ButtonIcon } from './buttons/ButtonIcon';
 import Notification from './notification/Notification';
 import ProfileDropdown from './ProfileDropdown';
+import { getCarts } from '../redux/features/cartSlice';
 
 const Nav = () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,12 +23,12 @@ const Nav = () => {
 	const { numberOfItem } = useAppSelector((state) => state.cart);
 	const userData = fetchInfo();
 
-	// Fetch user data when the component mounts
 	useEffect(() => {
 		if (!data && accessToken) {
-			dispatch(fetchUserProfile());
+			dispatch(fetchUserProfile()).unwrap();
 		}
-	}, [data, dispatch]);
+		dispatch(getCarts()).unwrap();
+	}, [accessToken, data, dispatch]);
 
 	const links = [
 		{ to: '/', label: 'Home' },

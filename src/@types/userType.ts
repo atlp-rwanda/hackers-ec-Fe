@@ -32,3 +32,9 @@ export interface UserInfoTypes extends JwtPayload {
 	iat?: number;
 	exp?: number;
 }
+
+export type CopyType = {
+	name: string;
+	text: string;
+	value: string;
+};

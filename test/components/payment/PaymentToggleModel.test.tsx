@@ -4,6 +4,7 @@ import { it, expect, describe, vi } from 'vitest';
 import configureStore from 'redux-mock-store';
 import PaymentToggleModel from '../../../src/components/payment/PaymentToggleModel';
 import { payModel } from '../../../src/redux/features/toggleSlice';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureStore([]);
 
@@ -14,6 +15,7 @@ vi.mock('../../src/assets/cancel.png', () => 'cancelIcon');
 describe('PaymentToggleModel component', () => {
 	it('should render the PaymentToggleModel component with buttons', () => {
 		const initialState = {
+			momo: {},
 			stripe: {
 				data: { data: { sessionUrl: 'http://example.com' } },
 				isLoading: false,
@@ -27,7 +29,9 @@ describe('PaymentToggleModel component', () => {
 
 		render(
 			<Provider store={store}>
-				<PaymentToggleModel />
+				<BrowserRouter>
+					<PaymentToggleModel />
+				</BrowserRouter>
 			</Provider>,
 		);
 
@@ -42,6 +46,7 @@ describe('PaymentToggleModel component', () => {
 
 	it('should handle Cancel button click', () => {
 		const initialState = {
+			momo: {},
 			stripe: {
 				data: { data: { sessionUrl: 'http://example.com' } },
 				isLoading: false,
@@ -57,7 +62,9 @@ describe('PaymentToggleModel component', () => {
 
 		render(
 			<Provider store={store}>
-				<PaymentToggleModel />
+				<MemoryRouter>
+					<PaymentToggleModel />
+				</MemoryRouter>
 			</Provider>,
 		);
 

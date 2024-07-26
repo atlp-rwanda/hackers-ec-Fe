@@ -36,6 +36,8 @@ import toggleSlice from './features/toggleSlice';
 import profileSlice from './features/userUpdateSlice';
 import VerifyAccountSlice from './features/VerifyAccountSlice';
 import productAvailabilitySlice from './features/productAvailabilitySlice';
+import momoSlice from './features/momoPaymentSlice';
+
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
@@ -75,6 +77,7 @@ export const store = configureStore({
 		order: OrdersSlice,
 		sellerWishes: sellerWishlistSlice,
 		productAvailability: productAvailabilitySlice,
+		momo: momoSlice,
 	},
 });
 
