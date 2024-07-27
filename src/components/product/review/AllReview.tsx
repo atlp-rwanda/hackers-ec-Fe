@@ -98,35 +98,39 @@ function AllReview(props: reviewType) {
 				</h2>
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-4 mobile:flex-row mobile:justify-between">
-						<div>
+						<div className="flex flex-col gap-5">
 							<h2 className="font-[500] text-[18px]">Customer reviews</h2>
 							<div className="flex items-center gap-4">
 								<h2 className="text-inputCaption">
-									{handleTotalrating() || 0}
+									<p className="bg-blue-100 text-black text-sm font-semibold inline-flex items-center p-1.5 rounded">
+										{handleTotalrating() || 0}
+									</p>
 								</h2>
 								<StarsRatings
 									rate={handleTotalrating()}
 									filledStar="text-[17px] mobile:text-[1.1rem] bg-opacity-15 ipad:text-[1.1rem]"
 									emptyStar="text-[17px] mobile:text-[1.1rem] ipad:text-[1.1rem]"
 								/>
-								<div className="relative">
-									<IoMdArrowDropdown
-										data-testid="drop-down-tab-rate"
-										className="dropDown text-[18px] mobile:text-[2rem]"
-										onClick={() => handleRating()}
-									/>
+								<div
+									className="relative hover:cursor-pointer"
+									onMouseEnter={() => setRatingTab(true)}
+									onMouseLeave={() => setRatingTab(false)}
+								>
+									<span className="hover:scale-110">
+										<IoMdArrowDropdown
+											data-testid="drop-down-tab-rate"
+											className="dropDown text-[18px] mobile:text-[2rem]"
+											onClick={() => handleRating()}
+										/>
+									</span>
 									{ratingTab && <RatingModel />}
 								</div>
 							</div>
 						</div>
-						<div className="flex flex-col gap-1">
+						<div className="flex flex-col gap-5">
 							<h1 className="font-[500] text-[18px] leading-none">
 								Review this product
 							</h1>
-							<p className="text-inputCaption text-[15px]">
-								share your feelings with us
-							</p>
-
 							<button
 								className="bg-custom-gradient w-[11rem]  hover:scale-105  text-neutral-white text-center py-[2%]  rounded  text-[12px] mobile:w-[90%] ipad:max-w-[11rem] mobile:px-2"
 								onClick={() => handleReviewForm()}

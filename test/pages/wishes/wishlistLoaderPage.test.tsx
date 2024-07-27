@@ -49,7 +49,6 @@ describe('review test', () => {
 	};
 	it('should render wishlist', () => {
 		renderwishlistPage();
-		screen.debug(undefined, 1000000);
 		const loader = screen.getByRole('progressbar');
 		expect(loader).toBeInTheDocument();
 		expect(screen.getByText(/Please wait/i)).toBeDefined();

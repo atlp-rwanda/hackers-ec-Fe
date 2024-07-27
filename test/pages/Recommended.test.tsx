@@ -25,7 +25,6 @@ describe('Recommended products design', () => {
 	it('should renders component without crashing', () => {
 		renderComponent();
 		expect(screen.getByText(/Product 1/i)).toBeInTheDocument();
-		screen.debug();
 	});
 
 	it('should render product props', () => {

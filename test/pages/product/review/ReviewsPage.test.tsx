@@ -246,7 +246,7 @@ describe('review test', () => {
 		const dropBut = screen.getByTestId('drop-down-tab-rate');
 		expect(dropBut).toBeInTheDocument();
 		expect(screen.queryByText(/star-rate-5/i)).toBeNull();
-		await userEvent.click(dropBut);
+		await userEvent.hover(dropBut);
 		const star5 = screen.getByTestId('star-rate-5');
 		expect(star5).toBeInTheDocument();
 		const pageWrappper = screen.getByTestId('page-wrapper');

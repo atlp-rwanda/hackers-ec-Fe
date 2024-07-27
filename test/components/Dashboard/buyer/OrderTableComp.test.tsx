@@ -65,7 +65,6 @@ const renderComponent = () => {
 describe('OrderTableComp', () => {
 	it('should render the table with orders', () => {
 		renderComponent();
-		screen.debug();
 		expect(screen.getByRole('table')).toBeInTheDocument();
 		expect(screen.getByText('1')).toBeInTheDocument();
 		expect(screen.getByText('2')).toBeInTheDocument();

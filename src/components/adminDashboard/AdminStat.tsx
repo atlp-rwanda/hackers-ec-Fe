@@ -40,16 +40,16 @@ function AdminStat() {
 		const productNames = sales
 			.map((sale) => sale.soldProducts?.name)
 			.filter(Boolean);
-		const displayedNames = productNames.slice(0, 3).join(', ');
-		return productNames.length > 3 ? `${displayedNames}, ...` : displayedNames;
+		const displayedNames = productNames.join(' , ');
+		return displayedNames;
 	};
 	return (
 		<div
-			className={` tablet:p-3 h-[90vh] w-[80%]  bimobile:w-full overflow-y-auto no-scrollbar flex flex-col gap-12`}
+			className={` tablet:p-3 h-[90vh] w-[80%]  bimobile:w-full overflow-y-auto no-scrollbar flex flex-col gap-12  `}
 			aria-label="container"
 		>
 			{data?.data && (
-				<>
+				<div className="flex flex-col h-full justify-between max-h-[45rem] gap-6 ipad:my-auto">
 					<div className="grid grid-cols-1 gap-5 mobile:grid-cols-2 ipad:grid-cols-3">
 						<UserStatCard
 							title="Total Sellers"
@@ -77,7 +77,7 @@ function AdminStat() {
 						/>
 					</div>
 					<div className="w-full flex gap-6 flex-col tablet:flex-row">
-						<div className="flex ">
+						<div className="flex tablet:w-[30%] ">
 							<div className="flex flex-col  justify-center w-[82%]  mobile:w-full  max-w-sm p-6 bg-primary-lightblue  border border-gray-200 rounded-lg shadow">
 								<h5 className="mb-2 text-2xl font-bold tracking-tight text-neutral-white ">
 									Great job! Shop trovel have successfully completed{' '}
@@ -130,7 +130,7 @@ function AdminStat() {
 													>
 														<th
 															scope="row"
-															className="px-6 py-4 max-w-[300px] text-wrap font-medium text-gray-900 whitespace-nowrap flex gap-4 items-center"
+															className="px-6 py-4 max-w-[400px]  text-wrap font-medium text-gray-900 whitespace-nowrap flex gap-4 items-center"
 														>
 															<img
 																src={item?.sales[0]?.soldProducts?.images[0]}
@@ -153,7 +153,7 @@ function AdminStat() {
 							</div>
 						</div>
 					</div>
-				</>
+				</div>
 			)}
 		</div>
 	);
