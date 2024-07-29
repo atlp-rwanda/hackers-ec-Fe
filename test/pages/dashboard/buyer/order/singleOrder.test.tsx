@@ -85,7 +85,6 @@ describe('SingleOrder', () => {
 					},
 				},
 			});
-			screen.debug();
 			expect(screen.getByText(/Order Id:/i)).toBeInTheDocument();
 			expect(screen.getByText(/#12345/i)).toBeInTheDocument();
 			expect(screen.getByText(/Delivery Date:/i)).toBeInTheDocument();

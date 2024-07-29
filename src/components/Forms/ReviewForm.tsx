@@ -14,6 +14,7 @@ import { DynamicData } from '../../@types/DynamicData';
 import { fetchReview } from '../../redux/features/getReviewSice';
 import fetchInfo from '../../utils/userDetails';
 import { editReview } from '../../redux/features/editReviewSlice';
+import IconLoader from '../Loaders/IconLoader';
 interface reviewFormType {
 	id: string;
 	handleReviewform: () => void;
@@ -36,6 +37,11 @@ function ReviewForm(props: reviewFormType) {
 	const data = useAppSelector(
 		(state) => state.fetchReview.data[state.fetchReview.data.length - 1]?.data,
 	);
+	const { isLoading } = useAppSelector((state) => state.createReview);
+	const { isLoading: editIsLoading } = useAppSelector(
+		(state) => state.editReview,
+	);
+
 	const onSubmit: SubmitHandler<reviewFormSchemaType> = async (
 		data: reviewFormSchemaType,
 	) => {
@@ -102,7 +108,7 @@ function ReviewForm(props: reviewFormType) {
 						1 star for a poor experience. 5 stars for a very good experience.
 					</p>
 					<div
-						className="text-[2rem] flex justify-center"
+						className="text-[2rem] flex justify-center "
 						data-testid="rate-button"
 					>
 						{[...Array(5)].map((_, index) =>
@@ -111,7 +117,7 @@ function ReviewForm(props: reviewFormType) {
 									data-testid={`star-rate-${index}`}
 									title="star-rate-filled"
 									key={index}
-									className="text-[24px] mobile:text-[1.7rem]"
+									className="text-[24px] mobile:text-[1.7rem] hover:cursor-pointer"
 									color="#006bb3"
 									onClick={() => {
 										setRated(index + 1);
@@ -123,7 +129,7 @@ function ReviewForm(props: reviewFormType) {
 									data-testid={`star-rate-${index}`}
 									title="star-rate-empty"
 									key={index}
-									className="text-[24px] mobile:text-[1.7rem]"
+									className="text-[24px] mobile:text-[1.7rem] hover:cursor-pointer"
 									onClick={() => {
 										setRated(index + 1);
 										setValue('ratings', index + 1);
@@ -160,8 +166,17 @@ function ReviewForm(props: reviewFormType) {
 							data-testid="submit-review-form"
 							type="submit"
 							className="w-[60%] bg-custom-gradient py-2 hover:scale-105  rounded-lg text-neutral-white mobile:w-[40%] mobile:h-[2.5rem]  mobile:py-0"
+							disabled={isLoading}
 						>
-							{isEditMode ? 'Edit your review' : ' submit your review'}
+							{isLoading || editIsLoading ? (
+								<div className="flex items-center justify-center">
+									<IconLoader className="animate-spin mr-1" /> {'Loading....'}
+								</div>
+							) : isEditMode ? (
+								'Edit your review'
+							) : (
+								' submit your review'
+							)}
 						</button>
 					</div>
 				</div>

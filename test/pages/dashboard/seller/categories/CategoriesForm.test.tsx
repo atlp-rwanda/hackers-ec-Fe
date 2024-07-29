@@ -39,6 +39,5 @@ describe('category form', () => {
 		await waitFor(() => {
 			expect(dispatchSpy).toHaveBeenCalledWith(expect.any(Function));
 		});
-		screen.debug();
 	});
 });

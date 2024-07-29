@@ -151,9 +151,6 @@ describe('Single product component', () => {
 		);
 		expect(screen.getByText(/Top reviews/i)).toBeInTheDocument();
 		expect(screen.getAllByText(/Submit your review/i)).toHaveLength(2);
-		expect(
-			screen.getByText(/share your feelings with us/i),
-		).toBeInTheDocument();
 		expect(screen.getByText(/Next/i)).toBeInTheDocument();
 		expect(screen.getByText('Previous')).toBeInTheDocument();
 		const Customerreviews = screen.getByText(/Customer reviews/i);
@@ -164,7 +161,7 @@ describe('Single product component', () => {
 		expect(Submityourreview).toBeInTheDocument();
 		const dropBut = screen.getByTestId('drop-down-tab-rate');
 		expect(dropBut).toBeInTheDocument();
-		await userEvent.click(dropBut);
+		await userEvent.hover(dropBut);
 		const star5 = screen.getByTestId('star-rate-5');
 		expect(star5).toBeInTheDocument();
 	});

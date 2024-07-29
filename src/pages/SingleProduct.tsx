@@ -152,36 +152,46 @@ const SingleProduct = () => {
 							</Link>
 
 							<div className="review-on-single product relative flex flex-col h-full w-full  p-[5%] ipad:w-full  tablet:py-[2%] tablet:px-[5%] ipad:m-auto   ">
-								<div className="flex flex-col gap-4 mobile:flex-row mobile:justify-between ipad:justify-normal ipad:gap-[20%] px-5">
-									<div>
-										<h2 className="font-[500] text-[18px]">Customer reviews</h2>
+								<div className="flex flex-col gap-4 mobile:flex-row mobile:justify-between ipad:justify-normal ipad:gap-[20%]">
+									<div className="flex flex-col gap-5">
+										<h2 className="font-[500] text-[18px] leading-none">
+											Customer reviews
+										</h2>
 										<div className="flex items-center gap-4">
 											<h2 className="text-inputCaption">
-												{handleTotalrating()}
+												<p className="bg-blue-100 text-black text-sm font-semibold inline-flex items-center p-1.5 rounded">
+													{handleTotalrating()}
+												</p>
 											</h2>
 											<StarsRatings
 												rate={handleTotalrating()}
 												filledStar="text-[17px] mobile:text-[1.1rem] bg-opacity-15 ipad:text-[1.1rem]"
 												emptyStar="text-[17px] mobile:text-[1.1rem] ipad:text-[1.1rem]"
 											/>
-											<div className="relative">
-												<IoMdArrowDropdown
-													data-testid="drop-down-tab-rate"
-													className="dropDown text-[18px] mobile:text-[2rem]"
-													onClick={() => handleRating()}
-												/>
+											<div
+												className="relative hover:cursor-pointer"
+												onMouseEnter={() => setRatingTab(true)}
+												onMouseLeave={() => setRatingTab(false)}
+											>
+												<span className="hover:scale-110">
+													<IoMdArrowDropdown
+														data-testid="drop-down-tab-rate"
+														className="dropDown text-[18px] mobile:text-[2rem]"
+														onClick={() => handleRating()}
+													/>
+												</span>
 												{ratingTab && <RatingModel />}
 											</div>
 										</div>
 									</div>
 
-									<div className="flex flex-col gap-1">
-										<h1 className="font-[500] text-[18px] leading-none">
-											Review this product
-										</h1>
-										<p className="text-inputCaption text-[15px]">
-											share your feelings with us
-										</p>
+									<div className="flex flex-col gap-5">
+										<span className="flex flex-col gap-1">
+											<h1 className="font-[500] text-[18px] leading-none">
+												Review this product
+											</h1>
+											<p className="text-inputCaption text-[13px]"></p>
+										</span>
 
 										<button
 											className="bg-custom-gradient w-[11rem]  hover:scale-105  text-neutral-white text-center py-[2%]  rounded  text-[12px] mobile:w-[90%] ipad:max-w-[11rem] mobile:px-2"
@@ -195,7 +205,7 @@ const SingleProduct = () => {
 									</div>
 								</div>
 
-								<div className="reviewss border--2 h-full w-full pt-3 flex flex-col gap-">
+								<div className="reviewss border--2 h-full w-full pt-3 flex flex-col">
 									<h1 className="font-[500] text-[18px]">Top reviews</h1>
 									{review &&
 										review.length > 0 &&
@@ -232,10 +242,10 @@ const SingleProduct = () => {
 										))}
 								</div>
 
-								<div className="flex flex-col gap-4 mobile:flex-row mobile:justify-between ipad:justify-normal ipad:gap-[20%] px-5">
+								<div className="flex flex-col gap-4 py-2.5 mobile:flex-row mobile:justify-between ipad:justify-normal ipad:gap-[20%]">
 									<Link
-										className="text-primary-lightblue py-5 underline-offset-1 underline"
 										to={`/reviews/${id}`}
+										className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
 									>
 										view more reviews
 									</Link>
