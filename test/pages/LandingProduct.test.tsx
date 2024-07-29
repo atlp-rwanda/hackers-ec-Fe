@@ -93,6 +93,10 @@ describe('Get all products', () => {
 			</AllProvider>,
 		);
 
+		const loader = screen.getByRole('progressbar');
+		await waitForElementToBeRemoved(loader);
+		expect(loader).not.toBeInTheDocument();
+
 		return {
 			name: screen.getAllByRole('progressbar'),
 		};
@@ -109,10 +113,6 @@ describe('Get all products', () => {
 		expect(result).toEqual(mockDecoded);
 		expect(jwtDecode).toHaveBeenCalledWith(mockToken);
 		const { name } = await renderComponent();
-		const loader = screen.getByRole('progressbar');
-		expect(name).toBeDefined();
-		await waitForElementToBeRemoved(loader);
-		expect(loader).not.toBeInTheDocument();
 
 		expect(name).toBeDefined();
 		expect(screen.getByText('11%')).toBeInTheDocument();
@@ -129,11 +129,7 @@ describe('Get all products', () => {
 	});
 
 	it('handles search input changes', async () => {
-		render(
-			<AllProvider>
-				<LandingProduct />
-			</AllProvider>,
-		);
+		await renderComponent();
 
 		const filterButton = screen.getByText(/Filters/i);
 		const user = userEvent.setup();

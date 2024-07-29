@@ -10,7 +10,7 @@ import { GrNext, GrPrevious } from 'react-icons/gr';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import CategoriesForm from './CategoriesForm';
 import { categorySchemaType } from '../../../../validations/categories/category.validation';
-import { ScaleLoader } from 'react-spinners';
+import { HashLoader } from 'react-spinners';
 
 const CategoriesPage = () => {
 	const [categoryData, setCategoryData] = useState<categorySchemaType | null>(
@@ -45,8 +45,8 @@ const CategoriesPage = () => {
 	return (
 		<>
 			{isLoading ? (
-				<div className="w-full absolute h-full flex items-center justify-center">
-					<ScaleLoader
+				<div className="w-full h-full flex items-center justify-center">
+					<HashLoader
 						color="#256490"
 						role="progressbar"
 						aria-label="single_product_loder"

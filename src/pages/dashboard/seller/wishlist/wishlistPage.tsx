@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ScaleLoader } from 'react-spinners';
+import { HashLoader } from 'react-spinners';
 import WishTable from '../../../../components/wishes/Seller/WishlistTable';
 import { getSellerWishlist } from '../../../../redux/features/sellerWishlistSlice';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks/hooks';
@@ -26,8 +26,8 @@ const WishlistPage = () => {
 	return (
 		<div className="parent_container relative max-h-[80%] overflow-y-scroll overflow-hidden pb-4 mt-4 h-full">
 			{isLoading ? (
-				<div className="w-full absolute h-full flex items-center justify-center">
-					<ScaleLoader
+				<div className="w-full h-full flex items-center justify-center">
+					<HashLoader
 						color="#256490"
 						role="progressbar"
 						aria-label="single_product_loader"

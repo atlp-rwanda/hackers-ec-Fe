@@ -55,7 +55,11 @@ const SalesTableRow: React.FC<SalesTableRowProps> = ({
 					className="w-full h-full object-cover rounded-lg"
 				/>
 			</td>
-			<td>{sale.soldProducts.name}</td>
+			<td>
+				{sale?.soldProducts?.name?.length > 15
+					? `${sale?.soldProducts?.name?.substring(0, 15)}...`
+					: `${sale?.soldProducts?.name}`}
+			</td>
 			<td>{sale.quantitySold}</td>
 			<td className={getStatusClass(sale.status)}>{sale.status}</td>
 			<td>{formatDate(sale.deliveryDate)}</td>

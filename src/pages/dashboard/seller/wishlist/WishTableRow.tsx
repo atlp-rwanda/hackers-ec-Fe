@@ -25,7 +25,11 @@ const WishTableRow: React.FC<SalesTableRowProps> = ({
 					className="w-full h-full object-cover rounded-lg"
 				/>
 			</td>
-			<td>{wishes.product.name}</td>
+			<td>
+				{wishes.product.name.length > 15
+					? `${wishes.product.name.substring(0, 15)}...`
+					: wishes.product.name}
+			</td>
 			<td>{wishes.product.quantity}</td>
 			<td>{wishes.product.discount}</td>
 			<td>{wishes.numberOfUserWishProduct}</td>

@@ -266,6 +266,7 @@ const AddEditProductForm = () => {
 						}
 						color="bg-action-success"
 						otherStyles="rounded-md h-10"
+						disabled={processing}
 					/>
 					<Button
 						title="Cancel"
