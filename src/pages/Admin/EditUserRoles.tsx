@@ -11,12 +11,12 @@ const EditUser = () => {
 	const users = useAppSelector(
 		(state) => state.allUsers.data[state.allUsers.data.length - 1],
 	);
-
 	const getUserInfo = () => {
-		return users?.data.filter((item: userType) => item?.id === id) || '';
+		return (
+			users?.data?.users?.filter((item: userType) => item?.id === id) || ''
+		);
 	};
 	const useR = getUserInfo();
-
 	return (
 		<div className="content  h-full ipad:pl-0 w-full">
 			<GetUser />

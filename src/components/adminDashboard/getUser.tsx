@@ -1,23 +1,23 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { IoMdMore } from 'react-icons/io';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
 import { userType } from '../../@types/userType';
 import { getRoles } from '../../redux/features/getRolesSlice';
 import { roleType } from '../../@types/roleTypes';
-import { DynamicData } from '../../@types/DynamicData';
 import { GrNext, GrPrevious } from 'react-icons/gr';
 import ReactPaginate from 'react-paginate';
-import { getUser } from '../../redux/features/getUserSlice';
 import { HashLoader } from 'react-spinners';
-
+import { getUserPag } from '../../redux/features/getUserPagination';
+import useToast from '../../hooks/useToast';
 interface getUserType {
 	arrow?: ReactNode;
 	searchIcon?: ReactNode;
+	location?: string;
 }
 const GetUser = (props: getUserType) => {
 	const [currentPage, setCurrentPage] = useState(0);
@@ -25,26 +25,30 @@ const GetUser = (props: getUserType) => {
 	const [butOverlay, setButOverlay] = useState('');
 	const roles = useAppSelector((state) => state.allRoles?.data[0]);
 	const roleLoading = useAppSelector((state) => state.allRoles.isLoading);
-	const { isLoading, data } = useAppSelector((state) => state.allUsers);
+	const { isLoading, data } = useAppSelector((state) => state.userPagination);
 	const pathname = window.location.pathname;
 	const dispatch = useAppDispatch();
-	const itemsPerPage = 8;
+	const prevPage = useRef(0);
+	const { showErrorMessage } = useToast();
 
 	useEffect(() => {
 		if (!roles) {
-			dispatch(getRoles()).unwrap();
+			dispatch(getRoles())
+				.unwrap()
+				.catch((error) => {
+					showErrorMessage(error.message || 'Failed to load wishes');
+				});
 		}
 	}, [dispatch]);
-
 	useEffect(() => {
-		setCurrentPage(0);
-	}, [searchQuery]);
-
-	useEffect(() => {
-		if (data.length === 0) {
-			dispatch(getUser()).unwrap();
+		if (props.location?.includes('users')) {
+			dispatch(getUserPag({ page: currentPage, search: searchQuery }))
+				.unwrap()
+				.catch((error) => {
+					showErrorMessage(error.message || 'Failed to load wishes');
+				});
 		}
-	}, [dispatch]);
+	}, [dispatch, currentPage, searchQuery]);
 
 	const getRoleName = (roleId: string) => {
 		return roles?.data.find((role: roleType) => role.id === roleId).roleName;
@@ -52,28 +56,32 @@ const GetUser = (props: getUserType) => {
 	const handleOverlay = (userId: string) => {
 		setButOverlay(userId === butOverlay ? '' : userId);
 	};
+	useEffect(() => {
+		if (data[data?.length - 1]?.data?.totalPages < prevPage.current) {
+			setCurrentPage(1);
+		} else {
+			setCurrentPage(prevPage.current);
+		}
+	}, [searchQuery, data[data?.length - 1]?.data?.totalPages]);
 	const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchQuery(event.target.value);
+		if (event.target.value.length < 1) {
+			setCurrentPage(prevPage.current);
+		}
+		if (event.target.value.length === 1 && currentPage !== 1) {
+			prevPage.current = currentPage;
+		}
 	};
-	const offset = currentPage * itemsPerPage;
-	const currentItems = data[data.length - 1]?.data
-		.filter((user: DynamicData) =>
-			user.email.toLowerCase().includes(searchQuery.toLowerCase()),
-		)
-		.slice(offset, offset + itemsPerPage);
-	let pageCount = 0;
-	if (data[0]?.data?.length) {
-		pageCount = Math.ceil(data[0]?.data?.length / itemsPerPage);
-	}
+
 	const handlePageClick = (event: { selected: number }) => {
-		setCurrentPage(event.selected);
+		setCurrentPage(event.selected + 1);
+		prevPage.current = event.selected + 1;
 	};
 	const handleButOverlayApp = () => {
 		if (butOverlay) {
 			setButOverlay('');
 		}
 	};
-
 	return (
 		<div className="relative w-full ipad:w-[93%] ipad:m-auto  shadow-2xl  rounded-2xl flex flex-col h-full ipad:h-[90%] ipad:pt-6  ">
 			{isLoading && roleLoading ? (
@@ -97,73 +105,52 @@ const GetUser = (props: getUserType) => {
 							All Users
 						</p>
 					</div>
-
 					<div className="py-1 w-full flex items-center justify-center">
-						<form className="search   w-[80%]  flex border  items-center rounded-xl  py-1 px-[2%] overflow-hidden mobile:max-w-[19rem]  ">
+						<form className="search   w-[80%]  flex border-2 border-black/30  items-center rounded-xl  py-1 px-[2%] overflow-hidden mobile:max-w-[19rem]  ">
 							<p className="text-[29px] flex-none ">{props.searchIcon}</p>
 							<input
 								type="text"
-								className=" w-[90%] focus:outline-none px-[13%] placeholder-neutral-black"
+								className=" w-[90%] focus:outline-none px-[13%] placeholder-neutral-black bg-transparent"
 								placeholder="Search by email"
 								onChange={handleSearch}
 							/>
 						</form>
 					</div>
 
-					<div className="div-table  w-full   overflow-x-auto    ipad:pt-1   ">
-						<table className=" table-fixed rounded-3xl m-auto shadow-xl  ipad:mt-2 ">
-							<thead className=" w-full text-neutral-white ">
-								<tr>
-									<th className=" bg-primary-lightblue px-[3rem] mobile:px-[2rem] py-3 rounded-l-lg  ipad:px-[1.5rem] ">
-										No
-									</th>
-									<th className=" bg-primary-lightblue   px-[3rem]  py-3 ipad:px-[1rem]">
-										Firstname
-									</th>
-									<th className="  bg-primary-lightblue px-[3rem]  py-3  ipad:px-[1rem]">
-										Lastname
-									</th>
-									<th className="  bg-primary-lightblue  px-[3rem]  py-3 ipad:px-[1rem]">
-										Email
-									</th>
-									<th className="  bg-primary-lightblue  px-[3rem] mobile:px-[1.5rem] py-3">
-										Active
-									</th>
-									<th className="  bg-primary-lightblue  px-[3rem] mobile:px-[3rem] py-3 ipad:px-[2.5rem]">
-										Role
-									</th>
-									<th className="  bg-primary-lightblue  px-[3rem] mobile:px-[3rem] py-3  rounded-r-lg  ipad:px-[1rem] ">
-										Action
-									</th>
+					<div className="tableWrapper mt-1 text-[1rem] mx-5 laptop:mx-10 bg-neutral-white p-4 rounded-md max-w-[95%]">
+						<table className="tables pt-2 p-3 overflow-hidden overflow-x-scroll max-w-[18rem] tablet:max-w-[100%]">
+							<thead className="bg-[#256490] text-neutral-white text-left overflow-hidden rounded-3xl p2">
+								<tr className="rounded-xl text-sm">
+									<th className="">No</th>
+									<th> Firstname</th>
+									<th> Lastname</th>
+									<th> Email</th>
+									<th> Active</th>
+									<th> Role</th>
+									<th className="expand">Action</th>
 								</tr>
 							</thead>
-
-							<tbody className=" text-center rounded-3xl">
-								{currentItems && currentItems.length > 0 ? (
-									currentItems.map((item: userType, index: number) => (
-										<tr
-											key={item?.id}
-											className={`${index % 2 !== 0 ? 'bg-neutral-white' : 'bg-overlay bg-opacity-15'}`}
-										>
-											<td className=" py-3">{index + 1 + offset}</td>
-											<td className="pl-[3rem] ipad:pl-[1rem] text-left">
-												{item?.firstName}
-											</td>
-											<td className=" pl-[3rem] ipad:pl-[1rem] text-left">
-												{' '}
-												{item?.lastName}
-											</td>
-											<td className="ipad:pl-[1rem] pl-[3rem] text-left">
-												{item?.email}
-											</td>
-											<td>
-												{' '}
-												{item?.isActive === true ? 'active' : 'unactive'}
-											</td>
-											<td> {getRoleName(item.role as string)}</td>
-											<td>
-												{' '}
-												<div className="relative">
+							<tbody className="text-slate-700">
+								{data[data?.length - 1]?.data &&
+								data[data?.length - 1]?.data?.users?.length > 0 ? (
+									data[data?.length - 1]?.data?.users.map(
+										(item: userType, index: number) => (
+											<tr
+												key={index}
+												className={`relative text-sm ${index % 2 !== 0 ? 'bg-[#DDDD]' : ''}`}
+											>
+												<td className="w-20 h-16">
+													{index + 1 + data[data?.length - 1]?.data?.offset}
+												</td>
+												<td className=" text-sm">{item?.firstName}</td>
+												<td>{item?.lastName}</td>
+												<td>{item?.email}</td>
+												<td>
+													{' '}
+													{item?.isActive === true ? 'active' : 'unactive'}
+												</td>
+												<td> {getRoleName(item.role as string)}</td>
+												<td className="cursor-ponter ">
 													<button
 														type="button"
 														onClick={() => {
@@ -174,34 +161,35 @@ const GetUser = (props: getUserType) => {
 														<IoMdMore />
 													</button>
 													{butOverlay === item.id && (
-														<div
-															className={` absolute h-[6rem] w-[15rem]  rounded  shadow-2xl  left-20 z-[900] bg-neutral-white px-4 flex flex-col gap-4 tablet:-left-40 py-2 
-															${index + 1 >= currentItems.length - 1 ? 'bottom-0 ' : 'left-20'}
-														`}
-														>
-															<Link to="" className="">
-																<div className="text-[26px] flex text-center items-center gap-4  bg-neutral-grey px-2 py-1 rounded-xl bg-opacity-35 hover:bg-opacity-70">
-																	<FaUserCircle />
-																	<p className="text-[17px] fontp">
-																		view user details
-																	</p>
+														<div className="absolute desktop:w-[15%] right-2 laptop:right-16 z-50 -top-10 flex p-2 rounded-lg  pt-5 pl-5">
+															<div className="flex flex-col justify-between relative w-full">
+																<div className="relative">
+																	<div
+																		className={` absolute h-[3rem] w-[15rem]  rounded  shadow-2xl  right-3 z-[900] bg-neutral-white px-4 flex flex-col gap-4 tablet:-left-40 py-2 		
+																	${index + 1 === 1 ? 'top-7 ' : ''}	
+																	
+																	`}
+																	>
+																		<Link
+																			to={`/dashboard/roles/${item.id}`}
+																			className=""
+																		>
+																			<div className="text-[26px] flex text-center items-center gap-4  px-2 py-1 rounded-xl bg-neutral-grey bg-opacity-35 hover:bg-opacity-70">
+																				<FaEdit />
+																				<p className="text-[17px]">
+																					Edit roles
+																				</p>
+																			</div>
+																		</Link>
+																	</div>
 																</div>
-															</Link>
-															<Link
-																to={`/dashboard/roles/${item.id}`}
-																className=""
-															>
-																<div className="text-[26px] flex text-center items-center gap-4  px-2 py-1 rounded-xl bg-neutral-grey bg-opacity-35 hover:bg-opacity-70">
-																	<FaEdit />
-																	<p className="text-[17px]">Edit roles</p>
-																</div>
-															</Link>
+															</div>
 														</div>
 													)}
-												</div>
-											</td>
-										</tr>
-									))
+												</td>
+											</tr>
+										),
+									)
 								) : (
 									<tr>
 										<td
@@ -221,7 +209,7 @@ const GetUser = (props: getUserType) => {
 							nextLabel={<GrNext />}
 							breakLabel={'...'}
 							breakClassName={'break-me'}
-							pageCount={pageCount}
+							pageCount={data[data?.length - 1]?.data?.totalPages || 0}
 							marginPagesDisplayed={2}
 							pageRangeDisplayed={2}
 							onPageChange={handlePageClick}
@@ -239,5 +227,4 @@ const GetUser = (props: getUserType) => {
 		</div>
 	);
 };
-
 export default GetUser;

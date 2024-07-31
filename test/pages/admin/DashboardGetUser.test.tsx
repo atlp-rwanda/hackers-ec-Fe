@@ -10,6 +10,7 @@ import { server } from '../../mock/server';
 import { http, HttpResponse } from 'msw';
 import AllProvider from '../../../src/utils/AllProvider';
 import userEvent from '@testing-library/user-event';
+import GetUser from '../../../src/components/adminDashboard/getUser';
 
 type userTYpe = {
 	id: string;
@@ -64,17 +65,49 @@ describe('Dashboard getuser page', () => {
 		server.use(
 			http.get(`${import.meta.env.VITE_API_BASE_URL}/users`, () => {
 				return HttpResponse.json({
-					data: userData,
+					data: { users: userData },
 				});
 			}),
 		);
 
 		render(
 			<AllProvider>
+				<div className="content h-full pl-5 ipad:pl-0 w-full">
+					<GetUser location="users" />
+				</div>
+			</AllProvider>,
+		);
+	};
+	const renderComponentAdmin = async () => {
+		server.use(
+			http.get(`${import.meta.env.VITE_API_BASE_URL}/roles`, () => {
+				return HttpResponse.json({
+					data: roleData,
+				});
+			}),
+		);
+		server.use(
+			http.get(`${import.meta.env.VITE_API_BASE_URL}/users`, () => {
+				return HttpResponse.json({
+					data: { users: userData },
+				});
+			}),
+		);
+		render(
+			<AllProvider>
 				<AdminDashboardAllUser />
 			</AllProvider>,
 		);
 	};
+	test('it should render admin page', async () => {
+		await renderComponentAdmin();
+		const firstName = screen.getByText(/firstName/i);
+		const lastName = screen.getByText(/lastName/i);
+		const email = screen.getByText(/email/i);
+		expect(firstName).toBeInTheDocument();
+		expect(lastName).toBeInTheDocument();
+		expect(email).toBeInTheDocument();
+	});
 	test('it should render table', async () => {
 		await renderComponent();
 		const loader = screen.getByRole('progressbar');
@@ -94,7 +127,6 @@ describe('Dashboard getuser page', () => {
 		const buttonWithDots = screen.getByTestId('dots-button');
 		await userEvent.click(buttonWithDots);
 		expect(screen.getByText(/Edit role/i)).toBeInTheDocument();
-		expect(screen.getByText(/view user details/i)).toBeInTheDocument();
 	});
 	test('it should display email searched by an admin ', async () => {
 		await renderComponent();

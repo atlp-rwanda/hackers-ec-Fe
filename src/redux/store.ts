@@ -39,7 +39,7 @@ import productAvailabilitySlice from './features/productAvailabilitySlice';
 import momoSlice from './features/momoPaymentSlice';
 import adminStatsSlice from './features/adminStatsSlice';
 import querySlice from './features/Queries/querySlice';
-
+import getUserPagSlice from './features/getUserPagination';
 export const store = configureStore({
 	reducer: {
 		login: loginReducer,
@@ -82,6 +82,7 @@ export const store = configureStore({
 		momo: momoSlice,
 		adminStatsSlice,
 		queries: querySlice,
+		userPagination: getUserPagSlice,
 	},
 });
 

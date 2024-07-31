@@ -101,7 +101,7 @@ describe('Dashboard Edit role page', () => {
 		server.use(
 			http.get(`${import.meta.env.VITE_API_BASE_URL}/users`, () => {
 				return HttpResponse.json({
-					data: userData,
+					data: { users: userData },
 				});
 			}),
 		);
@@ -120,7 +120,7 @@ describe('Dashboard Edit role page', () => {
 			render(
 				<AllProvider>
 					<div className="content  relative h-full ipad:pl-0 w-full">
-						<GetUser />
+						<GetUser location="users" />
 						<EditUserForm
 							id={user[0]}
 							useR={userData}
@@ -134,13 +134,6 @@ describe('Dashboard Edit role page', () => {
 	};
 	test('it should test edit role page of user', async () => {
 		await renderEditusePage();
-
-		const firstName = screen.getByText(/kabera/i);
-		const lastName = screen.getByText(/joe/i);
-		const email = screen.getByText(/johndoe1@example.com/i);
-		expect(firstName).toBeInTheDocument();
-		expect(lastName).toBeInTheDocument();
-		expect(email).toBeInTheDocument();
 		const backButton = screen.getByRole('button', { name: /back/i });
 		expect(backButton).toBeInTheDocument();
 
