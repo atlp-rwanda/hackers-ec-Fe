@@ -64,12 +64,14 @@ const ProductsPage = () => {
 
 	useEffect(() => {
 		const fetchCarts = async () => {
-			try {
-				if (carts && !carts.length) {
-					await dispatch(getCarts()).unwrap();
+			if (tokenInfo?.role === 'BUYER') {
+				try {
+					if (carts && !carts.length) {
+						await dispatch(getCarts()).unwrap();
+					}
+				} catch (error) {
+					showErrorMessage('Error fetching carts!');
 				}
-			} catch (error) {
-				showErrorMessage('Error fetching carts!');
 			}
 		};
 		fetchCarts();

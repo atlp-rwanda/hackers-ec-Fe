@@ -28,7 +28,9 @@ const Nav = () => {
 			if (!data) {
 				dispatch(fetchUserProfile()).unwrap();
 			}
-			dispatch(getCarts()).unwrap();
+			if (userData?.role === 'BUYER') {
+				dispatch(getCarts()).unwrap();
+			}
 		}
 	}, [accessToken, data, dispatch]);
 
